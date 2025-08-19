@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>García & Asociados - Estudio Jurídico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a1628;
+            --secondary: #1e3a5f;
+            --accent: #2c5282;
+            --light-blue: #a3b1c2;
+            --text: #333;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, rgba(10, 22, 40, 0.85) 0%, rgba(30, 58, 95, 0.9) 100%);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--white);
+        }
+
+        /* Navegación */
+        nav {
+            background: rgba(10, 22, 40, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 2rem;
+        }
+
+        /* Logo de texto simple */
+        .logo {
+            color: var(--white);
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--light-blue);
+        }
+        
+        /* Botón de Portal en el Nav */
+        .nav-portal-btn {
+            background: linear-gradient(45deg, #2c5282, #4a7ba7);
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        
+        .nav-portal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(44, 82, 130, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--light-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section con marca de agua */
+        .hero {
+            background: var(--gradient), url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUSEhIVFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAbAAABBQEBAAAAAAAAAAAAAAAEAQIDBQYAB//EAD4QAAIBAgQDBgQDBwQCAwAAAAECEQADBBIhMQVBUWEGEyJxgTKRofAUI0KxwdHhFVKi8RYkM3KCshZT/8QAGQEAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAIxEAAgIDAAICAwEBAAAAAAAAAAECEQMSITEEE0FRMiJhcf/aAAwDAQACEQMRAD8A8XpRS0tUICsNKaBSAUALQJNKBSGgApTSAUhoAcKaBQFIaAEoUtJSAWgTS0lIBQKWikFAwpRSCnKKAFpDS0lMBaTNFKKAFpDS0lAC0lLSGgBKKWkoGLRS0lAxKKWkoAKKWikFAxaKWkoAKSlpKBilFLSUDEpRS0lAxKKWkoAKKWkoGLSU6koAKKWkoAKKKKAClApRSCmBopRS0tUgLSGlpKAFpDS0lAC0lLSGgYtJQaKAFpKWkoGLSUtJQAUUtJSAdy0wEaUClAoGIKWgUUgFAxaKWkoAKKWkoAKKWkoGLRS0lAxKKWkoAKSlpKBilFLSUDEoopaSgYlFLSUDFpKWkoAKSlpKBilFLSUDFpKWkoAKKWkoAKKKKAClFJSmgYtKKUClqgQUUtJQAUUtJQAUUtJQMWkpaSgYlFLSUDFpKWkoAKSlpKBhRRRQMWkpaSgYlJSmkoAKKKKBiUUUUDCiiigYlFLSUDEooooGFFFFAxKKKKBhSUtJQMWkpaSgYlFLSUDEooooGFFFFAxaKWkoGFFFFABRRRQMWlFKKUUwNFFFFAxaKKKAFooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBaKKKACiiigAooooAKUUUUwClFFFAxaKKKAFooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKUUUUwNFFFKtWBoozTCigBaKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACgUtAoGFFFFMBaKKUUAIKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBaKKKYC//2Q==');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Marca de agua en el fondo */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,192L48,181.3C96,171,192,149,288,154.7C384,160,480,192,576,218.7C672,245,768,267,864,250.7C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom,
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.02) 0%, transparent 50%);
+            background-size: cover, 300px 300px, 400px 400px;
+        }
+
+        /* Marca de agua con texto */
+        .hero::after {
+            content: 'GARCÍA & ASOCIADOS';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 8rem;
+            font-weight: 100;
+            color: rgba(255, 255, 255, 0.03);
+            letter-spacing: 20px;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+            font-family: 'Georgia', serif;
+            text-transform: uppercase;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        /* Estilos para el nuevo título en el Hero */
+        .hero .hero-pre-title {
+            font-size: 1.8rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+            animation: fadeInUp 1s ease 0.1s both;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.2s both;
+            font-family: 'Georgia', serif;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero .tagline {
+            font-size: 1.4rem;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease 0.3s both;
+            font-style: italic;
+            font-family: 'Georgia', serif;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.4s both;
+            font-style: italic;
+            font-family: 'Georgia', serif;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.5s both;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255,255,255,0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Portal Button */
+        .portal-btn {
+            background: linear-gradient(45deg, #2c5282, #4a7ba7);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(44, 82, 130, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .portal-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 25px rgba(44, 82, 130, 0.5);
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .about-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .about-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .founder-info {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .founder-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light-blue);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--light-blue));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .service-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .service-card ul {
+            list-style: none;
+            color: var(--text);
+        }
+
+        .service-card li {
+            padding: 0.5rem 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .service-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .team h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+        }
+
+        .team-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .team-member h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 2rem;
+            background: var(--gradient), url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUSEhIVFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAbAAABBQEBAAAAAAAAAAAAAAAEAQIDBQYAB//EAD4QAAIBAgQDBgQDBwQCAwAAAAECEQADBBIhMQVBUWEGEyJxgTKRofAUI0KxwdHhFVKi8RYkM3KCshZT/8QAGQEAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAIxEAAgIDAAICAwEBAAAAAAAAAAECEQMSITEEE0FRMiJhcf/aAAwDAQACEQMRAD8A8XpRS0tUICsNKaBSAUALQJNKBSGgApTSAUhoAcKaBQFIaAEoUtJSAWgTS0lIBQKWikFAwpRSCnKKAFpDS0lMBaTNFKKAFpDS0lAC0lLSGgBKKWkoGLRS0lAxKKWkoAKKWikFAxaKWkoAKSlpKBilFLSUDEpRS0lAxKKWkoAKKWkoGLSU6koAKKWkoAKKKKAClApRSCmBopRS0tUgLSGlpKAFpDS0lAC0lLSGgYtJQaKAFpKWkoGLSUtJQAUUtJSAdy0wEaUClAoGIKWgUUgFAxaKWkoAKKWkoAKKWkoGLRS0lAxKKWkoAKSlpKBilFLSUDEoopaSgYlFLSUDFpKWkoAKSlpKBilFLSUDFpKWkoAKKWkoAKKKKAClFJSmgYtKKUClqgQUUtJQAUUtJQAUUtJQMWkpaSgYlFLSUDFpKWkoAKSlpKBhRRRQMWkpaSgYlJSmkoAKKKKBiUUUUDCiiigYlFLSUDEooooGFFFFAxKKKKBhSUtJQMWkpaSgYlFLSUDEooooGFFFFAxaKWkoGFFFFABRRRQMWlFKKUUwNFFFFAxaKKKAFooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBaKKKACiiigAooooAKUUUUwClFFFAxaKKKAFooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKUUUUwNFFFKtWBoozTCigBaKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACgUtAoGFFFFMBaKKUUAIKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBaKKKYC//2Q==') no-repeat center center;
+            background-size: cover;
+            color: var(--white);
+            text-align: center;
+            position: relative;
+        }
+
+        /* Marca de agua sutil en la sección de contacto */
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.05) 0%, transparent 60%),
+                radial-gradient(circle at 70% 70%, rgba(255,255,255,0.03) 0%, transparent 50%);
+            background-size: 600px 600px, 400px 400px;
+            pointer-events: none;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 2rem 3rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-item a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--light-blue);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .modal input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .modal-btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .modal-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-secondary {
+            background: #e0e0e0;
+            color: var(--text);
+        }
+
+        .modal-btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .hero-pre-title {
+                font-size: 1.2rem;
+            }
+
+            /* Ajustar marca de agua en móviles */
+            .hero::after {
+                font-size: 4rem;
+                letter-spacing: 10px;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#inicio" class="logo">García & Asociados</a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#equipo">Equipo</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <button class="nav-portal-btn" onclick="requestPassword()">
+                🔒 Portal Socios
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <p class="hero-pre-title">Estudio Jurídico</p>
+            <h1>García & Asociados</h1>
+            <p class="tagline">Transformamos conflictos en soluciones con ética y visión estratégica</p>
+            <p class="subtitle">
+                Estudio Jurídico especializado en Derecho de Familia, Accidentes de Tránsito y Derecho Civil
+            </p>
+            <div class="cta-buttons">
+                <a href="#" onclick="openCalendly()" class="btn btn-primary">📅 Agendar una Consulta</a>
+                <a href="#servicios" class="btn btn-secondary">Nuestros Servicios</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="nosotros">
+        <div class="about-container">
+            <div class="about-content">
+                <h2>Nuestra Filosofía</h2>
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem; color: #555;">
+                    En García & Asociados defendemos los derechos de nuestros clientes con compromiso y profesionalismo. 
+                    Nos destacamos por brindar una atención personalizada, acompañando cada proceso legal con dedicación y cercanía.
+                </p>
+                <div class="about-card">
+                    <h3 style="color: var(--primary); margin-bottom: 1rem;">¿Por qué elegirnos?</h3>
+                    <ul style="list-style: none;">
+                        <li style="padding: 0.5rem 0;">✓ <strong>Sólida trayectoria profesional:</strong> Más de 10 años de experiencia</li>
+                        <li style="padding: 0.5rem 0;">✓ <strong>Atención personalizada y humana:</strong> Escuchamos y comprendemos cada caso</li>
+                        <li style="padding: 0.5rem 0;">✓ <strong>Compromiso con la calidad:</strong> Transparencia y dedicación constante</li>
+                        <li style="padding: 0.5rem 0;">✓ <strong>Equipo interdisciplinario:</strong> Abordaje integral de cada situación</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="founder-info">
+                    <h3>Dra. Camila Florencia García</h3>
+                    <p style="font-style: italic; margin-bottom: 1rem;">Socia Fundadora</p>
+                    <p style="margin-bottom: 1rem;">
+                        Abogada egresada de la Universidad Abierta Interamericana, con especialización en 
+                        Derecho de las Familias y Responsabilidad Civil por Accidentes de Tránsito.
+                    </p>
+                    <p style="font-size: 0.9rem;">
+                        <strong>Matrículas:</strong><br>
+                        • C.A.Q.: T° XII, F° 383<br>
+                        • C.P.A.C.F.: T° 140, F° 85
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="servicios">
+        <div class="services-container">
+            <h2>Áreas de Práctica</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>👨‍👩‍👧‍👦 Derecho de Familia</h3>
+                    <ul>
+                        <li>Violencia Familiar - Medidas de protección</li>
+                        <li>Regímenes de Comunicación y Cuidado Personal</li>
+                        <li>Alimentos - Fijación, aumento y reducción</li>
+                        <li>Divorcios Unilaterales y de Común Acuerdo</li>
+                        <li>Medidas Cautelares Urgentes</li>
+                        <li>Reclamación e Impugnación de Filiación</li>
+                        <li>Responsabilidad Parental</li>
+                        <li>Derechos de Niños, Niñas y Adolescentes</li>
+                        <li>Adopción y Guarda</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <h3>🚗 Accidentes de Tránsito</h3>
+                    <ul>
+                        <li>Asesoramiento Integral a Víctimas</li>
+                        <li>Reclamos Administrativos ante aseguradoras</li>
+                        <li>Demandas por Daños y Perjuicios</li>
+                        <li>Indemnización por lesiones y daños materiales</li>
+                        <li>Defensa ante Responsabilidad Civil</li>
+                        <li>Negociación con compañías de seguros</li>
+                        <li>Pericias médicas y mecánicas</li>
+                        <li>Acompañamiento integral durante todo el proceso</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <h3>⚖️ Derecho Civil</h3>
+                    <ul>
+                        <li>Sucesiones judiciales y notariales</li>
+                        <li>Ciudadanías Españolas e Italianas</li>
+                        <li>Contratos de Locación</li>
+                        <li>Testamentos</li>
+                        <li>Boletos de Compraventa</li>
+                        <li>Asesoramiento en operaciones inmobiliarias</li>
+                        <li>Reconstrucción documental</li>
+                        <li>Escrituras y actos notariales</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <h3>🏥 Salud Mental y Discapacidad</h3>
+                    <ul>
+                        <li>Procesos de internación involuntaria</li>
+                        <li>Evaluación de tratamientos institucionales</li>
+                        <li>Acciones contra obras sociales y prepagas</li>
+                        <li>Asesoramiento para personas neurodivergentes</li>
+                        <li>Tramitación del CUD</li>
+                        <li>Apoyos jurídicos y tutelas</li>
+                        <li>Derechos de personas con discapacidad</li>
+                        <li>Prestaciones y coberturas médicas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team" id="equipo">
+        <h2>Equipo Interdisciplinario Asociado</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <h4>Licenciadas en Psicología</h4>
+                <p>Intervención y acompañamiento en situaciones de conflicto emocional y familiar</p>
+            </div>
+            <div class="team-member">
+                <h4>Licenciadas en Psicopedagogía</h4>
+                <p>Apoyo en procesos que involucran a niños, niñas y adolescentes</p>
+            </div>
+            <div class="team-member">
+                <h4>Trabajadoras Sociales</h4>
+                <p>Evaluación e informes socioambientales, intervención comunitaria</p>
+            </div>
+            <div class="team-member">
+                <h4>Peritos y Consultores</h4>
+                <p>Informes, dictámenes y peritajes clave en procesos judiciales</p>
+            </div>
+            <div class="team-member">
+                <h4>Coaches</h4>
+                <p>Desarrollo personal y acompañamiento en contextos de alta demanda emocional</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contacto">
+        <h2>Contacto</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; position: relative; z-index: 1;">
+            Estamos aquí para ayudarte. Contáctanos para una consulta inicial sin compromiso.
+        </p>
+        <div class="contact-info">
+            <div class="contact-item">
+                <span>📧</span>
+                <a href="mailto:garciayasociadosjus@gmail.com">garciayasociadosjus@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <span>📞</span>
+                <a href="tel:+541168063444">11 6806-3444</a>
+            </div>
+            <div class="contact-item">
+                <span>📞</span>
+                <a href="tel:+541172371991">11 7237-1991</a>
+            </div>
+        </div>
+        <button class="portal-btn" style="margin-top: 3rem; display: none; position: relative; z-index: 1;" onclick="requestPassword()">
+            INGRESAR AL PORTAL DE SOCIOS
+        </button>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 García & Asociados - Estudio Jurídico | Todos los derechos reservados</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+            Dra. Camila Florencia Rodríguez García - Letrada patrocinante
+        </p>
+    </footer>
+
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <h3>🔒 Acceso al Portal de Socios</h3>
+            <p style="color: #666; margin-bottom: 1.5rem;">Ingrese la clave de acceso proporcionada por el estudio</p>
+            <input type="password" id="passwordInput" placeholder="Contraseña" onkeypress="if(event.key==='Enter') checkPassword()">
+            <div id="errorMessage" class="error-message">Clave incorrecta. Por favor, intente nuevamente.</div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancelar</button>
+                <button class="modal-btn modal-btn-primary" onclick="checkPassword()">Ingresar</button>
+            </div>
+        </div>
+    </div>
+
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
+    <script>
+        // Configuración de Calendly
+        const CALENDLY_URL = 'https://calendly.com/garciayasociados/30min';
+        
+        // Clave de acceso al portal actualizada
+        const PORTAL_PASSWORD = 'Democracia0507';
+        const PORTAL_URL = 'https://garciayasociadosjus-boop.github.io/';
+
+        // Función para abrir Calendly
+        function openCalendly() {
+            Calendly.initPopupWidget({
+                url: CALENDLY_URL,
+                text: 'Agendar una Consulta',
+                color: '#2c5282',
+                textColor: '#ffffff',
+                branding: false
+            });
+            return false;
+        }
+
+        // Funciones del modal de clave
+        function requestPassword() {
+            document.getElementById('passwordModal').style.display = 'block';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('passwordInput').focus();
+        }
+
+        function closeModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function checkPassword() {
+            const inputPassword = document.getElementById('passwordInput').value;
+            
+            if (inputPassword === PORTAL_PASSWORD) {
+                closeModal();
+                window.open(PORTAL_URL, '_blank');
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+                
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Cerrar modal al hacer clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('passwordModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if(targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(10, 22, 40, 0.98)';
+                nav.style.boxShadow = '0 2px 30px rgba(0,0,0,0.3)';
+            } else {
+                nav.style.background = 'rgba(10, 22, 40, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.2)';
+            }
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card, .team-member, .about-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
