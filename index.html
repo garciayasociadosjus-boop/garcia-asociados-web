@@ -20,6 +20,10 @@
             --light: #f8f9fa;
             --white: #ffffff;
             --gradient: linear-gradient(135deg, rgba(10, 22, 40, 0.85) 0%, rgba(30, 58, 95, 0.9) 100%);
+            --silver: #c0c0c0;
+            --gold: #d4af37;
+            --platinum: #e5e4e2;
+            --dark-silver: #a8a8a8;
         }
 
         body {
@@ -64,10 +68,14 @@
             color: var(--light-blue);
         }
         
-        /* Botón de Portal en el Nav */
-        .nav-portal-btn {
-            background: linear-gradient(45deg, #2c5282, #4a7ba7);
-            color: white;
+        /* Botones en el Nav */
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .nav-portal-btn, .nav-ai-btn {
             padding: 8px 20px;
             border: none;
             border-radius: 25px;
@@ -77,9 +85,22 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
         }
         
-        .nav-portal-btn:hover {
+        .nav-portal-btn {
+            background: linear-gradient(45deg, #2c5282, #4a7ba7);
+            color: white;
+        }
+        
+        .nav-ai-btn {
+            background: linear-gradient(45deg, var(--silver), var(--platinum));
+            color: var(--primary);
+            border: 1px solid var(--gold);
+        }
+        
+        .nav-portal-btn:hover, .nav-ai-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(44, 82, 130, 0.3);
         }
@@ -114,9 +135,9 @@
             width: 100%;
         }
 
-        /* Hero Section con marca de agua */
+        /* Hero Section con efectos mejorados */
         .hero {
-            background: var(--gradient), url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUSEhIVFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAbAAABBQEBAAAAAAAAAAAAAAAEAQIDBQYAB//EAD4QAAIBAgQDBgQDBwQCAwAAAAECEQADBBIhMQVBUWEGEyJxgTKRofAUI0KxwdHhFVKi8RYkM3KCshZT/8QAGQEAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAIxEAAgIDAAICAwEBAAAAAAAAAAECEQMSITEEE0FRMiJhcf/aAAwDAQACEQMRAD8A8XpRS0tUICsNKaBSAUALQJNKBSGgApTSAUhoAcKaBQFIaAEoUtJSAWgTS0lIBQKWikFAwpRSCnKKAFpDS0lMBaTNFKKAFpDS0lAC0lLSGgBKKWkoGLRS0lAxKKWkoAKKWikFAxaKWkoAKSlpKBilFLSUDEpRS0lAxKKWkoAKKWkoGLSU6koAKKWkoAKKKKAClApRSCmBopRS0tUgLSGlpKAFpDS0lAC0lLSGgYtJQaKAFpKWkoGLSUtJQAUUtJSAdy0wEaUClAoGIKWgUUgFAxaKWkoAKKWkoAKKWkoGLRS0lAxKKWkoAKSlpKBilFLSUDEoopaSgYlFLSUDFpKWkoAKSlpKBilFLSUDFpKWkoAKKWkoAKKKKAClFJSmgYtKKUClqgQUUtJQAUUtJQAUUtJQMWkpaSgYlFLSUDFpKWkoAKSlpKBhRRRQMWkpaSgYlJSmkoAKKKKBiUUUUDCiiigYlFLSUDEooooGFFFFAxKKKKBhSUtJQMWkpaSgYlFLSUDEooooGFFFFAxaKWkoGFFFFABRRRQMWlFKKUUwNFFFFAxaKKKAFooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBaKKKACiiigAooooAKUUUUwClFFFAxaKKKAFooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKUUUUwNFFFKtWBoozTCigBaKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACgUtAoGFFFFMBaKKUUAIKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBaKKKYC//2Q==');
+            background: var(--gradient), url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUSEhIVFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAbAAABBQEBAAAAAAAAAAAAAAAEAQIDBQYAB//EAD4QAAIBAgQDBgQDBwQCAwAAAAECEQADBBIhMQVBUWEGEyJxgTKRofAUI0KxwdHhFVKi8RYkM3KCshVT/8QAGQEAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAIxEAAgIDAAICAwEBAAAAAAAAAAECEQMSITEEE0FRMyJhcf/aAAwDAQACEQMRAD8A8XpRS0tUICsNKaBSAUALQJNKBSGgApTSAUhoAcKaBQFIaAEoUtJSAWgTS0lIBQKWikFAwpRSCnKKAFpDS0lMBaTNFKKAFpDS0lAC0lLSGgBKKWkoGLRS0lAxKKWkoAKKWikFAxaKWkoAKSlpKBilFLSUDEpRS0lAxKKWkoAKKWkoGLSU6koAKKWkoAKKKKAClApRSCmBopRS0tUgLSGlpKAFpDS0lAC0lLSGgYtJQaKAFpKWkoGLSUtJQAUUtJSAdy0wEaUClAoGIKWgUUgFAxaKWkoAKKWkoAKKWkoGLRS0lAxKKWkoAKSlpKBilFLSUDEoopaSgYlFLSUDFpKWkoAKSlpKBilFLSUDFpKWkoAKKWkoAKKKKAClFJSmgYtKKUClqgQUUtJQAUUtJQAUUtJQMWkpaSgYlFLSUDFpKWkoAKSlpKBhRRRQMWkpaSgYlJSmkoAKKKKBiUUUUDCiiigYlFLSUDEooooGFFFFAxKKKKBhSUtJQMWkpaSgYlFLSUDEooooGFFFFAxaKWkoGFFFFABRRRQMWlFKKUUwNFFFFAxaKKKAFooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACgUtAoGFFFFMBaKKUUAIKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBaKKKYC//2Q==');
             background-size: cover;
             background-position: center;
             min-height: 100vh;
@@ -141,7 +162,7 @@
             background-size: cover, 300px 300px, 400px 400px;
         }
 
-        /* Marca de agua con texto */
+        /* Marca de agua con texto mejorada */
         .hero::after {
             content: 'GARCÍA & ASOCIADOS';
             position: absolute;
@@ -150,7 +171,15 @@
             transform: translate(-50%, -50%) rotate(-45deg);
             font-size: 8rem;
             font-weight: 100;
-            color: rgba(255, 255, 255, 0.03);
+            background: linear-gradient(45deg, 
+                rgba(192, 192, 192, 0.03) 0%, 
+                rgba(229, 228, 226, 0.05) 25%, 
+                rgba(212, 175, 55, 0.04) 50%, 
+                rgba(192, 192, 192, 0.03) 75%, 
+                rgba(229, 228, 226, 0.02) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: 20px;
             white-space: nowrap;
             pointer-events: none;
@@ -168,26 +197,109 @@
             text-align: center;
         }
         
-        /* Estilos para el nuevo título en el Hero */
+        /* Título principal con efectos de lujo */
         .hero .hero-pre-title {
             font-size: 1.8rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 300;
+            background: linear-gradient(45deg, 
+                var(--platinum) 0%, 
+                var(--silver) 25%, 
+                var(--gold) 50%, 
+                var(--silver) 75%, 
+                var(--platinum) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 400;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             margin-bottom: 0.5rem;
-            animation: fadeInUp 1s ease 0.1s both;
+            animation: shimmer 3s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                background-position: -100% 0;
+            }
+            50% {
+                background-position: 100% 0;
+            }
         }
 
         .hero h1 {
             font-size: 4rem;
-            color: var(--white);
+            background: linear-gradient(135deg, 
+                var(--platinum) 0%, 
+                var(--silver) 20%, 
+                var(--white) 40%, 
+                var(--gold) 60%, 
+                var(--silver) 80%, 
+                var(--platinum) 100%);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease 0.2s both;
+            animation: luxuryGlow 4s ease-in-out infinite, textFloat 6s ease-in-out infinite;
             font-family: 'Georgia', serif;
-            font-weight: 300;
+            font-weight: 400;
             letter-spacing: 3px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            text-shadow: 0 0 30px rgba(255,255,255,0.5);
+            position: relative;
+        }
+
+        .hero h1::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, 
+                rgba(192, 192, 192, 0.1) 0%, 
+                rgba(212, 175, 55, 0.15) 50%, 
+                rgba(192, 192, 192, 0.1) 100%);
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0;
+            animation: auraGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes luxuryGlow {
+            0%, 100% {
+                background-position: 0% 50%;
+                filter: brightness(1) contrast(1);
+            }
+            25% {
+                background-position: 50% 0%;
+                filter: brightness(1.1) contrast(1.1);
+            }
+            50% {
+                background-position: 100% 50%;
+                filter: brightness(1.2) contrast(1.2);
+            }
+            75% {
+                background-position: 50% 100%;
+                filter: brightness(1.1) contrast(1.1);
+            }
+        }
+
+        @keyframes textFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes auraGlow {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.3;
+            }
         }
 
         .hero .tagline {
@@ -220,6 +332,7 @@
             flex-wrap: wrap;
             animation: fadeInUp 1s ease 0.5s both;
             justify-content: center;
+            margin-bottom: 2rem;
         }
 
         .btn {
@@ -259,6 +372,85 @@
             background: var(--white);
             color: var(--primary);
             transform: translateY(-3px);
+        }
+
+        /* Nuevo botón IA con diseño premium */
+        .ai-btn {
+            background: linear-gradient(135deg, 
+                var(--silver) 0%, 
+                var(--platinum) 30%, 
+                var(--gold) 50%, 
+                var(--platinum) 70%, 
+                var(--silver) 100%);
+            background-size: 200% 200%;
+            color: var(--primary);
+            padding: 18px 45px;
+            border: 2px solid var(--gold);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 4px 15px rgba(212, 175, 55, 0.3),
+                0 0 30px rgba(192, 192, 192, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            animation: aiPulse 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(255,255,255,0.1) 45%, 
+                rgba(255,255,255,0.3) 50%, 
+                rgba(255,255,255,0.1) 55%, 
+                transparent 100%);
+            transform: rotate(45deg);
+            animation: shine 2s ease-in-out infinite;
+        }
+
+        @keyframes aiPulse {
+            0%, 100% {
+                background-position: 0% 50%;
+                box-shadow: 
+                    0 4px 15px rgba(212, 175, 55, 0.3),
+                    0 0 30px rgba(192, 192, 192, 0.2);
+            }
+            50% {
+                background-position: 100% 50%;
+                box-shadow: 
+                    0 6px 25px rgba(212, 175, 55, 0.5),
+                    0 0 50px rgba(192, 192, 192, 0.4);
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        .ai-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            background-position: 100% 50%;
+            box-shadow: 
+                0 8px 30px rgba(212, 175, 55, 0.6),
+                0 0 60px rgba(192, 192, 192, 0.5);
+            border-color: var(--platinum);
         }
 
         /* Portal Button */
@@ -474,7 +666,7 @@
         /* Contact Section */
         .contact {
             padding: 5rem 2rem;
-            background: var(--gradient), url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUSEhIVFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAbAAABBQEBAAAAAAAAAAAAAAAEAQIDBQYAB//EAD4QAAIBAgQDBgQDBwQCAwAAAAECEQADBBIhMQVBUWEGEyJxgTKRofAUI0KxwdHhFVKi8RYkM3KCshZT/8QAGQEAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAIxEAAgIDAAICAwEBAAAAAAAAAAECEQMSITEEE0FRMiJhcf/aAAwDAQACEQMRAD8A8XpRS0tUICsNKaBSAUALQJNKBSGgApTSAUhoAcKaBQFIaAEoUtJSAWgTS0lIBQKWikFAwpRSCnKKAFpDS0lMBaTNFKKAFpDS0lAC0lLSGgBKKWkoGLRS0lAxKKWkoAKKWikFAxaKWkoAKSlpKBilFLSUDEpRS0lAxKKWkoAKKWkoGLSU6koAKKWkoAKKKKAClApRSCmBopRS0tUgLSGlpKAFpDS0lAC0lLSGgYtJQaKAFpKWkoGLSUtJQAUUtJSAdy0wEaUClAoGIKWgUUgFAxaKWkoAKKWkoAKKWkoGLRS0lAxKKWkoAKSlpKBilFLSUDEoopaSgYlFLSUDFpKWkoAKSlpKBilFLSUDFpKWkoAKKWkoAKKKKAClFJSmgYtKKUClqgQUUtJQAUUtJQAUUtJQMWkpaSgYlFLSUDFpKWkoAKSlpKBhRRRQMWkpaSgYlJSmkoAKKKKBiUUUUDCiiigYlFLSUDEooooGFFFFAxKKKKBhSUtJQMWkpaSgYlFLSUDEooooGFFFFAxaKWkoGFFFFABRRRQMWlFKKUUwNFFFFAxaKKKAFooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBaKKKACiiigAooooAKUUUUwClFFFAxaKKKAFooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKUUUUwNFFFKtWBoozTCigBaKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACgUtAoGFFFFMBaKKUUAIKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBaKKKYC//2Q==') no-repeat center center;
+            background: var(--gradient), url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUSEhIVFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lICUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAbAAABBQEBAAAAAAAAAAAAAAAEAQIDBQYAB//EAD4QAAIBAgQDBgQDBwQCAwAAAAECEQADBBIhMQVBUWEGEyJxgTKRofAUI0KxwdHhFVKi8RYkM3KCshVT/8QAGQEAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAIxEAAgIDAAICAwEBAAAAAAAAAAECEQMSITEEE0FRMyNhcf/aAAwDAQACEQMRAD8A8XpRS0tUICsNKaBSAUALQJNKBSGgApTSAUhoAcKaBQFIaAEoUtJSAWgTS0lIBQKWikFAwpRSCnKKAFpDS0lMBaTNFKKAFpDS0lAC0lLSGgBKKWkoGLRS0lAxKKWkoAKKWikFAxaKWkoAKSlpKBilFLSUDEpRS0lAxKKWkoAKKWkoGLSU6koAKKWkoAKKKKAClApRSCmBopRS0tUgLSGlpKAFpDS0lAC0lLSGgYtJQaKAFpKWkoGLSUtJQAUUtJSAdy0wEaUClAoGIKWgUUgFAxaKWkoAKKWkoAKKWkoGLRS0lAxKKWkoAKSlpKBilFLSUDEoopaSgYlFLSUDFpKWkoAKSlpKBilFLSUDFpKWkoAKKWkoAKKKKAClFJSmgYtKKUClqgQUUtJQAUUtJQAUUtJQMWkpaSgYlFLSUDFpKWkoAKSlpKBhRRRQMWkpaSgYlJSmkoAKKKKBiUUUUDCiiigYlFLSUDEooooGFFFFAxKKKKBhSUtJQMWkpaSgYlFLSUDEooooGFFFFAxaKWkoGFFFFABRRRQMWlFKKUUwNFFFFAxaKKKAFooooAKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACgUtAoGFFFFMBaKKUUAIKKKKAFooooAKKKKAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBaKKKYC//2Q==') no-repeat center center;
             background-size: cover;
             color: var(--white);
             text-align: center;
@@ -661,6 +853,16 @@
             .nav-links {
                 display: none;
             }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .nav-ai-btn, .nav-portal-btn {
+                font-size: 0.75rem;
+                padding: 6px 15px;
+            }
 
             .hero h1 {
                 font-size: 2.5rem;
@@ -683,6 +885,17 @@
             .services-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .ai-btn {
+                font-size: 0.9rem;
+                padding: 15px 35px;
+                letter-spacing: 1px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
@@ -697,9 +910,14 @@
                 <li><a href="#equipo">Equipo</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
-            <button class="nav-portal-btn" onclick="requestPassword()">
-                🔒 Portal Socios
-            </button>
+            <div class="nav-buttons">
+                <a href="https://gemini.google.com/gem/18ab3383dcdf" target="_blank" class="nav-ai-btn">
+                    🤖 IA Jurídica
+                </a>
+                <button class="nav-portal-btn" onclick="requestPassword()">
+                    🔒 Portal Socios
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -715,6 +933,9 @@
                 <a href="#" onclick="openCalendly()" class="btn btn-primary">📅 Agendar una Consulta</a>
                 <a href="#servicios" class="btn btn-secondary">Nuestros Servicios</a>
             </div>
+            <a href="https://gemini.google.com/gem/18ab3383dcdf" target="_blank" class="ai-btn">
+                🤖 García & Asociados IA
+            </a>
         </div>
     </section>
 
