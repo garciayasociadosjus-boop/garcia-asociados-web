@@ -453,6 +453,41 @@
             margin-bottom: 3rem;
             align-items: center; /* Para alinear botones de diferentes alturas */
         }
+        
+        /* --- NUEVOS ESTILOS PARA EL VIDEO --- */
+        .welcome-title {
+            font-family: 'Crimson Text', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: rgba(255, 255, 255, 0.95);
+            margin-top: 4rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 2.6s ease-out 1.4s both;
+            font-weight: 600;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Ancho máximo del video */
+            margin: 2rem auto 4rem auto; /* Margen superior e inferior */
+            padding-bottom: 56.25%; /* Proporción 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: var(--shadow-hover);
+            animation: fadeInUp 2.8s ease-out 1.6s both;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        /* --- FIN DE NUEVOS ESTILOS --- */
+
 
         .btn {
             padding: 18px 40px;
@@ -1181,6 +1216,16 @@
             <div class="cta-buttons">
                 <a href="#" onclick="openCalendly()" class="btn btn-primary">📅 Agendar una Consulta</a>
                 <a href="#servicios" class="btn btn-secondary">Nuestros Servicios</a>
+            </div>
+            
+            <h2 class="welcome-title">¡Bienvenidos!</h2>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/ayz4FRQMmTA" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
             </div>
             <a href="https://gemini.google.com/gem/18ab3383dcdf" target="_blank" class="ai-btn">
                 🔍 García & Asociados IA
