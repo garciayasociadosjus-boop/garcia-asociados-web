@@ -625,6 +625,120 @@
         
         footer { background: var(--primary); color: var(--white); text-align: center; padding: 3rem; }
 
+        /* ===== INICIO: CÓDIGO RESTAURADO PARA EL MODAL DE ACCESO ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 14, 26, 0.85);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .modal-content {
+            background: var(--white);
+            margin: 15% auto;
+            padding: 3rem;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-hover);
+            border: 1px solid rgba(107, 114, 128, 0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-80px) scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal h3 {
+            font-family: 'Crimson Text', serif;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.1rem;
+            border: 2px solid rgba(107, 114, 128, 0.2);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .modal input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(55, 65, 81, 0.2);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .modal-btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        .modal-btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(10, 14, 26, 0.3);
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 30px rgba(10, 14, 26, 0.4);
+        }
+
+        .modal-btn-secondary {
+            background: var(--light);
+            color: var(--text);
+            border: 1px solid rgba(107, 114, 128, 0.3);
+        }
+
+        .modal-btn-secondary:hover {
+            background: var(--silver);
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        /* ===== FIN: CÓDIGO RESTAURADO PARA EL MODAL DE ACCESO ===== */
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links, .nav-buttons { display: none; }
@@ -650,7 +764,7 @@
                 <a href="https://wa.me/5491168063444?text=Hola%2C%20me%20pongo%20en%20contacto%20desde%20la%20web%20del%20estudio.%20Necesito%20asesoramiento%20jur%C3%ADdico" target="_blank" class="nav-whatsapp-btn" style="text-transform: none;">
                     💬 WhatsApp
                 </a>
-                <button class="nav-portal-btn">🔒 Acceso Interno</button>
+                <button class="nav-portal-btn" onclick="requestPassword()">🔒 Acceso Interno</button>
             </div>
         </div>
     </nav>
@@ -852,9 +966,25 @@
             Dra. Camila Florencia Rodríguez García - Letrada patrocinante
         </p>
     </footer>
-    
+
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <h3>🔒 Acceso al Portal de Socios</h3>
+            <p style="color: #666; margin-bottom: 2rem;">Ingrese la clave de acceso proporcionada por el estudio</p>
+            <input type="password" id="passwordInput" placeholder="Contraseña" onkeypress="if(event.key==='Enter') checkPassword()">
+            <div id="errorMessage" class="error-message">Clave incorrecta. Por favor, intente nuevamente.</div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancelar</button>
+                <button class="modal-btn modal-btn-primary" onclick="checkPassword()">Ingresar</button>
+            </div>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    
     <script>
         gsap.registerPlugin(ScrollTrigger);
         const zoomContainer = document.querySelector(".efecto-zoom-container");
@@ -874,6 +1004,55 @@
           .to(knockoutSvg, { scale: 30, duration: 2 }, 0) 
           .to(knockoutSvg, { opacity: 0, duration: 0.5 }, "-=0.5")
           .to(scrollableCard, { scrollTop: () => scrollableCard.scrollHeight - scrollableCard.clientHeight, ease: "none", duration: 1.5 }, 1.5);
+
+        // ===== INICIO: JAVASCRIPT RESTAURADO PARA EL MODAL Y CALENDLY =====
+        const CALENDLY_URL = 'https://calendly.com/garciayasociados/30min';
+        const PORTAL_PASSWORD = 'Democracia0507';
+        const PORTAL_URL = 'https://garciayasociadosjus-boop.github.io/';
+
+        function openCalendly() {
+            Calendly.initPopupWidget({
+                url: CALENDLY_URL,
+                text: 'Agendar una Consulta',
+                color: '#1F2937',
+                textColor: '#ffffff',
+                branding: false
+            });
+            return false;
+        }
+
+        function requestPassword() {
+            document.getElementById('passwordModal').style.display = 'block';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('passwordInput').focus();
+        }
+
+        function closeModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+        }
+
+        function checkPassword() {
+            const inputPassword = document.getElementById('passwordInput').value;
+            if (inputPassword === PORTAL_PASSWORD) {
+                closeModal();
+                window.open(PORTAL_URL, '_blank');
+            } else {
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+                setTimeout(() => { errorMessage.style.display = 'none'; }, 3000);
+            }
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('passwordModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        // ===== FIN: JAVASCRIPT RESTAURADO PARA EL MODAL Y CALENDLY =====
     </script>
 </body>
 </html>
