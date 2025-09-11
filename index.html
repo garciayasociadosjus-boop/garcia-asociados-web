@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -22,12 +24,12 @@
             --primary: #0A0E1A;
             --secondary: #151B2D;
             --tertiary: #1F2937;
-            --accent: #374151;
-            --light-accent: #6B7280;
+            --accent: #374151; /* Gris oscuro principal para los paneles */
+            --light-accent: #6B7280; /* Gris más claro */
             --text: #1F2937;
             --light: #F9FAFB;
             --white: #FFFFFF;
-            --silver: #E5E7EB;
+            --silver: #E5E7EB; /* Color para el texto del párrafo (Blanco-Gris) */
             --dark-silver: #D1D5DB;
             --platinum: #F3F4F6;
             --champagne: #F9F9F7;
@@ -46,7 +48,7 @@
             overflow-x: hidden;
         }
 
-        /* Navegación Oscura Premium */
+        /* Navegación */
         nav {
             background: rgba(10, 14, 26, 0.98);
             backdrop-filter: blur(20px);
@@ -78,58 +80,7 @@
             transition: all 0.3s ease;
             text-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
         }
-
-        .logo:hover {
-            color: var(--light-accent);
-            transform: translateY(-1px);
-        }
         
-        .nav-buttons {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-        
-        .nav-portal-btn, .nav-whatsapp-btn {
-            padding: 12px 28px;
-            border: none;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            font-family: 'Source Sans Pro', sans-serif;
-        }
-        
-        .nav-portal-btn {
-            background: linear-gradient(45deg, var(--tertiary), var(--accent));
-            color: white;
-            box-shadow: 0 4px 20px rgba(31, 41, 55, 0.4);
-        }
-        
-        .nav-whatsapp-btn {
-            background: linear-gradient(45deg, var(--whatsapp), #128c7e);
-            color: white;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
-            gap: 8px;
-        }
-        
-        .nav-portal-btn:hover, .nav-whatsapp-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-        }
-
-        .nav-whatsapp-btn:hover {
-            background: linear-gradient(45deg, #128c7e, #075e54);
-        }
-
         .nav-links {
             display: flex;
             list-style: none;
@@ -161,22 +112,57 @@
         .nav-links a:hover::after {
             width: 100%;
         }
-
-        /* Hero Section Ultra Oscuro */
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .nav-portal-btn, .nav-whatsapp-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        
+        .nav-portal-btn {
+            background: linear-gradient(45deg, var(--tertiary), var(--accent));
+            color: white;
+            box-shadow: 0 4px 20px rgba(31, 41, 55, 0.4);
+        }
+        
+        .nav-whatsapp-btn {
+            background: linear-gradient(45deg, var(--whatsapp), #128c7e);
+            color: white;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            gap: 8px;
+        }
+        
+        /* ===== INICIO: ESTILOS HERO CON DESTELLO (DE PRUEBA25) ===== */
         .hero {
             background: var(--gradient-hero), 
                         radial-gradient(circle at 20% 80%, rgba(55, 65, 81, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(107, 114, 128, 0.08) 0%, transparent 50%),
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.015"/></pattern></defs><rect width="1000" height="1000" fill="url(%23grain)"/></svg>');
+                        radial-gradient(circle at 80% 20%, rgba(107, 114, 128, 0.08) 0%, transparent 50%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
             padding-top: 140px;
-            padding-bottom: 4rem; /* Espacio extra abajo */
+            padding-bottom: 4rem;
         }
-
+        
         .hero::before {
             content: '';
             position: absolute;
@@ -198,65 +184,30 @@
             75% { transform: translateX(-2px) translateY(-2px) rotate(-0.5deg); }
         }
 
-        .hero::after {
-            content: 'GARCÍA & ASOCIADOS';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-family: 'Crimson Text', serif;
-            font-size: clamp(4rem, 12vw, 10rem);
-            font-weight: 400;
-            background: linear-gradient(45deg, 
-                rgba(229, 231, 235, 0.015) 0%, 
-                rgba(209, 213, 219, 0.025) 25%, 
-                rgba(243, 244, 246, 0.02) 50%, 
-                rgba(209, 213, 219, 0.025) 75%, 
-                rgba(229, 231, 235, 0.015) 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 0.15em;
-            white-space: nowrap;
-            pointer-events: none;
-            z-index: 0;
-            animation: watermarkFloat 15s ease-in-out infinite;
-        }
-
-        @keyframes watermarkFloat {
-            0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); opacity: 0.3; }
-            50% { transform: translate(-50%, -52%) rotate(-45deg) scale(1.02); opacity: 0.5; }
-        }
-
         .hero-content {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem 4rem; /* Reducido el padding vertical */
+            padding: 2rem 4rem;
             position: relative;
             z-index: 1;
             text-align: center;
         }
-        
         .hero .hero-pre-title {
             font-family: 'Source Sans Pro', sans-serif;
             font-size: clamp(1.8rem, 4vw, 2.8rem);
             background: linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 20%, #D1D5DB 40%, #9CA3AF 60%, #D1D5DB 80%, #F9FAFB 100%);
             background-size: 200% 200%;
-            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 300;
             text-transform: uppercase;
             letter-spacing: 0.5em;
             margin-bottom: 1.5rem;
-            animation: sunRayEffect 4s ease-in-out infinite, slideDownFromTop 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+            animation: sunRayEffect 4s ease-in-out infinite;
             text-shadow: 0 0 80px rgba(255, 255, 255, 0.3);
-            transform: scaleY(1.6);
-            line-height: 1.0;
             position: relative;
-            background-position: 50% 50%;
         }
-
+        
         .hero .hero-pre-title::before {
             content: '';
             position: absolute;
@@ -268,37 +219,35 @@
             animation: rayGlow 4s ease-in-out infinite;
             z-index: -1;
         }
-
+        
         .hero h1 {
             font-family: 'Crimson Text', serif;
             font-size: clamp(3.5rem, 8vw, 7rem);
             background: linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 15%, #F9FAFB 25%, #F3F4F6 35%, #E5E7EB 50%, #F3F4F6 65%, #F9FAFB 75%, #FFFFFF 85%, #FFFFFF 100%);
             background-size: 400% 400%;
-            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 2rem;
-            animation: whiteFlow 6s ease-in-out infinite, textFloat 8s ease-in-out infinite, slideDownFromTop 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s both;
             font-weight: 700;
-            letter-spacing: 0.02em;
             text-shadow: 0 0 120px rgba(255, 255, 255, 0.6);
-            position: relative;
             line-height: 1.1;
+            animation: whiteFlow 6s ease-in-out infinite, textFloat 8s ease-in-out infinite;
+            position: relative;
         }
 
-        @keyframes slideDownFromTop {
-            from {
-                opacity: 0;
-                transform: translateY(-80px) scale(0.9);
-                filter: blur(5px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: blur(0px);
-            }
+        .hero h1::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, rgba(229, 231, 235, 0.04) 30%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: auraFlow 6s ease-in-out infinite;
         }
-
+        
         @keyframes sunRayEffect {
             0%, 100% { background-position: 0% 50%; filter: brightness(1.1) contrast(1.1); }
             25% { background-position: 25% 25%; filter: brightness(1.4) contrast(1.3) drop-shadow(0 0 20px rgba(249, 250, 251, 0.6)); }
@@ -318,19 +267,6 @@
             75% { background-position: 75% 75%; filter: brightness(1.18) contrast(1.18) drop-shadow(0 0 35px rgba(229, 231, 235, 0.4)); }
         }
 
-        .hero h1::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, rgba(229, 231, 235, 0.04) 30%, transparent 70%);
-            border-radius: 50%;
-            z-index: -1;
-            animation: auraFlow 6s ease-in-out infinite;
-        }
-
         @keyframes textFloat {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             33% { transform: translateY(-8px) rotate(0.3deg); }
@@ -341,58 +277,47 @@
             0%, 100% { opacity: 0; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(1.05); }
         }
-
+        
+        /* ===== FIN: ESTILOS HERO CON DESTELLO ===== */
+        
         .hero .tagline {
             font-family: 'Crimson Text', serif;
             font-size: clamp(1.3rem, 2vw, 1.8rem);
             color: rgba(255, 255, 255, 0.95);
             margin-bottom: 1.5rem;
-            animation: fadeInUp 1.8s ease-out 0.6s both;
             font-style: italic;
-            font-weight: 400;
-            letter-spacing: 0.01em;
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
         }
-        
         .hero .subtitle {
             font-family: 'Source Sans Pro', sans-serif;
             font-size: clamp(1rem, 1.5vw, 1.3rem);
             color: rgba(255, 255, 255, 0.85);
-            margin-bottom: 3rem; /* Margen reducido */
-            animation: fadeInUp 2.1s ease-out 0.9s both;
-            font-weight: 400;
+            margin-bottom: 3rem;
             max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 1.7;
         }
-        
         .welcome-title {
             font-family: 'Crimson Text', serif;
             font-size: clamp(2rem, 4vw, 3rem);
             color: rgba(255, 255, 255, 0.95);
             margin-top: 3rem;
             margin-bottom: 2rem;
-            animation: fadeInUp 2.6s ease-out 1.4s both;
             font-weight: 600;
         }
-
         .video-container {
             position: relative;
             width: 100%;
             max-width: 800px; 
-            margin: 0 auto; /* Centrado sin margen vertical */
+            margin: 0 auto;
             padding-bottom: 56.25%; 
             height: 0;
-            overflow: hidden;
             border-radius: 20px;
             box-shadow: var(--shadow-hover);
-            animation: fadeInUp 2.8s ease-out 1.6s both;
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
-
         .video-container iframe {
             position: absolute;
             top: 0;
@@ -400,8 +325,6 @@
             width: 100%;
             height: 100%;
         }
-
-        /* --- NUEVO ESTILO UNIFICADO PARA BOTONES HERO --- */
         .cta-container {
             display: flex;
             justify-content: center;
@@ -409,7 +332,6 @@
             flex-wrap: wrap;
             align-items: center;
         }
-
         .hero-cta-btn {
             padding: 16px 35px;
             font-size: 1rem;
@@ -423,57 +345,150 @@
             justify-content: center;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
             font-family: 'Source Sans Pro', sans-serif;
             box-shadow: var(--shadow-elegant);
         }
-
         .hero-cta-btn:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: var(--shadow-hover);
         }
-        
         .hero-cta-btn.primary {
             background: linear-gradient(45deg, var(--white), var(--platinum));
             color: var(--primary);
         }
-        
         .hero-cta-btn.secondary {
             background: transparent;
             color: var(--white);
             border-color: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            box-shadow: none;
         }
-        
-        .hero-cta-btn.secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--white);
-            box-shadow: var(--shadow-hover);
-        }
-
         .hero-cta-btn.whatsapp {
             background: linear-gradient(45deg, var(--whatsapp), #128c7e);
             color: white;
             gap: 8px;
         }
-        
-        /* --- CLASE NUEVA PARA QUITAR MAYÚSCULAS --- */
         .no-uppercase {
             text-transform: none !important;
         }
-
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ESTILOS SVG KNOCKOUT */
+        .efecto-zoom-container { position: relative; }
+        .zoom-content-wrapper { height: 100vh; width: 100%; position: relative; overflow: hidden; }
+        .filosofia-revelado, .knockout-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: grid; place-items: center; }
+        .filosofia-revelado { z-index: 1; opacity: 0; }
+        .knockout-svg { z-index: 2; width: 90vw; height: 90vh; }
+        .knockout-svg .knockout-rect { fill: var(--white); }
+        .knockout-svg text { font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 80px; }
+        
+        /* SECCIÓN 'NOSOTROS' */
+        .filosofia-revelado .about-container {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-hover);
+            width: 90%;
+            max-width: 1300px;
+            height: 85vh;
+            overflow-y: auto;
+        }
+        .filosofia-revelado .about-container::-webkit-scrollbar { width: 8px; }
+        .filosofia-revelado .about-container::-webkit-scrollbar-track { background: #e0e0e0; }
+        .filosofia-revelado .about-container::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+        
+        .about-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: stretch;
+        }
+        
+        .about-content {
+            background: var(--accent);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-elegant);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .about-content h2 {
+            font-family: 'Crimson Text', serif;
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1.5rem;
         }
 
+        .about-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--light-accent);
+            border-radius: 2px;
+        }
+
+        .about-content > p {
+            color: var(--silver);
+            font-size: 1.2rem; 
+            margin-bottom: 2rem; 
+            line-height: 1.8;
+            flex-grow: 1;
+        }
+
+        .about-card {
+            background: var(--gradient-primary);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: none;
+        }
+        
+        .about-card h3 {
+            color: var(--light-accent);
+            font-family: 'Crimson Text', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .about-card ul, .about-card li, .about-card li strong, .about-card li::before {
+            color: var(--white);
+        }
+        
+        .founder-info {
+            background: var(--accent);
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-elegant);
+        }
+
+        .founder-info h3 {
+            font-family: 'Crimson Text', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+        
+        /* Estilos del resto de la página */
+        .services, .team, .contact, footer { padding: 8rem 4rem; }
+        .services-container { max-width: 1400px; margin: 0 auto; }
+        .services h2 { text-align: center; font-family: 'Crimson Text', serif; font-size: 3.5rem; color: var(--primary); margin-bottom: 5rem; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; margin-top: 4rem; }
+        .service-card { background: var(--white); padding: 3rem; border-radius: 25px; box-shadow: var(--shadow-elegant); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(107, 114, 128, 0.1); position: relative; overflow: hidden; text-align: center; }
+        .service-card:hover { transform: translateY(-15px) scale(1.02); box-shadow: var(--shadow-hover); }
+        .service-card h3 { font-family: 'Crimson Text', serif; color: var(--primary); margin-bottom: 2rem; font-size: 1.6rem; }
+        .service-card ul { list-style: none; color: var(--text); text-align: left; }
+        .service-card li { padding: 0.8rem 0; padding-left: 30px; position: relative; }
+        .service-card li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: bold; font-size: 1.2rem; }
+        
+        /* ===== INICIO: ESTILOS PARA BOTONES WHATSAPP EN SERVICIOS (DE PRUEBA25) ===== */
         .whatsapp-btn {
             background: linear-gradient(45deg, var(--whatsapp), #128c7e);
             color: white !important;
@@ -504,270 +519,25 @@
             padding: 10px 22px;
             margin-top: 1.5rem;
         }
+        /* ===== FIN: ESTILOS PARA BOTONES WHATSAPP ===== */
 
-        .whatsapp-general {
-            background: linear-gradient(45deg, var(--whatsapp), #128c7e);
-            padding: 18px 35px;
-            font-size: 1.2rem;
-            border-radius: 35px;
-            margin: 3rem auto;
-            display: inline-flex;
-            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4);
-            color: white !important;
-            text-decoration: none;
-            font-weight: 600;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .whatsapp-general:hover {
-            transform: translateY(-6px) scale(1.08);
-            box-shadow: 0 15px 50px rgba(37, 211, 102, 0.5);
-            color: white !important;
-        }
-
-        .portal-btn {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 18px 45px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-elegant);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 3rem;
-            animation: pulse 3s infinite;
-            font-family: 'Source Sans Pro', sans-serif;
-            font-weight: 600;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: var(--shadow-elegant); }
-            50% { transform: scale(1.05); box-shadow: var(--shadow-hover); }
-        }
-
-        .portal-btn:hover {
-            transform: translateY(-6px) scale(1.08);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .about {
-            padding: 8rem 4rem;
-            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
-        }
-
-        .about-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6rem;
-            align-items: center;
-        }
-
-        .about-content h2 {
-            font-family: 'Crimson Text', serif;
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-
-        .about-content h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--tertiary), var(--accent));
-            border-radius: 2px;
-        }
-
-        .about-card {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow-elegant);
-            transition: all 0.4s ease;
-            border: 1px solid rgba(107, 114, 128, 0.1);
-        }
-
-        .about-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .founder-info {
-            background: var(--gradient-primary);
-            color: var(--white);
-            padding: 3rem;
-            border-radius: 20px;
-            margin-top: 3rem;
-            box-shadow: var(--shadow-elegant);
-        }
-
-        .founder-info h3 {
-            font-family: 'Crimson Text', serif;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--light-accent);
-        }
-
-        .services {
-            padding: 8rem 4rem;
-            background: var(--white);
-        }
-
-        .services-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .services h2 {
-            text-align: center;
-            font-family: 'Crimson Text', serif;
-            font-size: 3.5rem;
-            color: var(--primary);
-            margin-bottom: 5rem;
-            position: relative;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            margin-top: 4rem;
-        }
-
-        .service-card {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: 25px;
-            box-shadow: var(--shadow-elegant);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(107, 114, 128, 0.1);
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, var(--primary), var(--tertiary), var(--accent));
-            transform: scaleX(0);
-            transition: transform 0.5s ease;
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .service-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .service-card h3 {
-            font-family: 'Crimson Text', serif;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            font-size: 1.6rem;
-        }
-
-        .service-card ul {
-            list-style: none;
-            color: var(--text);
-            text-align: left;
-        }
-
-        .service-card li {
-            padding: 0.8rem 0;
-            padding-left: 30px;
-            position: relative;
-            font-weight: 400;
-        }
-
-        .service-card li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .team {
-            padding: 8rem 4rem;
-            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
-        }
-
-        .team h2 {
-            text-align: center;
-            font-family: 'Crimson Text', serif;
-            font-size: 3.5rem;
-            color: var(--primary);
-            margin-bottom: 5rem;
-        }
-
-        .team-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-        }
-
-        .team-member {
-            text-align: center;
-            padding: 2.5rem;
-            background: var(--white);
-            border-radius: 20px;
-            transition: all 0.4s ease;
-            box-shadow: var(--shadow-elegant);
-            border: 1px solid rgba(107, 114, 128, 0.1);
-        }
-
-        .team-member:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .team-member h4 {
-            font-family: 'Crimson Text', serif;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
+        .team h2 { text-align: center; font-family: 'Crimson Text', serif; font-size: 3.5rem; color: var(--primary); margin-bottom: 5rem; }
+        .team-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; }
+        .team-member { text-align: center; padding: 2.5rem; background: var(--white); border-radius: 20px; transition: all 0.4s ease; box-shadow: var(--shadow-elegant); border: 1px solid rgba(107, 114, 128, 0.1); }
+        .team-member:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+        .team-member h4 { font-family: 'Crimson Text', serif; color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; }
+        
+        /* ===== INICIO: ESTILOS CONTACTO RESTAURADO (DE PRUEBA25) ===== */
         .contact {
-            padding: 8rem 4rem;
-            background: var(--gradient-hero),
-                        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
-                        radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+            background: var(--gradient-hero);
             color: var(--white);
             text-align: center;
-            position: relative;
         }
-
         .contact h2 {
             font-family: 'Crimson Text', serif;
             font-size: 3.5rem;
             margin-bottom: 3rem;
-            position: relative;
-            z-index: 1;
         }
-
         .contact-info {
             max-width: 1000px;
             margin: 0 auto;
@@ -779,185 +549,41 @@
             z-index: 1;
             margin-bottom: 3rem;
         }
-
         .contact-item {
             display: flex;
             align-items: center;
             gap: 1rem;
             font-size: 1.1rem;
         }
-
         .contact-item a {
             color: var(--white);
             text-decoration: none;
             transition: all 0.3s ease;
         }
-
         .contact-item a:hover {
             color: var(--light-accent);
         }
-
         .contact-item span {
             display: flex;
             align-items: center;
         }
-        
         .contact-item svg {
             transition: transform 0.3s ease;
         }
-
         .contact-item:hover svg {
              transform: scale(1.15) rotate(5deg);
         }
+        /* ===== FIN: ESTILOS CONTACTO RESTAURADO ===== */
+        
+        footer { background: var(--primary); color: var(--white); text-align: center; padding: 3rem; }
 
-
-        footer {
-            background: var(--primary);
-            color: var(--white);
-            text-align: center;
-            padding: 3rem;
-            font-family: 'Source Sans Pro', sans-serif;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(10, 14, 26, 0.85);
-            backdrop-filter: blur(10px);
-            animation: fadeIn 0.4s ease;
-        }
-
-        .modal-content {
-            background: var(--white);
-            margin: 15% auto;
-            padding: 3rem;
-            border-radius: 25px;
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
-            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-hover);
-            border: 1px solid rgba(107, 114, 128, 0.2);
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-80px) scale(0.95);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal h3 {
-            font-family: 'Crimson Text', serif;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            font-size: 1.8rem;
-        }
-
-        .modal input {
-            width: 100%;
-            padding: 18px;
-            font-size: 1.1rem;
-            border: 2px solid rgba(107, 114, 128, 0.2);
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-            font-family: 'Source Sans Pro', sans-serif;
-        }
-
-        .modal input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(55, 65, 81, 0.2);
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .modal-btn {
-            padding: 14px 30px;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-family: 'Source Sans Pro', sans-serif;
-        }
-
-        .modal-btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: 0 4px 20px rgba(10, 14, 26, 0.3);
-        }
-
-        .modal-btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 30px rgba(10, 14, 26, 0.4);
-        }
-
-        .modal-btn-secondary {
-            background: var(--light);
-            color: var(--text);
-            border: 1px solid rgba(107, 114, 128, 0.3);
-        }
-
-        .modal-btn-secondary:hover {
-            background: var(--silver);
-        }
-
-        .error-message {
-            color: #dc3545;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        /* Responsive Premium */
+        /* Responsive */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            
-            .nav-buttons {
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-            
-            .nav-whatsapp-btn, .nav-portal-btn {
-                font-size: 0.7rem;
-                padding: 6px 12px;
-            }
-
+            .nav-links, .nav-buttons { display: none; }
             .hero-content { padding: 2rem; }
-            .hero h1 { font-size: 3rem; }
-            .hero .hero-pre-title { font-size: 1.3rem; letter-spacing: 0.2em; }
-            .hero::after { font-size: 3rem; letter-spacing: 0.1em; }
-            
-            .cta-container { flex-direction: column; }
-            .hero-cta-btn { font-size: 0.9rem; padding: 14px 30px; }
-
-            .about-container { grid-template-columns: 1fr; gap: 3rem; }
-            .services-grid { grid-template-columns: 1fr; }
-            .services, .about, .team, .contact { padding: 4rem 2rem; }
-            .services h2, .team h2, .contact h2 { font-size: 2.5rem; }
-            .whatsapp-general { font-size: 1rem; padding: 15px 30px; }
+            .about-container { grid-template-columns: 1fr; }
+            .services, .team, .contact { padding: 4rem 2rem; }
+            .filosofia-revelado .about-container { padding: 1.5rem; height: auto; }
         }
     </style>
 </head>
@@ -976,15 +602,13 @@
                 <a href="https://wa.me/5491168063444?text=Hola%2C%20me%20pongo%20en%20contacto%20desde%20la%20web%20del%20estudio.%20Necesito%20asesoramiento%20jur%C3%ADdico" target="_blank" class="nav-whatsapp-btn" style="text-transform: none;">
                     💬 WhatsApp
                 </a>
-                <button class="nav-portal-btn" onclick="requestPassword()">
-                    🔒 Acceso Interno
-                </button>
+                <button class="nav-portal-btn">🔒 Acceso Interno</button>
             </div>
         </div>
     </nav>
 
     <section class="hero" id="inicio">
-        <div class="hero-content">
+        <div class="hero-content" style="animation: fadeInUp 1s ease-out .5s both;">
             <p class="hero-pre-title">Estudio Jurídico</p>
             <h1>García & Asociados</h1>
             <p class="tagline">Transformamos conflictos en soluciones con ética y visión estratégica</p>
@@ -992,7 +616,7 @@
                 Estudio Jurídico especializado en Derecho de Familia, Accidentes de Tránsito y Derecho Civil con más de una década de experiencia defendiendo los derechos de nuestros clientes
             </p>
             
-            <div class="cta-container" style="margin-bottom: 3rem; animation: fadeInUp 2.4s ease-out 1.2s both;">
+            <div class="cta-container" style="margin-bottom: 3rem;">
                 <a href="#servicios" class="hero-cta-btn primary">Nuestros Servicios</a>
                 <a href="https://gemini.google.com/gem/18ab3383dcdf" target="_blank" class="hero-cta-btn secondary">García & Asociados IA</a>
             </div>
@@ -1002,46 +626,64 @@
                 <iframe src="https://www.youtube.com/embed/ayz4FRQMmTA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
 
-            <div class="cta-container" style="margin-top: 3rem; animation: fadeInUp 3s ease-out 1.8s both;">
+            <div class="cta-container" style="margin-top: 3rem;">
                 <a href="https://wa.me/5491168063444?text=Hola%2C%20me%20pongo%20en%20contacto%20desde%20la%20web%20del%20estudio.%20Necesito%20asesoramiento%20jur%C3%ADdico" target="_blank" class="hero-cta-btn whatsapp no-uppercase">💬 Consultar por WhatsApp</a>
                 <a href="#" onclick="openCalendly()" class="hero-cta-btn primary">📅 Agendar Consulta</a>
             </div>
         </div>
     </section>
 
-    <section class="about" id="nosotros">
-        <div class="about-container">
-            <div class="about-content">
-                <h2>Nuestra Filosofía</h2>
-                <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #555; line-height: 1.8;">
-                    En García & Asociados defendemos los derechos de nuestros clientes con compromiso y profesionalismo. 
-                    Nos destacamos por brindar una atención personalizada, acompañando cada proceso legal con dedicación y cercanía humana.
-                </p>
-                <div class="about-card">
-                    <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-family: 'Crimson Text', serif; font-size: 1.5rem;">¿Por qué elegirnos?</h3>
-                    <ul style="list-style: none;">
-                        <li style="padding: 0.8rem 0;"><strong>✓ Sólida trayectoria profesional:</strong> Más de 10 años de experiencia</li>
-                        <li style="padding: 0.8rem 0;"><strong>✓ Atención personalizada y humana:</strong> Escuchamos y comprendemos cada caso</li>
-                        <li style="padding: 0.8rem 0;"><strong>✓ Compromiso con la calidad:</strong> Transparencia y dedicación constante</li>
-                        <li style="padding: 0.8rem 0;"><strong>✓ Equipo interdisciplinario:</strong> Abordaje integral de cada situación</li>
-                    </ul>
+    <section class="efecto-zoom-container" id="nosotros">
+        <div class="zoom-content-wrapper">
+
+            <div class="filosofia-revelado">
+                <div class="about-container">
+                    <div class="about-content">
+                        <h2>Nuestra Filosofía</h2>
+                        <p>
+                            En García & Asociados defendemos los derechos de nuestros clientes con compromiso y profesionalismo. 
+                            Nos destacamos por brindar una atención personalizada, acompañando cada proceso legal con dedicación y cercanía humana.
+                        </p>
+                        <div class="about-card">
+                            <h3>¿Por qué elegirnos?</h3>
+                            <ul>
+                                <li><strong>✓ Sólida trayectoria profesional:</strong> Más de 10 años de experiencia</li>
+                                <li><strong>✓ Atención personalizada y humana:</strong> Escuchamos y comprendemos cada caso</li>
+                                <li><strong>✓ Compromiso con la calidad:</strong> Transparencia y dedicación constante</li>
+                                <li><strong>✓ Equipo interdisciplinario:</strong> Abordaje integral de cada situación</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="founder-info">
+                            <h3>Dra. Camila Florencia Rodríguez García</h3>
+                            <p style="font-style: italic; margin-bottom: 1.5rem; font-size: 1.1rem;">Socia Fundadora</p>
+                            <p style="margin-bottom: 1.5rem; line-height: 1.6;">
+                                Abogada egresada de la Universidad Abierta Interamericana, con especialización en 
+                                Derecho de las Familias y Responsabilidad Civil por Accidentes de Tránsito.
+                            </p>
+                            <p style="font-size: 1rem;">
+                                <strong>Matrículas:</strong><br>
+                                • C.A.Q.: T° XII, F° 383<br>
+                                • C.P.A.C.F.: T° 140, F° 85
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div>
-                <div class="founder-info">
-                    <h3>Dra. Camila Florencia García</h3>
-                    <p style="font-style: italic; margin-bottom: 1.5rem; font-size: 1.1rem;">Socia Fundadora</p>
-                    <p style="margin-bottom: 1.5rem; line-height: 1.6;">
-                        Abogada egresada de la Universidad Abierta Interamericana, con especialización en 
-                        Derecho de las Familias y Responsabilidad Civil por Accidentes de Tránsito.
-                    </p>
-                    <p style="font-size: 1rem;">
-                        <strong>Matrículas:</strong><br>
-                        • C.A.Q.: T° XII, F° 383<br>
-                        • C.P.A.C.F.: T° 140, F° 85
-                    </p>
-                </div>
-            </div>
+            
+            <svg class="knockout-svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                    <mask id="texto-mask">
+                        <rect width="100%" height="100%" fill="white" />
+                        <text x="50%" y="50%" dy="0.35em" text-anchor="middle" fill="black">
+                            García & Asociados
+                        </text>
+                    </mask>
+                </defs>
+                <rect class="knockout-rect" width="100%" height="100%" mask="url(#texto-mask)" />
+            </svg>
+
         </div>
     </section>
 
@@ -1056,11 +698,8 @@
                         <li>Regímenes de Comunicación y Cuidado Personal</li>
                         <li>Alimentos - Fijación, aumento y reducción</li>
                         <li>Divorcios Unilaterales y de Común Acuerdo</li>
-                        <li>Medidas Cautelares Urgentes</li>
                         <li>Reclamación e Impugnación de Filiación</li>
                         <li>Responsabilidad Parental</li>
-                        <li>Derechos de Niños, Niñas y Adolescentes</li>
-                        <li>Adopción y Guarda</li>
                     </ul>
                     <a href="https://wa.me/5491168063444?text=Hola%2C%20necesito%20asesoramiento%20en%20Derecho%20de%20Familia" 
                        target="_blank" class="whatsapp-btn whatsapp-btn-small">
@@ -1073,13 +712,11 @@
                         <li>Asesoramiento Integral a Víctimas</li>
                         <li>Reclamos Administrativos ante aseguradoras</li>
                         <li>Demandas por Daños y Perjuicios</li>
-                        <li>Indemnización por lesiones y daños materiales</li>
-                        <li>Defensa ante Responsabilidad Civil</li>
+                        <li>Indemnización por lesiones y daños</li>
                         <li>Negociación con compañías de seguros</li>
                         <li>Pericias médicas y mecánicas</li>
-                        <li>Acompañamiento integral durante todo el proceso</li>
                     </ul>
-                    <a href="https://wa.me/5491168063444?text=Hola%2C%20tuve%20un%20accidente%20de%20tr%C3%A1nsito%20y%20necesito%20asesoramiento" 
+                    <a href="https://wa.me/5491168063444?text=Hola%2C%20tuve%20un%20accidente%20de%20tr%C3%A1nsito" 
                        target="_blank" class="whatsapp-btn whatsapp-btn-small">
                         💬 Consultar por WhatsApp
                     </a>
@@ -1090,30 +727,11 @@
                         <li>Sucesiones judiciales</li>
                         <li>Ciudadanías Españolas e Italianas</li>
                         <li>Contratos de Locación</li>
-                        <li>Testamentos</li>
-                        <li>Boletos de Compraventa</li>
+                        <li>Testamentos y Boletos de Compraventa</li>
                         <li>Asesoramiento en operaciones inmobiliarias</li>
-                        <li>Reconstrucción documental</li>
                         <li>Escrituras y actos notariales</li>
                     </ul>
                     <a href="https://wa.me/5491168063444?text=Hola%2C%20necesito%20asesoramiento%20en%20Derecho%20Civil" 
-                       target="_blank" class="whatsapp-btn whatsapp-btn-small">
-                        💬 Consultar por WhatsApp
-                    </a>
-                </div>
-                <div class="service-card">
-                    <h3>🥼 Salud Mental y Discapacidad</h3>
-                    <ul>
-                        <li>Procesos de internación involuntaria</li>
-                        <li>Evaluación de tratamientos institucionales</li>
-                        <li>Acciones contra obras sociales y prepagas</li>
-                        <li>Asesoramiento para personas neurodivergentes</li>
-                        <li>Tramitación del CUD</li>
-                        <li>Apoyos jurídicos y tutelas</li>
-                        <li>Derechos de personas con discapacidad</li>
-                        <li>Prestaciones y coberturas médicas</li>
-                    </ul>
-                    <a href="https://wa.me/5491168063444?text=Hola%2C%20necesito%20asesoramiento%20en%20temas%20de%20salud%20mental%20y%20discapacidad" 
                        target="_blank" class="whatsapp-btn whatsapp-btn-small">
                         💬 Consultar por WhatsApp
                     </a>
@@ -1125,26 +743,10 @@
     <section class="team" id="equipo">
         <h2>Equipo Interdisciplinario Asociado</h2>
         <div class="team-grid">
-            <div class="team-member">
-                <h4>Licenciadas en Psicología</h4>
-                <p>Intervención y acompañamiento en situaciones de conflicto emocional y familiar</p>
-            </div>
-            <div class="team-member">
-                <h4>Licenciadas en Psicopedagogía</h4>
-                <p>Apoyo en procesos que involucran a niños, niñas y adolescentes</p>
-            </div>
-            <div class="team-member">
-                <h4>Trabajadoras Sociales</h4>
-                <p>Evaluación e informes socioambientales, intervención comunitaria</p>
-            </div>
-            <div class="team-member">
-                <h4>Peritos y Consultores</h4>
-                <p>Informes, dictámenes y peritajes clave en procesos judiciales</p>
-            </div>
-            <div class="team-member">
-                <h4>Coaches</h4>
-                <p>Desarrollo personal y acompañamiento en contextos de alta demanda emocional</p>
-            </div>
+            <div class="team-member"><h4>Licenciadas en Psicología</h4><p>Intervención y acompañamiento emocional y familiar.</p></div>
+            <div class="team-member"><h4>Licenciadas en Psicopedagogía</h4><p>Apoyo en procesos que involucran a niños y adolescentes.</p></div>
+            <div class="team-member"><h4>Trabajadoras Sociales</h4><p>Evaluación e informes socioambientales.</p></div>
+            <div class="team-member"><h4>Peritos y Consultores</h4><p>Informes, dictámenes y peritajes clave en procesos judiciales.</p></div>
         </div>
     </section>
 
@@ -1170,24 +772,7 @@
                 <span><svg fill="white" height="24" width="24" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg></span>
                 <a href="https://www.instagram.com/garciayasociadosjus/" target="_blank">garciayasociadosjus</a>
             </div>
-            <div class="contact-item">
-                 <span><svg fill="white" height="24" width="24" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-2.43.03-4.83-.95-6.43-2.98-1.59-2.01-2.18-4.71-1.88-7.23.12-1.04.42-2.07.92-3.02.51-.97 1.24-1.82 2.16-2.52.93-.7 2.03-1.24 3.22-1.52.05-2.5.01-4.99.01-7.49.83-.01 1.65-.02 2.48-.01zM14.68 8.71c-.39.26-.78.53-1.16.82-.02 2.39-.01 4.79-.01 7.18 0 .83.18 1.64.53 2.37.52 1.09 1.53 1.84 2.75 1.94.81.07 1.61-.18 2.22-.68.6-.5.95-1.24.95-2.01.01-1.47-.01-2.95-.01-4.42-.99.31-2.01.44-3.03.35-1.18-.1-2.22-.6-2.9-1.38a3.52 3.52 0 0 1-1.07-2.17z"></path></svg></span>
-                <a href="https://www.tiktok.com/@dragarciacamila1" target="_blank">dragarciacamila1</a>
-            </div>
-            <div class="contact-item">
-                 <span><svg fill="white" height="24" width="24" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25 1.09-.83 1.82-1.88 2.36-1.16.53-3.39.7-6.44.7H12c-3.05 0-5.28-.17-6.44-.7-1.05-.54-1.63-1.27-1.88-2.36-.28-1.03-.44-2.64-.44-4.83v-.01c0-.6.03-1.29.1-2.09.06-.8.15-1.43.28-1.9.28-1.01.88-1.74 1.93-2.25 1.19-.57 3.34-.73 6.51-.73h.01c3.17 0 5.32.16 6.51.73 1.05.51 1.65 1.24 1.93 2.25z"></path></svg></span>
-                <a href="https://www.youtube.com/@Garciayasociadosjus" target="_blank">garciayasociadosjus</a>
-            </div>
         </div>
-        
-        <a href="https://wa.me/5491168063444?text=Hola%2C%20me%20pongo%20en%20contacto%20desde%20la%20web%20del%20estudio.%20Necesito%20asesoramiento%20jur%C3%ADdico" 
-           target="_blank" class="whatsapp-general">
-            💬 Consultar por WhatsApp
-        </a>
-        
-        <button class="portal-btn" style="display: none; position: relative; z-index: 1;" onclick="requestPassword()">
-            INGRESAR AL PORTAL DE SOCIOS
-        </button>
     </section>
 
     <footer>
@@ -1196,103 +781,28 @@
             Dra. Camila Florencia Rodríguez García - Letrada patrocinante
         </p>
     </footer>
-
-    <div id="passwordModal" class="modal">
-        <div class="modal-content">
-            <h3>🔒 Acceso al Portal de Socios</h3>
-            <p style="color: #666; margin-bottom: 2rem;">Ingrese la clave de acceso proporcionada por el estudio</p>
-            <input type="password" id="passwordInput" placeholder="Contraseña" onkeypress="if(event.key==='Enter') checkPassword()">
-            <div id="errorMessage" class="error-message">Clave incorrecta. Por favor, intente nuevamente.</div>
-            <div class="modal-buttons">
-                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancelar</button>
-                <button class="modal-btn modal-btn-primary" onclick="checkPassword()">Ingresar</button>
-            </div>
-        </div>
-    </div>
-
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script>
-        const CALENDLY_URL = 'https://calendly.com/garciayasociados/30min';
-        const PORTAL_PASSWORD = 'Democracia0507';
-        const PORTAL_URL = 'https://garciayasociadosjus-boop.github.io/';
-
-        function openCalendly() {
-            Calendly.initPopupWidget({
-                url: CALENDLY_URL,
-                text: 'Agendar una Consulta',
-                color: '#1F2937',
-                textColor: '#ffffff',
-                branding: false
-            });
-            return false;
-        }
-
-        function requestPassword() {
-            document.getElementById('passwordModal').style.display = 'block';
-            document.getElementById('passwordInput').value = '';
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('passwordInput').focus();
-        }
-
-        function closeModal() {
-            document.getElementById('passwordModal').style.display = 'none';
-        }
-
-        function checkPassword() {
-            const inputPassword = document.getElementById('passwordInput').value;
-            if (inputPassword === PORTAL_PASSWORD) {
-                closeModal();
-                window.open(PORTAL_URL, '_blank');
-            } else {
-                const errorMessage = document.getElementById('errorMessage');
-                errorMessage.style.display = 'block';
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('passwordInput').focus();
-                setTimeout(() => { errorMessage.style.display = 'none'; }, 3000);
-            }
-        }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('passwordModal');
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetElement = document.querySelector(this.getAttribute('href'));
-                if(targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.style.background = 'rgba(10, 14, 26, 0.99)';
-                nav.style.boxShadow = '0 8px 50px rgba(10, 14, 26, 0.5)';
-            } else {
-                nav.style.background = 'rgba(10, 14, 26, 0.98)';
-                nav.style.boxShadow = '0 8px 40px rgba(10, 14, 26, 0.4)';
+        gsap.registerPlugin(ScrollTrigger);
+        const zoomContainer = document.querySelector(".efecto-zoom-container");
+        const revealedContent = document.querySelector(".filosofia-revelado");
+        const scrollableCard = document.querySelector(".filosofia-revelado .about-container");
+        const knockoutSvg = document.querySelector(".knockout-svg");
+        let tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: zoomContainer,
+                start: "top top",
+                end: "+=3000",
+                scrub: 1,
+                pin: true,
             }
         });
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
-
-        document.querySelectorAll('.service-card, .team-member, .about-card').forEach(el => {
-            observer.observe(el);
-        });
+        tl.to(revealedContent, { opacity: 1, duration: 0.5 })
+          .to(knockoutSvg, { scale: 30, duration: 2 }, 0) 
+          .to(knockoutSvg, { opacity: 0, duration: 0.5 }, "-=0.5")
+          .to(scrollableCard, { scrollTop: () => scrollableCard.scrollHeight - scrollableCard.clientHeight, ease: "none", duration: 1.5 }, 1.5);
     </script>
 </body>
 </html>
