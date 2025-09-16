@@ -84,7 +84,7 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2.5rem; /* Espacio entre links */
+            gap: 2.5rem;
         }
 
         .nav-links a {
@@ -867,9 +867,13 @@
                 font-weight: 600;
             }
             .nav-buttons {
-                flex-direction: column; /* Apila los botones verticalmente */
-                align-items: flex-end;  /* Los alinea a la derecha */
-                gap: 0.5rem;            /* Espacio vertical entre botones */
+                flex-direction: column; 
+                align-items: flex-end;
+                gap: 0.5rem;
+            }
+            .nav-buttons-bottom-row {
+                display: flex;
+                gap: 0.5rem;
             }
             /* ----- FIN CORRECCIÓN FINAL PARA CELULARES ----- */
         }
@@ -890,9 +894,11 @@
                 <a href="https://wa.me/5491168063444?text=Hola%2C%20me%20pongo%20en%20contacto%20desde%20la%20web%20del%20estudio.%20Necesito%20asesoramiento%20jur%C3%ADdico" target="_blank" class="nav-whatsapp-btn" style="text-transform: none;">
                     💬 WhatsApp
                 </a>
-                <button class="nav-portal-btn" onclick="openDniModal()">🔍 Expediente Online</button>
-                <button class="nav-portal-btn" onclick="openPasswordModal()">🔒 Acceso Interno</button>
-            </div>
+                <div class="nav-buttons-bottom-row">
+                    <button class="nav-portal-btn" onclick="openDniModal()">🔍 Expediente Online</button>
+                    <button class="nav-portal-btn" onclick="openPasswordModal()">🔒 Acceso Interno</button>
+                </div>
+                </div>
         </div>
     </nav>
 
