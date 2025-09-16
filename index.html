@@ -850,7 +850,6 @@
             .services h2, .team h2 {
                 font-size: 2.5rem;
             }
-            /* ----- INICIO DE LA CORRECCIÓN ----- */
             .nav-container {
                 padding: 1rem 1rem; /* Reducir padding horizontal */
             }
@@ -862,7 +861,19 @@
                 font-size: 0.75rem; /* Reducir tamaño de la letra en los botones */
                 letter-spacing: 0.5px; /* Reducir espaciado de letras */
             }
-            /* ----- FIN DE LA CORRECCIÓN ----- */
+            /* ----- INICIO CORRECCIÓN LOGO ----- */
+            .logo {
+                font-size: 0; /* Oculta el texto original */
+                letter-spacing: 0; /* Resetea el espaciado para que no afecte el ancho */
+            }
+            .logo::before {
+                content: 'G & A'; /* Inserta el nuevo texto abreviado */
+                font-size: 1.6rem; /* Restaura el tamaño de fuente original */
+                letter-spacing: 0.5px; /* Restaura el espaciado de letras original */
+                font-family: 'Crimson Text', serif; /* Asegura que la fuente sea la misma */
+                font-weight: 600; /* Asegura que el grosor sea el mismo */
+            }
+            /* ----- FIN CORRECCIÓN LOGO ----- */
         }
     </style>
 </head>
