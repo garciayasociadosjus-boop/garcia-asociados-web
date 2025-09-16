@@ -842,15 +842,25 @@
             .nav-links { display: none; } /* Ocultar links para dar espacio a botones */
         }
         @media (max-width: 768px) {
-            /* ----- INICIO DE LA CORRECCIÓN ----- */
-            .nav-links { display: none; } /* Se quita .nav-buttons de esta línea para que se muestren */
+            .nav-links { display: none; } 
             .hero-content { padding: 2rem; }
             .about-container { grid-template-columns: 1fr; }
             .services, .team, .contact, footer { padding: 4rem 2rem; }
             .filosofia-revelado .about-container { padding: 1.5rem; height: auto; }
-            /* Se reduce el tamaño de fuente de los títulos de sección para que no se corten */
             .services h2, .team h2 {
                 font-size: 2.5rem;
+            }
+            /* ----- INICIO DE LA CORRECCIÓN ----- */
+            .nav-container {
+                padding: 1rem 1rem; /* Reducir padding horizontal */
+            }
+            .nav-buttons {
+                gap: 0.4rem; /* Reducir espacio entre botones */
+            }
+            .nav-portal-btn, .nav-whatsapp-btn {
+                padding: 8px 12px; /* Reducir padding de los botones */
+                font-size: 0.75rem; /* Reducir tamaño de la letra en los botones */
+                letter-spacing: 0.5px; /* Reducir espaciado de letras */
             }
             /* ----- FIN DE LA CORRECCIÓN ----- */
         }
