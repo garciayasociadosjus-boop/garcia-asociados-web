@@ -9,7 +9,7 @@
     
     <meta name="google-site-verification" content="o1LX4hWlPc0uicWvfL9wugJChFJExTmMSpZy1yXHxRE" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
 
@@ -489,7 +489,89 @@
         }
         
         /* Estilos del resto de la página */
-        .services, .team, .contact, footer { padding: 8rem 4rem; }
+        .services, .team, footer { padding: 8rem 4rem; }
+        
+        /* ===== INICIO: MEJORAS SOLICITADAS - FONDOS CON AURA DE LUZ INTENSA (VERSIÓN FINALÍSIMA) ===== */
+        .services, .team {
+            position: relative;
+            overflow: hidden; 
+        }
+
+        .services::before, .team::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+            opacity: 0.35; /* Aumentamos un poco más la opacidad para que el brillo sea más visible */
+            z-index: 0;
+            pointer-events: none; 
+        }
+        
+        /* Contenido debe estar por encima del fondo */
+        .services-container, .team-grid, .team h2 {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Fondo para la sección de servicios (Abstracción de la justicia) */
+        .services::before {
+            /* SVG base ahora es BLANCO para que actúe como fuente de luz */
+            background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' fill='%23FFFFFF'%3E%3Crect x='10' y='10' width='100' height='100' rx='10' ry='10' stroke='%23FFFFFF' stroke-width='2' fill='none'/%3E%3Cpath d='M30 30L60 60L90 30L60 0L30 30Z' fill='%23FFFFFF'/%3E%3Cpath d='M30 90L60 60L90 90L60 120L30 90Z' fill='%23FFFFFF'/%3E%3Ccircle cx='60' cy='60' r='15' fill='%23FFFFFF'/%3E%3C/svg%3E");
+            background-size: 800px;
+            animation: modern-justice-flow 25s linear infinite; /* Animación de movimiento y color más rápida */
+        }
+
+        /* Fondo para la sección de equipo (Red de interconexiones abstracta) */
+        .team::before {
+            /* SVG base ahora es BLANCO para que actúe como fuente de luz */
+            background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' fill='%23FFFFFF'%3E%3Ccircle cx='30' cy='30' r='15'/%3E%3Ccircle cx='90' cy='30' r='15'/%3E%3Ccircle cx='30' cy='90' r='15'/%3E%3Ccircle cx='90' cy='90' r='15'/%3E%3Cline x1='30' y1='30' x2='90' y2='30' stroke='%23FFFFFF' stroke-width='3'/%3E%3Cline x1='30' y1='30' x2='30' y2='90' stroke='%23FFFFFF' stroke-width='3'/%3E%3Cline x1='90' y1='30' x2='90' y2='90' stroke='%23FFFFFF' stroke-width='3'/%3E%3Cline x1='30' y1='90' x2='90' y2='90' stroke='%23FFFFFF' stroke-width='3'/%3E%3Cline x1='30' y1='30' x2='90' y2='90' stroke='%23FFFFFF' stroke-width='3'/%3E%3Cline x1='90' y1='30' x2='30' y2='90' stroke='%23FFFFFF' stroke-width='3'/%3E%3C/svg%3E");
+            background-size: 700px; 
+            animation: interconnected-drift 30s linear infinite alternate; /* Animación de movimiento y color más rápida */
+        }
+
+        /* Animación para "Áreas de Práctica" - AURA DE LUZ PURA */
+        @keyframes modern-justice-flow {
+            0% {
+                transform: translateX(-40px) translateY(40px) rotate(-10deg) scale(1.3);
+                filter: drop-shadow(0 0 80px rgba(0, 191, 255, 1)); /* Azul brillante */
+            }
+            25% {
+                transform: translateX(20px) translateY(-50px) rotate(5deg) scale(1.4);
+                filter: drop-shadow(0 0 90px rgba(0, 255, 255, 1)); /* Turquesa puro */
+            }
+            50% {
+                transform: translateX(50px) translateY(10px) rotate(15deg) scale(1.5);
+                filter: drop-shadow(0 0 100px rgba(138, 43, 226, 1)); /* Azul violeta */
+            }
+            75% {
+                transform: translateX(-30px) translateY(-20px) rotate(-5deg) scale(1.4);
+                filter: drop-shadow(0 0 90px rgba(72, 61, 139, 1)); /* Púrpura oscuro */
+            }
+            100% {
+                transform: translateX(-40px) translateY(40px) rotate(-10deg) scale(1.3);
+                filter: drop-shadow(0 0 80px rgba(0, 191, 255, 1)); /* Vuelve al azul brillante */
+            }
+        }
+        
+        /* Animación para "Equipo" - AURA DE LUZ PURA */
+        @keyframes interconnected-drift {
+            from {
+                background-position: 0% 0%;
+                transform: rotate(0deg) scale(1.5);
+                filter: drop-shadow(0 0 80px rgba(0, 191, 255, 1)); /* Azul brillante */
+            }
+            to {
+                background-position: 100% 100%;
+                transform: rotate(25deg) scale(1.6);
+                filter: drop-shadow(0 0 100px rgba(147, 112, 219, 1)); /* Violeta claro */
+            }
+        }
+        /* ===== FIN: MEJORAS SOLICITADAS ===== */
+
         .services-container { max-width: 1400px; margin: 0 auto; }
         .services h2 { text-align: center; font-family: 'Crimson Text', serif; font-size: 3.5rem; color: var(--primary); margin-bottom: 5rem; }
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; margin-top: 4rem; }
@@ -575,53 +657,103 @@
 
         .team-member h4 { font-family: 'Crimson Text', serif; color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; }
         
-        /* ===== INICIO: ESTILOS CONTACTO RESTAURADO (DE PRUEBA25) ===== */
+        
+        /* ===== INICIO: SECCIÓN DE CONTACTO MEJORADA ===== */
         .contact {
             background: var(--gradient-hero);
             color: var(--white);
+            padding: 8rem 4rem;
+        }
+
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
             text-align: center;
         }
+
         .contact h2 {
             font-family: 'Crimson Text', serif;
             font-size: 3.5rem;
-            margin-bottom: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--white);
         }
-        .contact-info {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            gap: 2.5rem 3.5rem;
-            flex-wrap: wrap;
+
+        .contact-container > p {
+            font-size: 1.3rem;
+            margin-bottom: 4rem;
             position: relative;
             z-index: 1;
-            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            color: var(--silver);
         }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            text-align: left;
+        }
+
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
             font-size: 1.1rem;
         }
+
+        .contact-item .icon {
+            background: var(--accent);
+            color: var(--white);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+
+        .contact-item:hover .icon {
+            transform: scale(1.15) rotate(10deg);
+            background: var(--light-accent);
+            box-shadow: 0 0 20px rgba(107, 114, 128, 0.5);
+        }
+
         .contact-item a {
             color: var(--white);
             text-decoration: none;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
         }
+
         .contact-item a:hover {
-            color: var(--light-accent);
+            color: var(--dark-silver);
+            text-decoration: underline;
         }
-        .contact-item span {
-            display: flex;
-            align-items: center;
+        
+        .map-container {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
-        .contact-item svg {
-            transition: transform 0.3s ease;
+
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border: 0;
         }
-        .contact-item:hover svg {
-             transform: scale(1.15) rotate(5deg);
-        }
-        /* ===== FIN: ESTILOS CONTACTO RESTAURADO ===== */
+        /* ===== FIN: SECCIÓN DE CONTACTO MEJORADA ===== */
         
         footer { background: var(--primary); color: var(--white); text-align: center; padding: 3rem; }
 
@@ -740,11 +872,17 @@
         /* ===== FIN: CÓDIGO RESTAURADO PARA EL MODAL DE ACCESO ===== */
 
         /* Responsive */
+        @media (max-width: 992px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         @media (max-width: 768px) {
             .nav-links, .nav-buttons { display: none; }
             .hero-content { padding: 2rem; }
             .about-container { grid-template-columns: 1fr; }
-            .services, .team, .contact { padding: 4rem 2rem; }
+            .services, .team, .contact, footer { padding: 4rem 2rem; }
             .filosofia-revelado .about-container { padding: 1.5rem; height: auto; }
         }
     </style>
@@ -935,27 +1073,43 @@
             </div>
         </div>
     </section>
+    
     <section class="contact" id="contacto">
-        <h2>Contacto</h2>
-        <p style="font-size: 1.3rem; margin-bottom: 3rem; position: relative; z-index: 1; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-            Estamos aquí para ayudarte. Contáctanos para una consulta inicial y descubre cómo podemos defender tus derechos.
-        </p>
-        <div class="contact-info">
-            <div class="contact-item">
-                <span>📧</span>
-                <a href="mailto:garciayasociadosjus@gmail.com">garciayasociadosjus@gmail.com</a>
-            </div>
-            <div class="contact-item">
-                <span>📞</span>
-                <a href="tel:+541168063444">11 6806-3444</a>
-            </div>
-            <div class="contact-item">
-                <span>📞</span>
-                <a href="tel:+541172371991">11 7237-1991</a>
-            </div>
-            <div class="contact-item">
-                <span><svg fill="white" height="24" width="24" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg></span>
-                <a href="https://www.instagram.com/garciayasociadosjus/" target="_blank">garciayasociadosjus</a>
+        <div class="contact-container">
+            <h2>Contacto</h2>
+            <p>
+                Estamos aquí para ayudarte. Contáctanos para una consulta inicial y descubre cómo podemos defender tus derechos.
+            </p>
+            <div class="contact-grid">
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        </div>
+                        <a href="mailto:garciayasociadosjus@gmail.com">garciayasociadosjus@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        </div>
+                        <a href="tel:+541168063444">11 6806-3444 / 11 7237-1991</a>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </div>
+                        <a href="https://www.instagram.com/garciayasociadosjus/" target="_blank">@garciayasociadosjus</a>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        </div>
+                        <a href="https://www.google.com/maps/place/Zapiola+662,+B1876BPN+Bernal,+Provincia+de+Buenos+Aires/@-34.710006,-58.306073,17z/data=!3m1!4b1!4m6!3m5!1s0x95a33251412d1c97:0x4d33a1e64a852504!8m2!3d-34.710006!4d-58.306073!16s%2Fg%2F11cs7_1zkv?entry=ttu" target="_blank">Zapiola 662, Bernal, Quilmes</a>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3279.882914163934!2d-58.30864792341991!3d-34.70817396168864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a33251412d1c97%3A0x4d33a1e64a852504!2sZapiola%20662%2C%20B1876BPN%20Bernal%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1726154564516!5m2!1ses-419!2sar" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
             </div>
         </div>
     </section>
