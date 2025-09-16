@@ -9,7 +9,7 @@
     
     <meta name="google-site-verification" content="o1LX4hWlPc0uicWvfL9wugJChFJExTmMSpZy1yXHxRE" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
 
@@ -842,11 +842,17 @@
             .nav-links { display: none; } /* Ocultar links para dar espacio a botones */
         }
         @media (max-width: 768px) {
-            .nav-links, .nav-buttons { display: none; }
+            /* ----- INICIO DE LA CORRECCIÓN ----- */
+            .nav-links { display: none; } /* Se quita .nav-buttons de esta línea para que se muestren */
             .hero-content { padding: 2rem; }
             .about-container { grid-template-columns: 1fr; }
             .services, .team, .contact, footer { padding: 4rem 2rem; }
             .filosofia-revelado .about-container { padding: 1.5rem; height: auto; }
+            /* Se reduce el tamaño de fuente de los títulos de sección para que no se corten */
+            .services h2, .team h2 {
+                font-size: 2.5rem;
+            }
+            /* ----- FIN DE LA CORRECCIÓN ----- */
         }
     </style>
 </head>
