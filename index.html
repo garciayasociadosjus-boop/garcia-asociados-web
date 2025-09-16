@@ -836,9 +836,7 @@
             display: none;
         }
 
-        /* ----- INICIO ESTILOS BOTÓN FLOTANTE (SOLO VISIBLE EN CELULAR) ----- */
-        .floating-action-button { display: none; } /* Oculto por defecto */
-        /* ----- FIN ESTILOS BOTÓN FLOTANTE ----- */
+        .floating-action-button { display: none; }
         
         
         /* Responsive */
@@ -849,10 +847,9 @@
         @media (max-width: 768px) {
             .nav-container {
                 padding: 1rem 1.5rem;
-                justify-content: center; /* Centramos el logo G&A */
             }
-            .nav-links, .nav-buttons { 
-                display: none; /* Ocultamos los botones originales del nav */
+            .nav-links { 
+                display: none; 
             } 
             .hero-content { padding: 2rem; }
             .about-container { grid-template-columns: 1fr; }
@@ -873,7 +870,20 @@
                 font-weight: 600;
             }
 
-            /* ----- INICIO NUEVO DISEÑO FLOTANTE PARA CELULARES ----- */
+            /* ----- INICIO NUEVO DISEÑO HÍBRIDO PARA CELULARES ----- */
+            .nav-buttons {
+                gap: 0.5rem;
+            }
+            /* Ocultamos solo el botón de Acceso Interno del nav principal */
+            .nav-buttons .acceso-interno-btn {
+                display: none;
+            }
+            .nav-portal-btn, .nav-whatsapp-btn {
+                padding: 8px 12px;
+                font-size: 0.75rem;
+                letter-spacing: 0.5px;
+            }
+
             .floating-action-button {
                 display: block;
                 position: fixed;
@@ -883,13 +893,12 @@
             }
             .fab-menu {
                 position: absolute;
-                bottom: 70px; /* Espacio sobre el botón principal */
+                bottom: 70px;
                 right: 0;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
                 gap: 15px;
-                /* Oculto por defecto */
                 opacity: 0;
                 transform: translateY(20px);
                 pointer-events: none;
@@ -934,7 +943,6 @@
                 width: 20px;
                 height: 20px;
             }
-            /* ESTADO ABIERTO */
             .floating-action-button.open .fab-menu {
                 opacity: 1;
                 transform: translateY(0);
@@ -943,7 +951,7 @@
             .floating-action-button.open .fab-main {
                 transform: rotate(45deg);
             }
-            /* ----- FIN NUEVO DISEÑO FLOTANTE PARA CELULARES ----- */
+            /* ----- FIN NUEVO DISEÑO HÍBRIDO PARA CELULARES ----- */
         }
     </style>
 </head>
@@ -963,21 +971,13 @@
                     💬 WhatsApp
                 </a>
                 <button class="nav-portal-btn" onclick="openDniModal()">🔍 Expediente Online</button>
-                <button class="nav-portal-btn" onclick="openPasswordModal()">🔒 Acceso Interno</button>
+                <button class="nav-portal-btn acceso-interno-btn" onclick="openPasswordModal()">🔒 Acceso Interno</button>
             </div>
         </div>
     </nav>
 
     <div class="floating-action-button" id="fab-container">
         <div class="fab-menu">
-            <a href="https://wa.me/5491168063444?text=Hola%2C%20me%20pongo%20en%20contacto%20desde%20la%20web%20del%20estudio.%20Necesito%20asesoramiento%20jur%C3%ADdico" target="_blank" class="fab-item">
-                <span>WhatsApp</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"></path></svg>
-            </a>
-            <a href="#" onclick="openDniModal()" class="fab-item">
-                <span>Expediente Online</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v15H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="12" y1="8" x2="16" y2="8"></line><line x1="12" y1="12" x2="16" y2="12"></line></svg>
-            </a>
             <a href="#" onclick="openPasswordModal()" class="fab-item">
                 <span>Acceso Interno</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -985,6 +985,7 @@
         </div>
         <button class="fab-main" id="fab-main-btn">+</button>
     </div>
+
     <section class="hero" id="inicio">
         <div class="hero-content" style="animation: fadeInUp 1s ease-out .5s both;">
             <p class="hero-pre-title">Estudio Jurídico</p>
@@ -1266,6 +1267,10 @@
         const PORTAL_URL = 'https://garciayasociadosjus-boop.github.io/';
         
         function openPasswordModal() {
+            // Primero, cerramos el menú flotante si está abierto, para que no interfiera.
+            const fabContainer = document.getElementById('fab-container');
+            if (fabContainer) fabContainer.classList.remove('open');
+            // Luego, abrimos el modal.
             const modal = document.getElementById('passwordModal');
             modal.style.display = 'flex';
             const input = document.getElementById('passwordInput');
@@ -1291,6 +1296,10 @@
         
         // --- LÓGICA PARA EXPEDIENTE ONLINE (DNI) ---
         function openDniModal() {
+            // Primero, cerramos el menú flotante si está abierto.
+            const fabContainer = document.getElementById('fab-container');
+            if (fabContainer) fabContainer.classList.remove('open');
+            // Luego, abrimos el modal.
             const modal = document.getElementById('dniModal');
             modal.style.display = 'flex';
             const input = document.getElementById('dniInput');
