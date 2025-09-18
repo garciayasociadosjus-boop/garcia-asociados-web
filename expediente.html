@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0A0E1A; --secondary: #151B2D; --accent: #374151; --light: #F9FAFB; --white: #FFFFFF; --silver: #E5E7EB; --ai-blue: #4285F4; }
+        :root { --primary: #0A0E1A; --secondary: #151B2D; --accent: #374151; --light: #F9FAFB; --white: #FFFFFF; --silver: #E5E7EB; --ai-blue: #4285F4; --pinned-bg: #fffbe6; --pinned-border: #ffe58f; }
         body { font-family: 'Source Sans Pro', sans-serif; background-color: var(--light); color: var(--primary); margin: 0; padding: 2rem; }
         .container { background-color: var(--white); border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); max-width: 800px; width: 100%; margin: 2rem auto; }
         .header { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: var(--white); padding: 2rem; text-align: center; border-radius: 15px 15px 0 0; }
@@ -28,6 +28,43 @@
         .ai-chat-button { display: inline-block; text-decoration: none; background: linear-gradient(45deg, #1e88e5, var(--ai-blue)); color: white; padding: 14px 28px; border-radius: 30px; font-weight: 600; margin-top: 1.5rem; transition: all 0.3s ease; }
         .ai-chat-button:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4); }
         .ai-container { text-align: center; padding-top: 1.5rem; border-top: 1px solid var(--silver); margin: 1.5rem; }
+
+        /* **NUEVO: Estilos para la audiencia fijada** */
+        .pinned-notice {
+            background-color: var(--pinned-bg);
+            border: 1px solid var(--pinned-border);
+            border-left: 5px solid var(--pinned-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 0 1.5rem 2rem 1.5rem;
+        }
+        .pinned-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+            font-family: 'Crimson Text', serif;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .pinned-title span {
+            margin-right: 0.75rem;
+            font-size: 1.5rem;
+        }
+        .pinned-item {
+            margin-bottom: 1rem;
+        }
+        .pinned-item:last-child {
+            margin-bottom: 0;
+        }
+        .pinned-date {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .pinned-text {
+            margin-top: 0.25rem;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -64,6 +101,41 @@
                     const expedienteContainer = document.createElement('div');
                     expedienteContainer.className = 'expediente-block';
 
+                    // **NUEVO: Lógica para buscar y mostrar audiencias fijadas**
+                    let pinnedHtml = '';
+                    const hoy = new Date();
+                    hoy.setHours(0, 0, 0, 0); // Para comparar solo fechas
+                    
+                    const audienciasFuturas = (expediente.audiencias_list || []).filter(aud => {
+                        if (!aud.fecha || aud.completed) return false;
+                        return new Date(aud.fecha + 'T00:00:00') >= hoy;
+                    });
+
+                    const mediacionesFuturas = (expediente.mediaciones_list || []).filter(med => {
+                        if (!med.fecha || med.completed) return false;
+                        return new Date(med.fecha + 'T00:00:00') >= hoy;
+                    });
+
+                    const eventosFuturos = [...audienciasFuturas, ...mediacionesFuturas].sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+
+                    if (eventosFuturos.length > 0) {
+                        pinnedHtml += '<div class="pinned-notice"><div class="pinned-title"><span>📌</span>Próximos Eventos Agendados</div>';
+                        eventosFuturos.forEach(evento => {
+                             const fecha = new Date(evento.fecha + 'T00:00:00');
+                             const fechaFormateada = fecha.toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                             const tipoEvento = evento.hora ? 'Audiencia' : 'Mediación'; // Asumimos que las mediaciones no tienen hora
+                             pinnedHtml += `
+                                <div class="pinned-item">
+                                    <div class="pinned-date">${fechaFormateada} a las ${evento.hora || ''} hs. (${tipoEvento})</div>
+                                    <div class="pinned-text">${evento.texto}</div>
+                                </div>
+                             `;
+                        });
+                        pinnedHtml += '</div>';
+                    }
+                    // **FIN Lógica Audiencias**
+
+
                     let historialHtml = '<p>No hay actuaciones para mostrar.</p>';
                     if (expediente.observaciones && expediente.observaciones.length > 0) {
                         const sortedObservaciones = expediente.observaciones.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
@@ -81,6 +153,7 @@
                             <div class="info-item"><h3>N° Expediente</h3><p>${expediente.expediente || 'N/D'}</p></div>
                             <div class="info-item"><h3>Estado</h3><p>${expediente.estado || 'N/D'}</p></div>
                         </div>
+                        ${pinnedHtml} 
                         <div class="history-section">
                             <h2>Historial de Actuaciones</h2>
                             <div>${historialHtml}</div>
