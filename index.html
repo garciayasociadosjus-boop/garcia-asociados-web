@@ -1217,7 +1217,17 @@ Ha escrito diversos libros, entre ellos “La problemática del embarazo y el pa
             </div>
         </div>
     </div>
-    
+
+    <div id="expedienteModal" class="modal">
+        <div class="modal-content" style="max-width: 700px; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="margin-bottom: 0;">📄 Resumen de Actuaciones</h3>
+                <span onclick="closeModal('expedienteModal')" style="cursor: pointer; font-size: 2.5rem; color: #aaa; font-weight: 300; line-height: 1;">&times;</span>
+            </div>
+            <div id="expedienteContent" style="white-space: pre-wrap; line-height: 1.7; max-height: 60vh; overflow-y: auto; background: #f9f9f9; padding: 1.5rem; border-radius: 10px; border: 1px solid #eee; color: #333;">
+                </div>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
@@ -1259,8 +1269,10 @@ Ha escrito diversos libros, entre ellos “La problemática del embarazo y el pa
         window.onclick = function(event) {
             const passwordModal = document.getElementById('passwordModal');
             const dniModal = document.getElementById('dniModal');
+            const expedienteModal = document.getElementById('expedienteModal'); // <-- MODIFICADO
             if (event.target == passwordModal) closeModal('passwordModal');
             if (event.target == dniModal) closeModal('dniModal');
+            if (event.target == expedienteModal) closeModal('expedienteModal'); // <-- MODIFICADO
         }
 
         // --- LÓGICA PARA ACCESO INTERNO (CONTRASEÑA) ---
@@ -1268,10 +1280,8 @@ Ha escrito diversos libros, entre ellos “La problemática del embarazo y el pa
         const PORTAL_URL = 'https://garciayasociadosjus-boop.github.io/';
         
         function openPasswordModal() {
-            // Primero, cerramos el menú flotante si está abierto, para que no interfiera.
             const fabContainer = document.getElementById('fab-container');
             if (fabContainer) fabContainer.classList.remove('open');
-            // Luego, abrimos el modal.
             const modal = document.getElementById('passwordModal');
             modal.style.display = 'flex';
             const input = document.getElementById('passwordInput');
@@ -1297,10 +1307,8 @@ Ha escrito diversos libros, entre ellos “La problemática del embarazo y el pa
         
         // --- LÓGICA PARA EXPEDIENTE ONLINE (DNI) ---
         function openDniModal() {
-            // Primero, cerramos el menú flotante si está abierto.
             const fabContainer = document.getElementById('fab-container');
             if (fabContainer) fabContainer.classList.remove('open');
-            // Luego, abrimos el modal.
             const modal = document.getElementById('dniModal');
             modal.style.display = 'flex';
             const input = document.getElementById('dniInput');
@@ -1310,19 +1318,53 @@ Ha escrito diversos libros, entre ellos “La problemática del embarazo y el pa
             input.focus();
         }
 
+        // ===== INICIO: NUEVA FUNCIÓN PARA CONSULTAR EXPEDIENTE =====
         function consultarExpediente() {
             const dniInput = document.getElementById('dniInput');
             const dni = dniInput.value.trim();
+            const error = document.getElementById('dniErrorMessage');
+            // URL de tu servidor en Railway
+            const API_URL = 'https://portal-backend-production-3ea3.up.railway.app/api/consulta-expediente';
 
-            if (dni && !isNaN(dni)) {
-                window.open(`expediente.html?dni=${dni}`, '_blank');
-                closeModal('dniModal');
-            } else {
-                const error = document.getElementById('dniErrorMessage');
+            if (!dni || isNaN(dni)) {
                 if(error) error.style.display = 'block';
                 setTimeout(() => { if(error) error.style.display = 'none'; }, 3000);
+                return;
             }
+
+            // Cerramos la ventana de DNI y abrimos la de resultados con un mensaje de carga
+            closeModal('dniModal');
+            const resultadoModal = document.getElementById('expedienteModal');
+            const contenido = document.getElementById('expedienteContent');
+            
+            if(resultadoModal) resultadoModal.style.display = 'flex';
+            if(contenido) contenido.innerHTML = '<p style="text-align: center;">Buscando y procesando su información... 🤖<br>Esto puede tardar unos segundos.</p>';
+
+            // Llamamos al servidor
+            fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ dni: dni }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Respuesta no válida del servidor.');
+                }
+                return response.text(); // Usamos .text() para recibir el texto plano de la IA
+            })
+            .then(data => {
+                // Mostramos el resumen de la IA en el modal de resultados
+                if(contenido) contenido.textContent = data;
+            })
+            .catch((error) => {
+                console.error('Error en la consulta:', error);
+                if(contenido) contenido.innerHTML = '<p style="color: red; text-align: center;"><strong>Ocurrió un error.</strong><br>No se pudo obtener la información. Por favor, intente más tarde o contacte al estudio para verificar sus datos.</p>';
+            });
         }
+        // ===== FIN: NUEVA FUNCIÓN PARA CONSULTAR EXPEDIENTE =====
+
 
         // --- LÓGICA PARA BOTÓN FLOTANTE (FAB) ---
         const fabContainer = document.getElementById('fab-container');
