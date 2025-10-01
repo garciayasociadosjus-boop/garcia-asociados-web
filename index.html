@@ -997,7 +997,7 @@
             
             <div class="cta-container" style="margin-bottom: 3rem;">
                 <a href="#servicios" class="hero-cta-btn primary">Nuestros Servicios</a>
-                <a href="https://gemini.google.com/gem/18ab3383dcdf" target="_blank" class="hero-cta-btn secondary">García & Asociados IA</a>
+                <a href="https://gemini.google.com/gem/18ab3383dcdf" target="_blank" class="hero-cta-btn secondary">Consultar a JUSTINA IA</a>
             </div>
 
             <h2 class="welcome-title">¡Bienvenidos!</h2>
@@ -1228,6 +1228,7 @@ Ha escrito diversos libros, entre ellos “La problemática del embarazo y el pa
                 </div>
         </div>
     </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
@@ -1269,10 +1270,10 @@ Ha escrito diversos libros, entre ellos “La problemática del embarazo y el pa
         window.onclick = function(event) {
             const passwordModal = document.getElementById('passwordModal');
             const dniModal = document.getElementById('dniModal');
-            const expedienteModal = document.getElementById('expedienteModal'); // <-- MODIFICADO
+            const expedienteModal = document.getElementById('expedienteModal');
             if (event.target == passwordModal) closeModal('passwordModal');
             if (event.target == dniModal) closeModal('dniModal');
-            if (event.target == expedienteModal) closeModal('expedienteModal'); // <-- MODIFICADO
+            if (event.target == expedienteModal) closeModal('expedienteModal');
         }
 
         // --- LÓGICA PARA ACCESO INTERNO (CONTRASEÑA) ---
@@ -1318,12 +1319,10 @@ Ha escrito diversos libros, entre ellos “La problemática del embarazo y el pa
             input.focus();
         }
 
-        // ===== INICIO: NUEVA FUNCIÓN PARA CONSULTAR EXPEDIENTE =====
         function consultarExpediente() {
             const dniInput = document.getElementById('dniInput');
             const dni = dniInput.value.trim();
             const error = document.getElementById('dniErrorMessage');
-            // URL de tu servidor en Railway
             const API_URL = 'https://portal-backend-production-3ea3.up.railway.app/api/consulta-expediente';
 
             if (!dni || isNaN(dni)) {
@@ -1332,7 +1331,6 @@ Ha escrito diversos libros, entre ellos “La problemática del embarazo y el pa
                 return;
             }
 
-            // Cerramos la ventana de DNI y abrimos la de resultados con un mensaje de carga
             closeModal('dniModal');
             const resultadoModal = document.getElementById('expedienteModal');
             const contenido = document.getElementById('expedienteContent');
@@ -1340,30 +1338,36 @@ Ha escrito diversos libros, entre ellos “La problemática del embarazo y el pa
             if(resultadoModal) resultadoModal.style.display = 'flex';
             if(contenido) contenido.innerHTML = '<p style="text-align: center;">Buscando y procesando su información... 🤖<br>Esto puede tardar unos segundos.</p>';
 
-            // Llamamos al servidor
             fetch(API_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ dni: dni }),
             })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Respuesta no válida del servidor.');
-                }
-                return response.text(); // Usamos .text() para recibir el texto plano de la IA
+                if (!response.ok) { throw new Error('Respuesta no válida del servidor.'); }
+                return response.text();
             })
             .then(data => {
-                // Mostramos el resumen de la IA en el modal de resultados
-                if(contenido) contenido.textContent = data;
+                const whatsappLink = `https://wa.me/5491168063444?text=Hola%2C%20acabo%20de%20revisar%20mi%20expediente%20online%20y%20tengo%20una%20consulta.`;
+                const justinaLink = `https://gemini.google.com/gem/18ab3383dcdf`;
+
+                if(contenido) {
+                    const textoFormateado = data.replace(/\n/g, '<br>');
+                    
+                    contenido.innerHTML = `
+                        <div style="padding-bottom: 1.5rem;">${textoFormateado}</div>
+                        <div style="border-top: 1px solid #eee; margin-top: 1rem; padding-top: 1.5rem; text-align: center; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                            <a href="${justinaLink}" target="_blank" class="modal-btn modal-btn-secondary" style="text-decoration: none;">🤖 Consultar a JUSTINA IA</a>
+                            <a href="${whatsappLink}" target="_blank" class="modal-btn modal-btn-primary" style="text-decoration: none;">💬 Contactar al Estudio</a>
+                        </div>
+                    `;
+                }
             })
             .catch((error) => {
                 console.error('Error en la consulta:', error);
                 if(contenido) contenido.innerHTML = '<p style="color: red; text-align: center;"><strong>Ocurrió un error.</strong><br>No se pudo obtener la información. Por favor, intente más tarde o contacte al estudio para verificar sus datos.</p>';
             });
         }
-        // ===== FIN: NUEVA FUNCIÓN PARA CONSULTAR EXPEDIENTE =====
 
 
         // --- LÓGICA PARA BOTÓN FLOTANTE (FAB) ---
