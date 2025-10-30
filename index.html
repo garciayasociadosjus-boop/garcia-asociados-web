@@ -1323,7 +1323,10 @@ Ha escrito diversos libros, entre ellos “La problemática del embarazo y el pa
             const dniInput = document.getElementById('dniInput');
             const dni = dniInput.value.trim();
             const error = document.getElementById('dniErrorMessage');
-            const API_URL = 'https://portal-backend-production-3ea3.up.railway.app/api/consulta-expediente';
+            
+            // !!!!!!!!!! ESTA ES LA LÍNEA QUE CAMBIÉ !!!!!!!!!!
+            const API_URL = 'https://portal-backend-1-8jx9.onrender.com/api/consulta-expediente';
+            // !!!!!!!!!! ------------------------------ !!!!!!!!!!
 
             if (!dni || isNaN(dni)) {
                 if(error) error.style.display = 'block';
