@@ -1,6 +1,1047 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta http-equiv="refresh" content="0; url=https://garciayasociadosjus-boop.github.io/firmadigital/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Firma Digital — García & Asociados</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 350 350'><circle cx='175' cy='40' r='14' fill='%23c9a96e' stroke='%238a6a10' stroke-width='3'/><circle cx='175' cy='40' r='7' fill='%23e8d9bb'/><rect x='168' y='40' width='16' height='280' rx='8' fill='%23c9a96e'/><rect x='25' y='48' width='300' height='14' rx='7' fill='%23c9a96e'/><rect x='110' y='308' width='130' height='14' rx='7' fill='%23c9a96e'/><line x1='35' y1='58' x2='15' y2='185' stroke='%23c9a96e' stroke-width='3'/><line x1='35' y1='58' x2='55' y2='185' stroke='%23c9a96e' stroke-width='3'/><line x1='315' y1='58' x2='295' y2='185' stroke='%23c9a96e' stroke-width='3'/><line x1='315' y1='58' x2='335' y2='185' stroke='%23c9a96e' stroke-width='3'/><ellipse cx='35' cy='198' rx='55' ry='12' fill='%238a6a10'/><ellipse cx='35' cy='190' rx='55' ry='12' fill='%23c9a96e' stroke='%238a6a10' stroke-width='3'/><ellipse cx='35' cy='187' rx='45' ry='6' fill='none' stroke='%23e8d9bb' stroke-width='1.5'/><ellipse cx='315' cy='198' rx='55' ry='12' fill='%238a6a10'/><ellipse cx='315' cy='190' rx='55' ry='12' fill='%23c9a96e' stroke='%238a6a10' stroke-width='3'/><ellipse cx='315' cy='187' rx='45' ry='6' fill='none' stroke='%23e8d9bb' stroke-width='1.5'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --ink: #0a0a0f;
+  --ink-60: rgba(10,10,15,0.6);
+  --ink-30: rgba(10,10,15,0.3);
+  --ink-10: rgba(10,10,15,0.1);
+  --cream: #f5f2ec;
+  --gold: #c9a96e;
+  --gold-light: #e8d9bb;
+  --white: #ffffff;
+  --slide-w: 1280px;
+  --slide-h: 720px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #1a1a1f;
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+/* ── NAVBAR ── */
+#navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(201,169,110,0.15);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  gap: 12px;
+}
+#navbar.visible { display: flex; }
+.nav-balanza {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+.nav-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.08em;
+}
+.nav-sep {
+  width: 1px;
+  height: 16px;
+  background: rgba(201,169,110,0.3);
+}
+.nav-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* ── WELCOME ── */
+#welcome {
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#welcome.hidden { opacity: 0; visibility: hidden; }
+
+.welcome-eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+}
+.welcome-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 300;
+  color: var(--white);
+  text-align: center;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  max-width: 700px;
+}
+.welcome-sub {
+  font-size: 15px;
+  color: var(--ink-60);
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 56px;
+  letter-spacing: 0.02em;
+}
+.welcome-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  margin-bottom: 40px;
+}
+#btn-start {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--gold);
+  border: none;
+  padding: 16px 48px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+#btn-start:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+/* ── STAGE SHELL ── */
+#stage {
+  position: relative;
+  width: 100%;
+  max-width: var(--slide-w);
+  padding: 40px 20px;
+}
+
+/* ── PROGRESS BAR ── */
+#progress-bar {
+  position: fixed;
+  top: 56px; left: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  z-index: 100;
+  width: 0%;
+}
+
+/* ── NAV CONTROLS ── */
+#nav-controls {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  z-index: 100;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(201,169,110,0.25);
+  padding: 12px 28px;
+  border-radius: 40px;
+}
+#nav-controls button {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  font-size: 18px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+#nav-controls button:hover { color: var(--gold); }
+#nav-controls button:disabled { opacity: 0.2; cursor: default; }
+
+#slide-counter {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.35);
+  min-width: 60px;
+  text-align: center;
+}
+
+#dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.dot.active {
+  background: var(--gold);
+  transform: scale(1.4);
+}
+
+/* ── AUDIO MUTE ── */
+#mute-btn {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 200;
+  background: rgba(10,10,15,0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(201,169,110,0.2);
+  color: rgba(255,255,255,0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+#mute-btn:hover { color: var(--gold); border-color: var(--gold); }
+#mute-btn.visible { display: flex; }
+
+/* ── SLIDE ── */
+.slide {
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--cream);
+  margin-bottom: 2px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.slide.visible { opacity: 1; transform: translateY(0); }
+
+/* Texture overlay */
+.slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.slide > * { position: relative; z-index: 2; }
+
+/* Gold accent line left */
+.slide-accent {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+}
+
+/* Footer */
+.slide-footer {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 16px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--ink-10);
+  z-index: 3;
+}
+.slide-footer-brand {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-30);
+}
+.slide-footer-step {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* ── SLIDE 1: PORTADA ── */
+#slide1 {
+  background: var(--ink);
+  align-items: center;
+}
+.cover-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(201,169,110,0.12) 0%, transparent 70%);
+}
+.cover-bg-img {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://i.postimg.cc/LsPWpjy1/BALANZA1.jpg');
+  background-size: 55%;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.04;
+}
+.cover-inner {
+  text-align: center;
+  padding: 0 60px;
+  position: relative;
+  z-index: 2;
+}
+.cover-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+}
+.cover-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5.5vw, 68px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+.cover-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.cover-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.06em;
+  font-weight: 300;
+}
+.cover-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 28px 0;
+}
+.cover-ornament span {
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.4;
+}
+.cover-ornament i {
+  color: var(--gold);
+  font-size: 14px;
+  opacity: 0.7;
+}
+#slide1 .slide-footer-brand { color: rgba(255,255,255,0.2); }
+
+/* ── SLIDE 2: SECCIÓN ── */
+#slide2 { background: var(--ink); align-items: center; }
+.section-inner {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  padding: 0 80px;
+}
+.section-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(80px, 12vw, 160px);
+  font-weight: 300;
+  color: rgba(201,169,110,0.08);
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  user-select: none;
+  letter-spacing: -0.05em;
+}
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4.5vw, 52px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.15;
+}
+.section-line {
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+  margin: 24px auto;
+  opacity: 0.5;
+}
+.section-desc {
+  font-size: 16px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 300;
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+#slide2 .slide-footer-brand { color: rgba(255,255,255,0.2); }
+
+/* ── SLIDES 3-6: PASOS ── */
+.step-slide {
+  background: var(--cream);
+}
+.step-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  padding: 52px 56px 80px 56px;
+  gap: 56px;
+  align-items: center;
+}
+.step-content {}
+.step-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.step-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+.step-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.step-list li {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.step-bullet {
+  width: 22px;
+  height: 22px;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.step-bullet i {
+  font-size: 10px;
+  color: var(--white);
+}
+.step-text {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-60);
+  font-weight: 300;
+}
+.step-text strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.step-image-wrap {
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  background: rgba(10,10,15,0.06);
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-image-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--ink-10);
+  z-index: 2;
+  pointer-events: none;
+}
+.step-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+/* Corner accent */
+.step-image-wrap::after {
+  content: '';
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 20px; height: 20px;
+  border-top: 1px solid var(--gold);
+  border-right: 1px solid var(--gold);
+  z-index: 3;
+  opacity: 0.6;
+}
+.step-num-bg {
+  position: absolute;
+  right: -10px;
+  bottom: -20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 140px;
+  font-weight: 300;
+  color: var(--ink-10);
+  user-select: none;
+  line-height: 1;
+  z-index: 0;
+}
+
+/* ── SLIDE 7: CONTACTO ── */
+#slide7 { background: var(--ink); }
+.contact-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px;
+  height: 100%;
+  position: relative;
+}
+.contact-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.contact-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+.contact-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 48px;
+  font-weight: 300;
+}
+.contact-grid {
+  display: flex;
+  gap: 0;
+  border: 1px solid rgba(201,169,110,0.2);
+}
+.contact-item {
+  padding: 28px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border-right: 1px solid rgba(201,169,110,0.2);
+  transition: background 0.3s;
+}
+.contact-item:last-child { border-right: none; }
+.contact-item:hover { background: rgba(201,169,110,0.05); }
+.contact-item i {
+  font-size: 20px;
+  color: var(--gold);
+  opacity: 0.7;
+}
+.contact-item span,
+.contact-item a {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: color 0.2s;
+}
+.contact-item a:hover { color: var(--gold); }
+#slide7 .slide-footer-brand { color: rgba(255,255,255,0.2); }
+
+/* hidden audio */
+.audio-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  opacity: 0;
+  top: -9999px; left: -9999px;
+  overflow: hidden;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  #stage { padding: 0; }
+  .slide { aspect-ratio: auto; min-height: 100vh; }
+  .step-layout {
+    grid-template-columns: 1fr;
+    padding: 48px 24px 100px;
+    gap: 32px;
+  }
+  .step-image-wrap { order: -1; aspect-ratio: 16/9; }
+  .step-num-bg { display: none; }
+  .cover-title { font-size: 36px; }
+  .contact-grid { flex-direction: column; }
+  .contact-item { border-right: none; border-bottom: 1px solid rgba(201,169,110,0.2); }
+  .contact-item:last-child { border-bottom: none; }
+  .slide-footer { padding: 14px 24px; }
+  #nav-controls { bottom: 16px; padding: 10px 20px; gap: 16px; }
+  .section-inner { padding: 0 32px; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
 </head>
+<body>
+
+<!-- Navbar -->
+<nav id="navbar">
+  <svg class="nav-balanza" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 350">
+    <circle cx="175" cy="40" r="14" fill="#c9a96e" stroke="#8a6a10" stroke-width="3"/>
+    <circle cx="175" cy="40" r="7" fill="#e8d9bb"/>
+    <rect x="168" y="40" width="16" height="280" rx="8" fill="#c9a96e"/>
+    <rect x="25" y="48" width="300" height="14" rx="7" fill="#c9a96e"/>
+    <rect x="110" y="308" width="130" height="14" rx="7" fill="#c9a96e"/>
+    <line x1="35" y1="58" x2="15" y2="185" stroke="#c9a96e" stroke-width="3"/>
+    <line x1="35" y1="58" x2="55" y2="185" stroke="#c9a96e" stroke-width="3"/>
+    <line x1="315" y1="58" x2="295" y2="185" stroke="#c9a96e" stroke-width="3"/>
+    <line x1="315" y1="58" x2="335" y2="185" stroke="#c9a96e" stroke-width="3"/>
+    <ellipse cx="35" cy="198" rx="55" ry="12" fill="#8a6a10"/>
+    <ellipse cx="35" cy="190" rx="55" ry="12" fill="#c9a96e" stroke="#8a6a10" stroke-width="3"/>
+    <ellipse cx="35" cy="187" rx="45" ry="6" fill="none" stroke="#e8d9bb" stroke-width="1.5"/>
+    <ellipse cx="315" cy="198" rx="55" ry="12" fill="#8a6a10"/>
+    <ellipse cx="315" cy="190" rx="55" ry="12" fill="#c9a96e" stroke="#8a6a10" stroke-width="3"/>
+    <ellipse cx="315" cy="187" rx="45" ry="6" fill="none" stroke="#e8d9bb" stroke-width="1.5"/>
+  </svg>
+  <span class="nav-brand">García &amp; Asociados</span>
+  <span class="nav-sep"></span>
+  <span class="nav-title">Guía de Firma Digital</span>
+</nav>
+
+<!-- Progress -->
+<div id="progress-bar"></div>
+
+<!-- Mute -->
+<button id="mute-btn" title="Silenciar / activar audio">
+  <i class="fas fa-volume-up" id="mute-icon"></i>
+</button>
+
+<!-- Logo SVG balanza (inline, reutilizable) -->
+<svg id="balanza-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 350" style="display:none">
+  <circle cx="175" cy="40" r="14" fill="#c9a96e" stroke="#0a0a0f" stroke-width="3"/>
+  <circle cx="175" cy="40" r="7" fill="#e8d9bb"/>
+  <rect x="168" y="40" width="16" height="280" rx="8" fill="#0a0a0f"/>
+  <rect x="25" y="48" width="300" height="14" rx="7" fill="#0a0a0f"/>
+  <rect x="110" y="308" width="130" height="14" rx="7" fill="#0a0a0f"/>
+  <rect x="130" y="295" width="90" height="15" rx="5" fill="#1a1a2e"/>
+  <line x1="35" y1="58" x2="15" y2="185" stroke="#0a0a0f" stroke-width="3"/>
+  <line x1="35" y1="58" x2="55" y2="185" stroke="#0a0a0f" stroke-width="3"/>
+  <line x1="315" y1="58" x2="295" y2="185" stroke="#0a0a0f" stroke-width="3"/>
+  <line x1="315" y1="58" x2="335" y2="185" stroke="#0a0a0f" stroke-width="3"/>
+  <ellipse cx="35" cy="198" rx="55" ry="12" fill="#8a6a10"/>
+  <ellipse cx="35" cy="190" rx="55" ry="12" fill="#c9a96e" stroke="#0a0a0f" stroke-width="3"/>
+  <ellipse cx="35" cy="187" rx="45" ry="6" fill="none" stroke="#e8d9bb" stroke-width="1.5"/>
+  <ellipse cx="315" cy="198" rx="55" ry="12" fill="#8a6a10"/>
+  <ellipse cx="315" cy="190" rx="55" ry="12" fill="#c9a96e" stroke="#0a0a0f" stroke-width="3"/>
+  <ellipse cx="315" cy="187" rx="45" ry="6" fill="none" stroke="#e8d9bb" stroke-width="1.5"/>
+</svg>
+
+<!-- Welcome -->
+<div id="welcome">
+  <p class="welcome-eyebrow">García &amp; Asociados — Estudio Jurídico</p>
+  <h1 class="welcome-title">Cómo firmar con <em>Adobe Acrobat Sign</em></h1>
+  <p class="welcome-sub">Guía para clientes</p>
+  <div class="welcome-line"></div>
+  <button id="btn-start">Comenzar</button>
+</div>
+
+<!-- Stage -->
+<div id="stage">
+
+  <!-- SLIDE 1: PORTADA -->
+  <div class="slide" id="slide1">
+    <div class="cover-bg"></div>
+    <div class="cover-bg-img"></div>
+    <div class="cover-inner">
+      <p class="cover-eyebrow">García &amp; Asociados — Estudio Jurídico</p>
+      <h1 class="cover-title">Cómo firmar con<br><em>Adobe Acrobat Sign</em></h1>
+      <div class="cover-ornament">
+        <span></span>
+        <i class="fas fa-balance-scale"></i>
+        <span></span>
+      </div>
+      <p class="cover-sub">Guía paso a paso para nuestros clientes</p>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-brand">García &amp; Asociados</span>
+      <span class="slide-footer-step"></span>
+    </div>
+    <div class="audio-hidden" id="audio-1"></div>
+  </div>
+
+  <!-- SLIDE 2: SECCIÓN -->
+  <div class="slide" id="slide2">
+    <div class="cover-bg"></div>
+    <div class="section-inner">
+      <div class="section-num">01</div>
+      <p class="section-label">El proceso</p>
+      <h2 class="section-title">Firma Digital<br>Segura y Sencilla</h2>
+      <div class="section-line"></div>
+      <p class="section-desc">Un método confiable y completamente digital para validar sus acuerdos. Solo necesita el correo que le enviamos.</p>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-brand">García &amp; Asociados</span>
+      <span class="slide-footer-step"></span>
+    </div>
+    <div class="audio-hidden" id="audio-2"></div>
+  </div>
+
+  <!-- SLIDE 3: PASO 1 -->
+  <div class="slide step-slide" id="slide3">
+    <div class="slide-accent"></div>
+    <div class="step-layout">
+      <div class="step-content">
+        <p class="step-eyebrow">Paso 01</p>
+        <h2 class="step-title">Revisar<br>la Solicitud</h2>
+        <ul class="step-list">
+          <li>
+            <div class="step-bullet"><i class="fas fa-check"></i></div>
+            <p class="step-text">Recibirá una solicitud en su correo electrónico enviada por nuestro estudio.</p>
+          </li>
+          <li>
+            <div class="step-bullet"><i class="fas fa-check"></i></div>
+            <p class="step-text">Para comenzar, haga clic en el botón azul <strong>"Revisar y firmar"</strong> que encontrará en el mensaje.</p>
+          </li>
+        </ul>
+      </div>
+      <div style="position:relative;">
+        <div class="step-image-wrap">
+          <img src="https://i.postimg.cc/Y2szb5Sj/1.jpg" alt="Paso 1: Revisar correo">
+        </div>
+        <span class="step-num-bg">1</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-brand">García &amp; Asociados</span>
+      <span class="slide-footer-step">Paso 1 de 4</span>
+    </div>
+    <div class="audio-hidden" id="audio-3"></div>
+  </div>
+
+  <!-- SLIDE 4: PASO 2 -->
+  <div class="slide step-slide" id="slide4">
+    <div class="slide-accent"></div>
+    <div class="step-layout">
+      <div class="step-content">
+        <p class="step-eyebrow">Paso 02</p>
+        <h2 class="step-title">Completar<br>los Campos</h2>
+        <ul class="step-list">
+          <li>
+            <div class="step-bullet"><i class="fas fa-check"></i></div>
+            <p class="step-text">Complete los campos obligatorios indicados, por ejemplo la fecha del documento.</p>
+          </li>
+          <li>
+            <div class="step-bullet"><i class="fas fa-check"></i></div>
+            <p class="step-text">Luego haga clic en el campo resaltado que dice <strong>"Haga clic aquí para firmar"</strong>.</p>
+          </li>
+        </ul>
+      </div>
+      <div style="position:relative;">
+        <div class="step-image-wrap">
+          <img src="https://i.postimg.cc/DfMPB9zq/2.jpg" alt="Paso 2: Completar campos">
+        </div>
+        <span class="step-num-bg">2</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-brand">García &amp; Asociados</span>
+      <span class="slide-footer-step">Paso 2 de 4</span>
+    </div>
+    <div class="audio-hidden" id="audio-4"></div>
+  </div>
+
+  <!-- SLIDE 5: PASO 3 -->
+  <div class="slide step-slide" id="slide5">
+    <div class="slide-accent"></div>
+    <div class="step-layout">
+      <div class="step-content">
+        <p class="step-eyebrow">Paso 03</p>
+        <h2 class="step-title">Aplicar<br>y Enviar</h2>
+        <ul class="step-list">
+          <li>
+            <div class="step-bullet"><i class="fas fa-check"></i></div>
+            <p class="step-text">Su firma digital quedará aplicada sobre el documento de forma segura.</p>
+          </li>
+          <li>
+            <div class="step-bullet"><i class="fas fa-check"></i></div>
+            <p class="step-text">Para finalizar y registrar su conformidad, haga clic en el botón <strong>"Enviar"</strong>.</p>
+          </li>
+        </ul>
+      </div>
+      <div style="position:relative;">
+        <div class="step-image-wrap">
+          <img src="https://i.postimg.cc/J725PfhX/3.jpg" alt="Paso 3: Enviar firma">
+        </div>
+        <span class="step-num-bg">3</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-brand">García &amp; Asociados</span>
+      <span class="slide-footer-step">Paso 3 de 4</span>
+    </div>
+    <div class="audio-hidden" id="audio-5"></div>
+  </div>
+
+  <!-- SLIDE 6: PASO 4 -->
+  <div class="slide step-slide" id="slide6">
+    <div class="slide-accent"></div>
+    <div class="step-layout">
+      <div class="step-content">
+        <p class="step-eyebrow">Paso 04</p>
+        <h2 class="step-title">¡Todo<br>Listo!</h2>
+        <ul class="step-list">
+          <li>
+            <div class="step-bullet"><i class="fas fa-check"></i></div>
+            <p class="step-text">Verá un mensaje de confirmación: <strong>"Ya está todo listo"</strong>. El proceso finalizó con éxito.</p>
+          </li>
+          <li>
+            <div class="step-bullet"><i class="fas fa-check"></i></div>
+            <p class="step-text">Puede <strong>descargar una copia</strong> del acuerdo firmado para sus registros.</p>
+          </li>
+        </ul>
+      </div>
+      <div style="position:relative;">
+        <div class="step-image-wrap">
+          <img src="https://i.postimg.cc/c1bBXpJR/4.jpg" alt="Paso 4: Confirmación">
+        </div>
+        <span class="step-num-bg">4</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-brand">García &amp; Asociados</span>
+      <span class="slide-footer-step">Paso 4 de 4</span>
+    </div>
+    <div class="audio-hidden" id="audio-6"></div>
+  </div>
+
+  <!-- SLIDE 7: CONTACTO -->
+  <div class="slide" id="slide7">
+    <div class="cover-bg"></div>
+    <div class="contact-layout">
+      <p class="contact-eyebrow">Estamos para ayudarle</p>
+      <h2 class="contact-title">¿Tiene alguna<br>consulta?</h2>
+      <p class="contact-sub">Comuníquese con nuestro equipo por cualquiera de estos medios</p>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <a href="mailto:garciayasociadosjus@gmail.com">garciayasociadosjus@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <span>11 6806-3444 / 11 7237-1991</span>
+        </div>
+        <div class="contact-item">
+          <i class="fab fa-instagram"></i>
+          <a href="https://www.instagram.com/garciayasociadosjus/" target="_blank">@garciayasociadosjus</a>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span class="slide-footer-brand">García &amp; Asociados</span>
+      <span class="slide-footer-step"></span>
+    </div>
+    <div class="audio-hidden" id="audio-7"></div>
+  </div>
+
+</div><!-- /stage -->
+
+<!-- Nav Controls -->
+<div id="nav-controls">
+  <button id="btn-prev" title="Anterior"><i class="fas fa-arrow-left"></i></button>
+  <div id="dots"></div>
+  <span id="slide-counter">1 / 7</span>
+  <button id="btn-next" title="Siguiente"><i class="fas fa-arrow-right"></i></button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  const TOTAL = 7;
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const progressBar = document.getElementById('progress-bar');
+  const counter = document.getElementById('slide-counter');
+  const dotsContainer = document.getElementById('dots');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  const muteBtn = document.getElementById('mute-btn');
+  const muteIcon = document.getElementById('mute-icon');
+  const welcomeEl = document.getElementById('welcome');
+  const btnStart = document.getElementById('btn-start');
+
+  let current = 0;
+  let muted = false;
+  let started = false;
+
+  const audioFiles = ['1.mp3','2.mp3','3.mp3','4.mp3','5.mp3','6.mp3','7.mp3'];
+  const players = [];
+
+  // Build dots
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(d);
+  }
+
+  function preload() {
+    audioFiles.forEach((f, i) => {
+      const c = document.getElementById('audio-' + (i + 1));
+      if (!c) return;
+      c.innerHTML = '';
+      const a = document.createElement('audio');
+      a.src = f;
+      a.id = 'player-' + (i + 1);
+      a.preload = 'auto';
+      a.muted = true;
+      c.appendChild(a);
+      players[i] = a;
+    });
+  }
+
+  function playSlide(idx) {
+    players.forEach((p, i) => {
+      if (!p) return;
+      if (i === idx) {
+        p.currentTime = 0;
+        p.muted = muted;
+        p.play().catch(() => {});
+      } else {
+        p.pause();
+      }
+    });
+  }
+
+  function updateUI() {
+    slides.forEach((s, i) => {
+      s.classList.toggle('visible', i === current);
+    });
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+    counter.textContent = (current + 1) + ' / ' + TOTAL;
+    const pct = ((current) / (TOTAL - 1)) * 100;
+    progressBar.style.width = pct + '%';
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === TOTAL - 1;
+    if (started) playSlide(current);
+  }
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= TOTAL) return;
+    current = idx;
+    updateUI();
+    const targetSlide = slides[idx];
+    targetSlide.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  btnPrev.addEventListener('click', () => goTo(current - 1));
+  btnNext.addEventListener('click', () => goTo(current + 1));
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!started) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current - 1);
+  });
+
+  // Mute toggle
+  muteBtn.addEventListener('click', () => {
+    muted = !muted;
+    players.forEach((p, i) => { if (p) p.muted = muted; });
+    muteIcon.className = muted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+    muteBtn.style.color = muted ? 'var(--gold)' : '';
+    muteBtn.style.borderColor = muted ? 'var(--gold)' : '';
+  });
+
+  // Intersection observer to update current on scroll
+  const observer = new IntersectionObserver((entries) => {
+    if (!started) return;
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
+        const idx = slides.indexOf(entry.target);
+        if (idx !== -1 && idx !== current) {
+          current = idx;
+          updateUI();
+        }
+      }
+    });
+  }, { threshold: 0.55 });
+
+  // Start button
+  btnStart.addEventListener('click', () => {
+    welcomeEl.classList.add('hidden');
+    started = true;
+    preload();
+    muteBtn.classList.add('visible');
+    document.getElementById('navbar').classList.add('visible');
+    slides.forEach(s => observer.observe(s));
+    setTimeout(() => {
+      updateUI();
+      // First slide audio
+      const p1 = document.getElementById('player-1');
+      if (p1) { p1.muted = false; p1.play().catch(() => {}); }
+    }, 300);
+  });
+
+  // Initial state (no anim until started)
+  slides[0].classList.add('visible');
+  btnPrev.disabled = true;
+
+});
+</script>
+</body>
 </html>
