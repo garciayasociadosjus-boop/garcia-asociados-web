@@ -1263,11 +1263,37 @@ function log(msg) {
     log('Estado a guardar: ' + nuevoEstado);
     log('Monto: ' + montoPagado + ' / Total: ' + montoTotal);
 
-    // ESTRATEGIA 1: PATCH directo a Firebase REST
+    // CRÍTICO: la planilla guarda como ARRAY, hay que encontrar el índice del item
+    let indexEnArray = null;
+    try {
+      log('🔍 Buscando índice en el array...');
+      const allResp = await fetch(RTDB_URL + '/planilla_abonos.json');
+      const allData = await allResp.json();
+      if (Array.isArray(allData)) {
+        indexEnArray = allData.findIndex(item => item && item.id === abonoId);
+        log('Es array. Índice encontrado: ' + indexEnArray);
+      } else if (allData && typeof allData === 'object') {
+        // Firebase puede convertir array sparse a objeto
+        for (const [k, v] of Object.entries(allData)) {
+          if (v && v.id === abonoId) { indexEnArray = k; break; }
+        }
+        log('Es objeto. Key encontrada: ' + indexEnArray);
+      }
+    } catch(e) {
+      log('❌ Error buscando índice: ' + e.message);
+    }
+
+    if (indexEnArray === null || indexEnArray === -1) {
+      log('❌ No se encontró el registro');
+      sessionStorage.removeItem('pagoActual');
+      return;
+    }
+
+    // ESTRATEGIA 1: PATCH al ÍNDICE del array
     let exito = false;
     try {
-      log('🔵 Intento 1: PATCH directo a Firebase...');
-      const r1 = await fetch(RTDB_URL + '/planilla_abonos/' + abonoId + '.json', {
+      log('🔵 PATCH al índice ' + indexEnArray + '...');
+      const r1 = await fetch(RTDB_URL + '/planilla_abonos/' + indexEnArray + '.json', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1287,40 +1313,16 @@ function log(msg) {
       log('❌ PATCH directo falló: ' + e.message);
     }
 
-    // ESTRATEGIA 2: Worker /actualizar-pago (si la directa falló)
-    if (!exito) {
-      try {
-        log('🔵 Intento 2: Vía Worker...');
-        const r2 = await fetch(WORKER_URL + '/actualizar-pago', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            abonoId:    abonoId,
-            estado:     nuevoEstado,
-            montoPagado: montoPagado,
-            fechaPago:  fechaPagoStr,
-            formaPago:  'Mercado Pago'
-          })
-        });
-        log('Respuesta Worker: ' + r2.status + ' ' + r2.statusText);
-        const txt2 = await r2.text();
-        log('Body: ' + txt2.substring(0, 200));
-        if (r2.ok) exito = true;
-      } catch(e) {
-        log('❌ Worker falló: ' + e.message);
-      }
-    }
-
     // VERIFICACIÓN: Leer Firebase para confirmar
     try {
-      log('🔍 Verificando estado actualizado...');
-      const verResp = await fetch(RTDB_URL + '/planilla_abonos/' + abonoId + '.json');
+      log('🔍 Verificando...');
+      const verResp = await fetch(RTDB_URL + '/planilla_abonos/' + indexEnArray + '.json');
       const verData = await verResp.json();
-      log('Estado actual en Firebase: ' + (verData?.estado || 'NO ENCONTRADO'));
+      log('Estado actual: ' + (verData?.estado || 'NO ENCONTRADO'));
       if (verData?.estado === nuevoEstado) {
-        log('✅ ACTUALIZACIÓN CONFIRMADA');
+        log('✅ CONFIRMADO');
       } else {
-        log('⚠️ Firebase NO actualizado todavía');
+        log('⚠️ NO actualizado');
       }
     } catch(e) {
       log('❌ Error verificando: ' + e.message);
