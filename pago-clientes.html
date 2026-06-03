@@ -1213,7 +1213,7 @@ function cerrarSesion() {
 // ══════════════════════════════════════════════════
 //  MANEJO DE RETORNO DESDE MERCADO PAGO
 // ══════════════════════════════════════════════════
-(function checkRetorno() {
+(async function checkRetorno() {
   const params = new URLSearchParams(window.location.search);
   const status = params.get('status');
   const abonoId = params.get('id');
@@ -1231,21 +1231,31 @@ function cerrarSesion() {
   }
 
   if (status === 'success') {
-    // Actualizar Firebase via REST (respaldo del webhook)
+    showScreen('screenLoading');
+    document.querySelector('#screenLoading p').textContent = 'Registrando tu pago...';
+
     if (abonoId) {
       const montoPagado = pagoActual ? pagoActual.monto : 0;
       const montoTotal  = pagoActual ? pagoActual.montoTotal : 0;
       const nuevoEstado = (!montoTotal || montoPagado >= montoTotal) ? 'Pagado' : 'Pago Parcial';
-      fetch(RTDB_URL + '/planilla_abonos/' + abonoId + '.json', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          estado:      nuevoEstado,
-          montoPagado: montoPagado,
-          fechaPago:   new Date().toISOString().split('T')[0],
-          formaPago:   'Mercado Pago'
-        })
-      }).catch(e => console.error('Error actualizando Firebase:', e));
+
+      try {
+        const resp = await fetch(WORKER_URL + '/actualizar-pago', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            abonoId:    abonoId,
+            estado:     nuevoEstado,
+            montoPagado: montoPagado,
+            fechaPago:  new Date().toISOString().split('T')[0],
+            formaPago:  'Mercado Pago'
+          })
+        });
+        const result = await resp.json();
+        console.log('Pago actualizado:', result);
+      } catch(e) {
+        console.error('Error actualizando pago:', e);
+      }
     }
     showScreen('screenExito');
 
@@ -1255,10 +1265,10 @@ function cerrarSesion() {
 
   } else if (status === 'pending') {
     if (abonoId) {
-      fetch(RTDB_URL + '/planilla_abonos/' + abonoId + '.json', {
-        method: 'PATCH',
+      fetch(WORKER_URL + '/actualizar-pago', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ estado: 'Pendiente', formaPago: 'Mercado Pago (pendiente confirmación)' })
+        body: JSON.stringify({ abonoId: abonoId, estado: 'Pendiente', formaPago: 'Mercado Pago (pendiente)' })
       }).catch(e => console.error(e));
     }
     showScreen('screenExito');
