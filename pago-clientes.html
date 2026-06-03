@@ -759,30 +759,16 @@
   <a href="https://garciayasociados.com.ar/" style="color:#9CA3AF;">garciayasociados.com.ar</a>
 </footer>
 
-<!-- Firebase Realtime Database SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
+<!-- Sin SDKs externos — usa Firebase REST API directamente -->
 <script>
+document.addEventListener('DOMContentLoaded', function() {
 // ══════════════════════════════════════════════════
 //  CONFIG
 // ══════════════════════════════════════════════════
-const FIREBASE_CONFIG = {
-  apiKey:            'AIzaSyBUdoBFw1R1_LKEB6VGitg1zuB78g-eo9k',
-  authDomain:        'garcia-asociados.firebaseapp.com',
-  projectId:         'garcia-asociados',
-  databaseURL:       'https://garcia-asociados-default-rtdb.firebaseio.com',
-  storageBucket:     'garcia-asociados.firebasestorage.app',
-  messagingSenderId: '579231843924',
-  appId:             '1:579231843924:web:73d02f5aacd7ecf27a4fc1'
-};
+const RTDB_URL   = 'https://garcia-asociados-default-rtdb.firebaseio.com';
 const MP_PUBLIC_KEY  = 'APP_USR-3f69851d-156d-44db-a666-82b8795c4869';
 const WORKER_URL     = 'https://garcia-ia.garciayasociadosjus.workers.dev';
 const SITE_URL       = 'https://garciayasociados.com.ar';
-const RTDB_URL       = 'https://garcia-asociados-default-rtdb.firebaseio.com';
-
-firebase.initializeApp(FIREBASE_CONFIG);
-const db = firebase.database();
 
 // ══════════════════════════════════════════════════
 //  STATE
@@ -851,9 +837,10 @@ async function buscarCliente() {
   showScreen('screenLoading');
 
   try {
-    // Leer planilla_abonos de Realtime Database y filtrar por DNI
-    const snap = await db.ref('planilla_abonos').once('value');
-    const rawData = snap.val();
+    // Leer planilla_abonos via REST API
+    const resp = await fetch(RTDB_URL + '/planilla_abonos.json');
+    if (!resp.ok) throw new Error('Error leyendo datos');
+    const rawData = await resp.json();
 
     if (!rawData) {
       document.getElementById('btnBuscar').disabled = false;
@@ -863,8 +850,8 @@ async function buscarCliente() {
       return;
     }
 
-    // Convertir objeto a array con IDs
-    const todos = Object.entries(rawData).map(([id, val]) => ({ id, ...val }))
+    const todos = Object.entries(rawData)
+      .map(([id, val]) => ({ id, ...val }))
       .filter(r => r.dniCliente && r.dniCliente.toString().trim() === dni);
 
     if (!todos.length) {
@@ -1122,6 +1109,8 @@ async function iniciarPago(cardId, montoTotal, expediente, tipo) {
     parcial:    parcial,
     fecha:      new Date().toLocaleDateString('es-AR')
   };
+  // Persistir en sessionStorage por si la página se recarga al volver de MP
+  sessionStorage.setItem('pagoActual', JSON.stringify(pagoActual));
 
   try {
     const resp = await fetch(WORKER_URL + '/crear-preferencia', {
@@ -1183,11 +1172,11 @@ function abrirReciboConDatos(d) {
   document.getElementById('reciboContenido').innerHTML = `
     <div class="recibo-header">
       <div class="firma-logo">García <span>&</span> Asociados</div>
-      <p>Estudio Jurídico · Zapiola 662, Bernal, Quilmes<br>Tel: 11 6806-3444 · garciayasociados.com.ar</p>
+      <p>Estudio Jurídico · Tel: 11 6806-3444 · garciayasociados.com.ar</p>
     </div>
     <div class="recibo-title">${d.parcial ? 'Comprobante de Pago Parcial' : 'Comprobante de Pago'}</div>
     <div class="recibo-row"><span class="lbl">Nº comprobante</span><span class="val">${num}</span></div>
-    <div class="recibo-row"><span class="lbl">Fecha</span><span class="val">${d.fecha}</span></div>
+    <div class="recibo-row"><span class="lbl">Fecha</span><span class="val">${new Date().toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'})}</span></div>
     <div class="recibo-row"><span class="lbl">Cliente</span><span class="val">${d.cliente}</span></div>
     <div class="recibo-row"><span class="lbl">DNI</span><span class="val">${d.dni}</span></div>
     <div class="recibo-row"><span class="lbl">Expediente / Asunto</span><span class="val">${d.expediente}</span></div>
@@ -1234,17 +1223,49 @@ function cerrarSesion() {
   // Limpiar la URL
   window.history.replaceState({}, '', window.location.pathname);
 
+  // Restaurar pagoActual desde sessionStorage
+  const guardado = sessionStorage.getItem('pagoActual');
+  if (guardado) {
+    try { pagoActual = JSON.parse(guardado); } catch(e) {}
+    sessionStorage.removeItem('pagoActual');
+  }
+
   if (status === 'success') {
+    // Actualizar Firebase via REST (respaldo del webhook)
+    if (abonoId) {
+      const montoPagado = pagoActual ? pagoActual.monto : 0;
+      const montoTotal  = pagoActual ? pagoActual.montoTotal : 0;
+      const nuevoEstado = (!montoTotal || montoPagado >= montoTotal) ? 'Pagado' : 'Pago Parcial';
+      fetch(RTDB_URL + '/planilla_abonos/' + abonoId + '.json', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          estado:      nuevoEstado,
+          montoPagado: montoPagado,
+          fechaPago:   new Date().toISOString().split('T')[0],
+          formaPago:   'Mercado Pago'
+        })
+      }).catch(e => console.error('Error actualizando Firebase:', e));
+    }
     showScreen('screenExito');
+
   } else if (status === 'failure') {
     document.getElementById('btnReintentar').onclick = cerrarSesion;
     showScreen('screenFalla');
+
   } else if (status === 'pending') {
-    // Pago pendiente (ej: efectivo en Rapipago)
-    pagoActual = { cliente: '—', dni: '—', expediente: '—', tipo: '—', monto: 0, montoTotal: 0, parcial: false, fecha: new Date().toLocaleDateString('es-AR') };
+    if (abonoId) {
+      fetch(RTDB_URL + '/planilla_abonos/' + abonoId + '.json', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ estado: 'Pendiente', formaPago: 'Mercado Pago (pendiente confirmación)' })
+      }).catch(e => console.error(e));
+    }
     showScreen('screenExito');
   }
 })();
+
+}); // fin DOMContentLoaded
 </script>
 
 </body>
