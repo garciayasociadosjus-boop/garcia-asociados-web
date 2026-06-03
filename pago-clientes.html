@@ -759,9 +759,9 @@
   <a href="https://garciayasociados.com.ar/" style="color:#9CA3AF;">garciayasociados.com.ar</a>
 </footer>
 
-<!-- Firebase SDK -->
+<!-- Firebase Realtime Database SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
 // ══════════════════════════════════════════════════
@@ -771,6 +771,7 @@ const FIREBASE_CONFIG = {
   apiKey:            'AIzaSyBUdoBFw1R1_LKEB6VGitg1zuB78g-eo9k',
   authDomain:        'garcia-asociados.firebaseapp.com',
   projectId:         'garcia-asociados',
+  databaseURL:       'https://garcia-asociados-default-rtdb.firebaseio.com',
   storageBucket:     'garcia-asociados.firebasestorage.app',
   messagingSenderId: '579231843924',
   appId:             '1:579231843924:web:73d02f5aacd7ecf27a4fc1'
@@ -778,9 +779,10 @@ const FIREBASE_CONFIG = {
 const MP_PUBLIC_KEY  = 'APP_USR-3f69851d-156d-44db-a666-82b8795c4869';
 const WORKER_URL     = 'https://garcia-ia.garciayasociadosjus.workers.dev';
 const SITE_URL       = 'https://garciayasociados.com.ar';
+const RTDB_URL       = 'https://garcia-asociados-default-rtdb.firebaseio.com';
 
 firebase.initializeApp(FIREBASE_CONFIG);
-const db = firebase.firestore();
+const db = firebase.database();
 
 // ══════════════════════════════════════════════════
 //  STATE
@@ -849,11 +851,11 @@ async function buscarCliente() {
   showScreen('screenLoading');
 
   try {
-    const snap = await db.collection('abonos')
-      .where('dniCliente', '==', dni)
-      .get();
+    // Leer planilla_abonos de Realtime Database y filtrar por DNI
+    const snap = await db.ref('planilla_abonos').once('value');
+    const rawData = snap.val();
 
-    if (snap.empty) {
+    if (!rawData) {
       document.getElementById('btnBuscar').disabled = false;
       errEl.textContent = 'No encontramos registros para ese DNI. Verificá el número o contactá al estudio.';
       errEl.style.display = 'block';
@@ -861,7 +863,17 @@ async function buscarCliente() {
       return;
     }
 
-    const todos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    // Convertir objeto a array con IDs
+    const todos = Object.entries(rawData).map(([id, val]) => ({ id, ...val }))
+      .filter(r => r.dniCliente && r.dniCliente.toString().trim() === dni);
+
+    if (!todos.length) {
+      document.getElementById('btnBuscar').disabled = false;
+      errEl.textContent = 'No encontramos registros para ese DNI. Verificá el número o contactá al estudio.';
+      errEl.style.display = 'block';
+      showScreen('screenLogin');
+      return;
+    }
 
     // Filtrar: solo desde mayo 2026 en adelante
     const desdeMayo = todos.filter(r => {
