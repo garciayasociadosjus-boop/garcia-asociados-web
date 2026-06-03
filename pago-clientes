@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Pagos — García & Asociados</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 350 350'><circle cx='175' cy='40' r='14' fill='%23d4a017' stroke='%231a1a2e' stroke-width='3'/><circle cx='175' cy='40' r='7' fill='%23f0c040'/><rect x='168' y='40' width='16' height='280' rx='8' fill='%231a1a2e'/><rect x='25' y='48' width='300' height='14' rx='7' fill='%231a1a2e'/><rect x='110' y='308' width='130' height='14' rx='7' fill='%231a1a2e'/><rect x='130' y='295' width='90' height='15' rx='5' fill='%232d2d44'/><line x1='35' y1='58' x2='15' y2='185' stroke='%231a1a2e' stroke-width='3'/><line x1='35' y1='58' x2='55' y2='185' stroke='%231a1a2e' stroke-width='3'/><line x1='315' y1='58' x2='295' y2='185' stroke='%231a1a2e' stroke-width='3'/><line x1='315' y1='58' x2='335' y2='185' stroke='%231a1a2e' stroke-width='3'/><ellipse cx='35' cy='198' rx='55' ry='12' fill='%23a07010'/><ellipse cx='35' cy='190' rx='55' ry='12' fill='%23d4a017' stroke='%231a1a2e' stroke-width='3'/><ellipse cx='315' cy='198' rx='55' ry='12' fill='%23a07010'/><ellipse cx='315' cy='190' rx='55' ry='12' fill='%23d4a017' stroke='%231a1a2e' stroke-width='3'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --primary:   #0A0E1A;
+      --secondary: #151B2D;
+      --tertiary:  #1F2937;
+      --gold:      #C9A84C;
+      --gold-light:#E8C97A;
+      --danger:    #dc2626;
+      --warning:   #d97706;
+      --success:   #16a34a;
+      --text:      #1F2937;
+      --light:     #F9FAFB;
+      --border:    #E5E7EB;
+      --mp-blue:   #009EE3;
+    }
+
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background: linear-gradient(135deg, #F0F2F7 0%, #E5E7EB 100%);
+      min-height: 100vh;
+      color: var(--text);
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(10,14,26,.5);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-logo {
+      font-family: 'Crimson Text', serif;
+      color: white;
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .header-logo span { color: var(--gold); }
+    .header-back {
+      color: #9CA3AF;
+      font-size: .85rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .2s;
+    }
+    .header-back:hover { color: white; }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ── SCREENS ── */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ── LOGIN ── */
+    .login-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 20px 60px rgba(10,14,26,.12);
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .login-icon {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
+    }
+    .login-card h1 {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: .4rem;
+    }
+    .login-card p {
+      color: #6B7280;
+      font-size: .95rem;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+    .input-group {
+      text-align: left;
+      margin-bottom: 1.2rem;
+    }
+    .input-group label {
+      display: block;
+      font-weight: 600;
+      font-size: .88rem;
+      color: var(--primary);
+      margin-bottom: .4rem;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-family: 'Source Sans Pro', sans-serif;
+      transition: border-color .2s;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Source Sans Pro', sans-serif;
+      cursor: pointer;
+      transition: all .3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: .5rem;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(10,14,26,.3); }
+    .btn-primary:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .login-error {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: var(--danger);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: .9rem;
+      margin-top: 1rem;
+      display: none;
+    }
+    .login-note {
+      font-size: .8rem;
+      color: #9CA3AF;
+      margin-top: 1.5rem;
+    }
+
+    /* ── LOADING ── */
+    .loading-center {
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #E5E7EB;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── BIENVENIDA ── */
+    .welcome-bar {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 16px;
+      padding: 1.5rem;
+      color: white;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .welcome-bar .avatar {
+      width: 50px;
+      height: 50px;
+      background: rgba(201,168,76,.2);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .welcome-bar h2 {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+    .welcome-bar p { font-size: .85rem; color: #9CA3AF; }
+
+    /* ── SECCIÓN ── */
+    .section-title {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.15rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── DEUDA CARD ── */
+    .deuda-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.4rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 20px rgba(10,14,26,.08);
+      border-left: 4px solid var(--border);
+      transition: box-shadow .2s;
+    }
+    .deuda-card:hover { box-shadow: 0 8px 30px rgba(10,14,26,.12); }
+    .deuda-card.urgente { border-left-color: var(--danger); }
+    .deuda-card.pendiente { border-left-color: var(--warning); }
+
+    .deuda-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+    .deuda-info h3 {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.1rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .deuda-info p {
+      font-size: .85rem;
+      color: #6B7280;
+      margin-top: 2px;
+    }
+    .badge {
+      font-size: .72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-danger  { background: #FEE2E2; color: var(--danger); }
+    .badge-warning { background: #FEF3C7; color: var(--warning); }
+    .badge-info    { background: #DBEAFE; color: #1D4ED8; }
+
+    .deuda-monto-total {
+      font-family: 'Crimson Text', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: .3rem;
+    }
+    .deuda-monto-label {
+      font-size: .8rem;
+      color: #9CA3AF;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 1rem;
+    }
+
+    .pago-opciones {
+      background: #F9FAFB;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .pago-opciones label {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: block;
+      margin-bottom: .5rem;
+    }
+    .pago-opciones .monto-row {
+      display: flex;
+      gap: .6rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn-monto-total {
+      padding: 8px 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+    .btn-monto-parcial {
+      padding: 8px 14px;
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: 'Source Sans Pro', sans-serif;
+      transition: border-color .2s;
+    }
+    .btn-monto-parcial:hover, .btn-monto-parcial.active { border-color: var(--primary); }
+
+    .input-parcial {
+      display: none;
+      margin-top: .8rem;
+    }
+    .input-parcial input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+    .input-parcial input:focus { outline: none; border-color: var(--primary); }
+    .input-parcial .hint {
+      font-size: .78rem;
+      color: #9CA3AF;
+      margin-top: 4px;
+    }
+
+    .btn-pagar {
+      width: 100%;
+      padding: 14px;
+      background: var(--mp-blue);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Source Sans Pro', sans-serif;
+      cursor: pointer;
+      transition: all .3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-pagar:hover { background: #007bbf; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,158,227,.3); }
+    .btn-pagar:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .btn-pagar svg { width: 20px; height: 20px; }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(10,14,26,.08);
+    }
+    .empty-state .icon { font-size: 3rem; margin-bottom: 1rem; }
+    .empty-state h3 {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: .5rem;
+    }
+    .empty-state p { color: #6B7280; font-size: .95rem; }
+
+    /* ── HISTORIAL ── */
+    .historial-item {
+      background: white;
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin-bottom: .7rem;
+      box-shadow: 0 2px 10px rgba(10,14,26,.06);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .historial-icon {
+      width: 42px;
+      height: 42px;
+      background: #DCFCE7;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .historial-icon.parcial { background: #FEF3C7; }
+    .historial-info { flex: 1; min-width: 0; }
+    .historial-info h4 {
+      font-family: 'Crimson Text', serif;
+      font-size: 1rem;
+      color: var(--primary);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .historial-info p { font-size: .8rem; color: #6B7280; margin-top: 2px; }
+    .historial-monto {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .historial-monto .amount {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--success);
+    }
+    .historial-monto .amount.parcial { color: var(--warning); }
+    .btn-recibo-mini {
+      display: block;
+      margin-top: 4px;
+      padding: 3px 10px;
+      background: #F3F4F6;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+      font-family: 'Source Sans Pro', sans-serif;
+      transition: background .2s;
+      white-space: nowrap;
+    }
+    .btn-recibo-mini:hover { background: #E5E7EB; }
+
+    /* ── RECEIPT MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,14,26,.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 520px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 30px 80px rgba(10,14,26,.4);
+    }
+
+    /* ── RECIBO ── */
+    .recibo-header {
+      text-align: center;
+      padding-bottom: 1.2rem;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 1.2rem;
+    }
+    .recibo-header .firma-logo {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .recibo-header .firma-logo span { color: var(--gold); }
+    .recibo-header p { font-size: .8rem; color: #6B7280; margin-top: 4px; }
+    .recibo-title {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.3rem;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .recibo-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #F3F4F6;
+      font-size: .9rem;
+    }
+    .recibo-row .lbl { color: #6B7280; }
+    .recibo-row .val { font-weight: 600; color: var(--primary); text-align: right; }
+    .recibo-total {
+      background: var(--primary);
+      color: white;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      margin: 1.2rem 0;
+    }
+    .recibo-total .amount {
+      font-family: 'Crimson Text', serif;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .recibo-total .lbl { font-size: .8rem; opacity: .7; }
+    .recibo-nota {
+      font-size: .78rem;
+      color: #9CA3AF;
+      text-align: center;
+      margin-top: .8rem;
+      line-height: 1.5;
+    }
+    .recibo-buttons {
+      display: flex;
+      gap: .8rem;
+      margin-top: 1.2rem;
+    }
+    .btn-imprimir {
+      flex: 1;
+      padding: 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: .9rem;
+      font-weight: 700;
+      font-family: 'Source Sans Pro', sans-serif;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-imprimir:hover { opacity: .9; }
+    .btn-cerrar {
+      flex: 1;
+      padding: 12px;
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: .9rem;
+      font-weight: 700;
+      font-family: 'Source Sans Pro', sans-serif;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    /* ── SUCCESS SCREEN ── */
+    .success-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(10,14,26,.12);
+    }
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: #DCFCE7;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2.5rem;
+    }
+    .failure-icon { background: #FEE2E2; }
+    .success-card h2 {
+      font-family: 'Crimson Text', serif;
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: .6rem;
+    }
+    .success-card p { color: #6B7280; line-height: 1.6; margin-bottom: 1.5rem; }
+    .btn-volver {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: .95rem;
+      font-weight: 700;
+      font-family: 'Source Sans Pro', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+    }
+
+    /* ── FOOTER ── */
+    .portal-footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: #9CA3AF;
+      font-size: .8rem;
+      line-height: 1.6;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: white; }
+      header, .deuda-card, .welcome-bar, .portal-footer, .recibo-buttons, .btn-cerrar { display: none !important; }
+      .modal-overlay { position: static; background: none; padding: 0; }
+      .modal-box { box-shadow: none; border-radius: 0; padding: 1rem; max-height: none; }
+    }
+
+    @media (max-width: 480px) {
+      .deuda-monto-total { font-size: 1.6rem; }
+      .login-card { padding: 1.8rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="header-logo" href="https://garciayasociados.com.ar/">García <span>&</span> Asociados</a>
+  <a class="header-back" href="https://garciayasociados.com.ar/">← Volver al sitio</a>
+</header>
+
+<!-- ══════════════════════════════════════ -->
+<!--  SCREEN 1: LOGIN                       -->
+<!-- ══════════════════════════════════════ -->
+<div id="screenLogin" class="screen active">
+  <div class="container">
+    <div class="login-card">
+      <div class="login-icon">🔐</div>
+      <h1>Portal de Pagos</h1>
+      <p>Ingresá tu número de DNI para ver<br>tus obligaciones pendientes y pagar en línea.</p>
+      <div class="input-group">
+        <label>Número de DNI</label>
+        <input type="text" id="dniLoginInput" placeholder="Ej: 30123456" maxlength="10"
+               inputmode="numeric" pattern="[0-9]*"
+               onkeydown="if(event.key==='Enter') buscarCliente()">
+      </div>
+      <button class="btn-primary" id="btnBuscar" onclick="buscarCliente()">
+        Ver mis pagos
+      </button>
+      <div class="login-error" id="loginError"></div>
+      <p class="login-note">🔒 Tu información está protegida. Solo vos podés ver tus datos con tu DNI.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!--  SCREEN 2: LOADING                     -->
+<!-- ══════════════════════════════════════ -->
+<div id="screenLoading" class="screen">
+  <div class="container">
+    <div class="loading-center">
+      <div class="spinner"></div>
+      <p style="color:#6B7280;">Buscando tus datos...</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!--  SCREEN 3: MIS PAGOS                   -->
+<!-- ══════════════════════════════════════ -->
+<div id="screenPagos" class="screen">
+  <div class="container">
+    <div class="welcome-bar">
+      <div class="avatar">👤</div>
+      <div>
+        <h2 id="clienteNombre">—</h2>
+        <p id="clienteDni">—</p>
+      </div>
+    </div>
+
+    <div id="deudaContainer"></div>
+
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="icon">✅</div>
+      <h3>¡Estás al día!</h3>
+      <p>No tenés obligaciones pendientes en este momento.<br>
+      Si creés que hay un error, contactá al estudio.</p>
+    </div>
+
+    <!-- HISTORIAL -->
+    <div id="historialContainer" style="display:none; margin-top:2rem;">
+      <div class="section-title" style="margin-top:0;">📋 Historial de pagos</div>
+      <div id="historialLista"></div>
+    </div>
+
+    <div style="text-align:center;margin-top:1.5rem;">
+      <button onclick="cerrarSesion()" style="background:none;border:none;color:#9CA3AF;font-size:.85rem;cursor:pointer;text-decoration:underline;">
+        Cerrar sesión
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!--  SCREEN 4: PAGO EXITOSO               -->
+<!-- ══════════════════════════════════════ -->
+<div id="screenExito" class="screen">
+  <div class="container">
+    <div class="success-card">
+      <div class="success-icon">✅</div>
+      <h2>¡Pago recibido!</h2>
+      <p>Tu pago fue procesado correctamente por Mercado Pago.<br>
+      En breve el estudio actualizará el estado de tu cuenta.<br>
+      Podés imprimir o guardar tu comprobante.</p>
+      <button class="btn-volver" onclick="mostrarReciboPago()">📄 Ver comprobante</button>
+      <br><br>
+      <button class="btn-volver" style="background:#F3F4F6;color:var(--primary);" onclick="cerrarSesion()">Volver al inicio</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!--  SCREEN 5: PAGO FALLIDO               -->
+<!-- ══════════════════════════════════════ -->
+<div id="screenFalla" class="screen">
+  <div class="container">
+    <div class="success-card">
+      <div class="success-icon failure-icon">❌</div>
+      <h2>El pago no se completó</h2>
+      <p>Hubo un problema al procesar tu pago o fue cancelado.<br>
+      Podés intentarlo nuevamente o contactar al estudio.</p>
+      <button class="btn-volver" id="btnReintentar">Intentar nuevamente</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!--  MODAL: RECIBO                         -->
+<!-- ══════════════════════════════════════ -->
+<div class="modal-overlay" id="modalRecibo">
+  <div class="modal-box" id="reciboContenido">
+    <!-- Se genera dinámicamente -->
+  </div>
+</div>
+
+<footer class="portal-footer">
+  García &amp; Asociados — Estudio Jurídico<br>
+  Zapiola 662, Bernal, Quilmes · Tel: 11 6806-3444<br>
+  <a href="https://garciayasociados.com.ar/" style="color:#9CA3AF;">garciayasociados.com.ar</a>
+</footer>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+// ══════════════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════════════
+const FIREBASE_CONFIG = {
+  apiKey:            'AIzaSyBUdoBFw1R1_LKEB6VGitg1zuB78g-eo9k',
+  authDomain:        'garcia-asociados.firebaseapp.com',
+  projectId:         'garcia-asociados',
+  storageBucket:     'garcia-asociados.firebasestorage.app',
+  messagingSenderId: '579231843924',
+  appId:             '1:579231843924:web:73d02f5aacd7ecf27a4fc1'
+};
+const MP_PUBLIC_KEY  = 'APP_USR-3f69851d-156d-44db-a666-82b8795c4869';
+const WORKER_URL     = 'https://garcia-ia.garciayasociadosjus.workers.dev';
+const SITE_URL       = 'https://garciayasociados.com.ar';
+
+firebase.initializeApp(FIREBASE_CONFIG);
+const db = firebase.firestore();
+
+// ══════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════
+let dniActual    = '';
+let nombreActual = '';
+let registros    = [];
+let pagoActual   = null; // { abonoId, monto, descripcion }
+
+// ══════════════════════════════════════════════════
+//  PANTALLAS
+// ══════════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ══════════════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════════════
+function formatMoney(n) {
+  return '$\u00A0' + (parseFloat(n)||0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function formatDate(d) {
+  if (!d) return new Date().toLocaleDateString('es-AR');
+  return new Date(d).toLocaleDateString('es-AR');
+}
+function badgeEstado(estado) {
+  const map = {
+    'Falta de Pago': ['badge-danger','Falta de Pago'],
+    'Ejecución de Honorarios': ['badge-danger','Ejecución'],
+    'Pendiente': ['badge-warning','Pendiente'],
+    'Pago Parcial': ['badge-info','Pago Parcial'],
+  };
+  const [cls, txt] = map[estado] || ['badge-info', estado];
+  return `<span class="badge ${cls}">${txt}</span>`;
+}
+function tipoLabel(tipo) {
+  const map = {
+    'Abono Mensual': '📅 Abono mensual',
+    'Convenio Blanco': '📋 Convenio',
+    'Honorarios en Cuotas': '📋 Cuotas',
+    'Regulación Honorarios': '⚖️ Regulación',
+    'Honorarios Siniestro': '🚗 Siniestro',
+    'Pago de Bonos y AP': '📎 Bono / AP',
+  };
+  return map[tipo] || tipo;
+}
+
+// ══════════════════════════════════════════════════
+//  BUSCAR CLIENTE
+// ══════════════════════════════════════════════════
+async function buscarCliente() {
+  const input = document.getElementById('dniLoginInput');
+  const dni = input.value.trim().replace(/\D/g,'');
+  const errEl = document.getElementById('loginError');
+  errEl.style.display = 'none';
+
+  if (!dni || dni.length < 6) {
+    errEl.textContent = 'Ingresá un DNI válido (mínimo 6 dígitos).';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  document.getElementById('btnBuscar').disabled = true;
+  showScreen('screenLoading');
+
+  try {
+    const snap = await db.collection('abonos')
+      .where('dniCliente', '==', dni)
+      .get();
+
+    if (snap.empty) {
+      document.getElementById('btnBuscar').disabled = false;
+      errEl.textContent = 'No encontramos registros para ese DNI. Verificá el número o contactá al estudio.';
+      errEl.style.display = 'block';
+      showScreen('screenLogin');
+      return;
+    }
+
+    const todos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    // Filtrar: solo desde mayo 2026 en adelante
+    const desdeMayo = todos.filter(r => {
+      const ms = r.mesServicio;
+      if (!ms) return true; // sin fecha = incluir
+      return (ms.year > 2026) || (ms.year === 2026 && ms.month >= 4);
+    });
+
+    // Pendientes (no pagados, no terminados)
+    registros = desdeMayo.filter(r => r.estado !== 'Pagado' && r.estado !== 'Terminado');
+
+    // Historial: pagados, del más reciente al más viejo
+    const pagados = desdeMayo
+      .filter(r => r.estado === 'Pagado' || r.estado === 'Pago Parcial')
+      .sort((a, b) => {
+        const ma = a.mesServicio || {}; const mb = b.mesServicio || {};
+        return ((mb.year||0)*12 + (mb.month||0)) - ((ma.year||0)*12 + (ma.month||0));
+      });
+
+    // Nombre del cliente (del primer registro)
+    nombreActual = todos[0].cliente || 'Cliente';
+    dniActual = dni;
+
+    document.getElementById('clienteNombre').textContent = nombreActual;
+    document.getElementById('clienteDni').textContent = 'DNI: ' + dni;
+
+    renderDeudas();
+    renderHistorial(pagados);
+    showScreen('screenPagos');
+
+  } catch (e) {
+    console.error(e);
+    document.getElementById('btnBuscar').disabled = false;
+    errEl.textContent = 'Error al consultar. Intentá nuevamente en unos segundos.';
+    errEl.style.display = 'block';
+    showScreen('screenLogin');
+  }
+}
+
+// ══════════════════════════════════════════════════
+//  RENDER HISTORIAL
+// ══════════════════════════════════════════════════
+function renderHistorial(pagados) {
+  const cont = document.getElementById('historialContainer');
+  const lista = document.getElementById('historialLista');
+
+  if (!pagados || !pagados.length) {
+    cont.style.display = 'none';
+    return;
+  }
+
+  cont.style.display = 'block';
+  lista.innerHTML = pagados.map(r => {
+    const esParcial  = r.estado === 'Pago Parcial';
+    const monto      = esParcial ? (parseFloat(r.montoPagado)||0) : (parseFloat(r.monto)||0);
+    const montoTotal = parseFloat(r.monto) || 0;
+    const fecha      = r.fechaPago ? new Date(r.fechaPago).toLocaleDateString('es-AR') : (r.mesServicio ? mesLabel(r.mesServicio) : '—');
+    const expediente = r.expediente || 'Expediente';
+
+    return `
+    <div class="historial-item">
+      <div class="historial-icon ${esParcial?'parcial':''}">${esParcial?'⚠️':'✅'}</div>
+      <div class="historial-info">
+        <h4>${expediente}</h4>
+        <p>${tipoLabel(r.tipo)} · ${fecha}${r.formaPago ? ' · ' + r.formaPago : ''}</p>
+        ${esParcial ? `<p style="color:var(--warning);font-size:.75rem;font-weight:600;">Saldo restante: ${formatMoney(montoTotal-monto)}</p>` : ''}
+      </div>
+      <div class="historial-monto">
+        <div class="amount ${esParcial?'parcial':''}">${formatMoney(monto)}</div>
+        <button class="btn-recibo-mini" onclick="imprimirReciboHistorial(${JSON.stringify(r).replace(/"/g,'&quot;')})">
+          🖨️ Recibo
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function imprimirReciboHistorial(r) {
+  const esParcial  = r.estado === 'Pago Parcial';
+  const monto      = esParcial ? (parseFloat(r.montoPagado)||0) : (parseFloat(r.monto)||0);
+  const montoTotal = parseFloat(r.monto) || 0;
+  const fecha      = r.fechaPago ? new Date(r.fechaPago).toLocaleDateString('es-AR') : (r.mesServicio ? mesLabel(r.mesServicio) : new Date().toLocaleDateString('es-AR'));
+  abrirReciboConDatos({
+    cliente:    r.cliente || nombreActual,
+    dni:        r.dniCliente || dniActual,
+    expediente: r.expediente || '—',
+    tipo:       r.tipo || '—',
+    monto:      monto,
+    montoTotal: montoTotal,
+    parcial:    esParcial,
+    fecha:      fecha
+  });
+}
+
+// ══════════════════════════════════════════════════
+//  RENDER DEUDAS
+// ══════════════════════════════════════════════════
+function renderDeudas() {
+  const container = document.getElementById('deudaContainer');
+  const empty     = document.getElementById('emptyState');
+
+  if (!registros.length) {
+    container.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+
+  // Agrupar por urgencia
+  const urgentes   = registros.filter(r => r.estado === 'Falta de Pago' || r.estado === 'Ejecución de Honorarios');
+  const pendientes = registros.filter(r => r.estado !== 'Falta de Pago' && r.estado !== 'Ejecución de Honorarios');
+
+  let html = '';
+
+  if (urgentes.length) {
+    html += `<div class="section-title">🚨 Con deuda</div>`;
+    urgentes.forEach(r => { html += cardHTML(r, 'urgente'); });
+  }
+  if (pendientes.length) {
+    html += `<div class="section-title" style="margin-top:${urgentes.length?'1.5rem':'0'}">⏳ Pendientes de pago</div>`;
+    pendientes.forEach(r => { html += cardHTML(r, 'pendiente'); });
+  }
+
+  container.innerHTML = html;
+}
+
+function cardHTML(r, tipo) {
+  const monto = parseFloat(r.monto) || 0;
+  const cardId = r.id;
+  const urgente = tipo === 'urgente';
+
+  return `
+  <div class="deuda-card ${tipo}" id="card-${cardId}">
+    <div class="deuda-header">
+      <div class="deuda-info">
+        <h3>${r.expediente || 'Expediente'}</h3>
+        <p>${tipoLabel(r.tipo)}${r.mesServicio ? ' · ' + mesLabel(r.mesServicio) : ''}</p>
+      </div>
+      ${badgeEstado(r.estado)}
+    </div>
+
+    <div class="deuda-monto-total" id="montoDisplay-${cardId}">${formatMoney(monto)}</div>
+    <div class="deuda-monto-label">Total adeudado</div>
+
+    <div class="pago-opciones">
+      <label>Monto a pagar:</label>
+      <div class="monto-row">
+        <button class="btn-monto-total" onclick="setMontoTotal('${cardId}', ${monto})">
+          Pagar total
+        </button>
+        <button class="btn-monto-parcial" id="btnParcial-${cardId}"
+                onclick="toggleParcial('${cardId}', ${monto})">
+          Pago parcial
+        </button>
+      </div>
+      <div class="input-parcial" id="parcialDiv-${cardId}">
+        <input type="number" id="montoParcial-${cardId}"
+               placeholder="Ingresá el importe que querés pagar"
+               min="1" max="${monto}" step="0.01"
+               oninput="actualizarMontoPago('${cardId}')">
+        <p class="hint">Máximo: ${formatMoney(monto)}</p>
+      </div>
+    </div>
+
+    <button class="btn-pagar" id="btnPagar-${cardId}"
+            onclick="iniciarPago('${cardId}', ${monto}, '${(r.expediente||'Honorarios').replace(/'/g,'')}', '${r.tipo||''}')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="5" width="20" height="14" rx="2"/>
+        <line x1="2" y1="10" x2="22" y2="10"/>
+      </svg>
+      Pagar con Mercado Pago
+    </button>
+  </div>`;
+}
+
+function mesLabel(ms) {
+  const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  return (meses[ms.month] || '') + ' ' + (ms.year || '');
+}
+
+// ══════════════════════════════════════════════════
+//  CONTROL DE MONTO
+// ══════════════════════════════════════════════════
+const pagosSeleccionados = {}; // { cardId: monto }
+
+function setMontoTotal(cardId, monto) {
+  pagosSeleccionados[cardId] = monto;
+  document.getElementById('parcialDiv-'+cardId).style.display = 'none';
+  const btn = document.getElementById('btnParcial-'+cardId);
+  btn.classList.remove('active');
+  document.getElementById('montoDisplay-'+cardId).textContent = formatMoney(monto);
+}
+
+function toggleParcial(cardId, montoTotal) {
+  const div = document.getElementById('parcialDiv-'+cardId);
+  const btn = document.getElementById('btnParcial-'+cardId);
+  const visible = div.style.display === 'block';
+  if (visible) {
+    div.style.display = 'none';
+    btn.classList.remove('active');
+    setMontoTotal(cardId, montoTotal);
+  } else {
+    div.style.display = 'block';
+    btn.classList.add('active');
+    document.getElementById('montoParcial-'+cardId).focus();
+  }
+}
+
+function actualizarMontoPago(cardId) {
+  const input = document.getElementById('montoParcial-'+cardId);
+  const val = parseFloat(input.value) || 0;
+  pagosSeleccionados[cardId] = val > 0 ? val : 0;
+  document.getElementById('montoDisplay-'+cardId).textContent = val > 0 ? formatMoney(val) : '—';
+}
+
+// ══════════════════════════════════════════════════
+//  INICIAR PAGO → MERCADO PAGO
+// ══════════════════════════════════════════════════
+async function iniciarPago(cardId, montoTotal, expediente, tipo) {
+  const monto = pagosSeleccionados[cardId] || montoTotal;
+
+  if (!monto || monto <= 0) {
+    alert('Ingresá un monto válido para continuar.');
+    return;
+  }
+  if (monto > montoTotal) {
+    alert('El monto no puede superar el total adeudado (' + formatMoney(montoTotal) + ').');
+    return;
+  }
+
+  const parcial = monto < montoTotal;
+  const btn = document.getElementById('btnPagar-'+cardId);
+  btn.disabled = true;
+  btn.textContent = 'Procesando...';
+
+  // Guardar datos para el recibo post-pago
+  pagoActual = {
+    abonoId:    cardId,
+    monto:      monto,
+    montoTotal: montoTotal,
+    expediente: expediente,
+    tipo:       tipo,
+    dni:        dniActual,
+    cliente:    nombreActual,
+    parcial:    parcial,
+    fecha:      new Date().toLocaleDateString('es-AR')
+  };
+
+  try {
+    const resp = await fetch(WORKER_URL + '/crear-preferencia', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        monto:      monto,
+        descripcion: `García & Asociados — ${expediente} (${tipo})${parcial?' — Pago parcial':''}`,
+        external_reference: cardId,
+        payer_email: '',
+        back_urls: {
+          success: SITE_URL + '/pago-clientes.html?status=success&id=' + cardId,
+          failure: SITE_URL + '/pago-clientes.html?status=failure&id=' + cardId,
+          pending: SITE_URL + '/pago-clientes.html?status=pending&id=' + cardId
+        }
+      })
+    });
+
+    if (!resp.ok) throw new Error('Error en el servidor');
+    const data = await resp.json();
+
+    if (data.init_point) {
+      window.location.href = data.init_point;
+    } else {
+      throw new Error('No se recibió el link de pago');
+    }
+
+  } catch(e) {
+    console.error(e);
+    btn.disabled = false;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg> Pagar con Mercado Pago`;
+    alert('No se pudo iniciar el pago. Verificá tu conexión e intentá nuevamente.');
+  }
+}
+
+// ══════════════════════════════════════════════════
+//  RECIBO
+// ══════════════════════════════════════════════════
+function mostrarRecibo(abonoId, monto, expediente, tipo) {
+  const parcial = pagosSeleccionados[abonoId] && pagosSeleccionados[abonoId] < monto;
+  abrirReciboConDatos({
+    cliente:   nombreActual,
+    dni:       dniActual,
+    expediente: expediente,
+    tipo:      tipo,
+    monto:     pagosSeleccionados[abonoId] || monto,
+    montoTotal: monto,
+    parcial:   parcial,
+    fecha:     new Date().toLocaleDateString('es-AR')
+  });
+}
+
+function mostrarReciboPago() {
+  if (pagoActual) abrirReciboConDatos(pagoActual);
+}
+
+function abrirReciboConDatos(d) {
+  const num = 'RC-' + Date.now().toString().slice(-8);
+  document.getElementById('reciboContenido').innerHTML = `
+    <div class="recibo-header">
+      <div class="firma-logo">García <span>&</span> Asociados</div>
+      <p>Estudio Jurídico · Zapiola 662, Bernal, Quilmes<br>Tel: 11 6806-3444 · garciayasociados.com.ar</p>
+    </div>
+    <div class="recibo-title">${d.parcial ? 'Comprobante de Pago Parcial' : 'Comprobante de Pago'}</div>
+    <div class="recibo-row"><span class="lbl">Nº comprobante</span><span class="val">${num}</span></div>
+    <div class="recibo-row"><span class="lbl">Fecha</span><span class="val">${d.fecha}</span></div>
+    <div class="recibo-row"><span class="lbl">Cliente</span><span class="val">${d.cliente}</span></div>
+    <div class="recibo-row"><span class="lbl">DNI</span><span class="val">${d.dni}</span></div>
+    <div class="recibo-row"><span class="lbl">Expediente / Asunto</span><span class="val">${d.expediente}</span></div>
+    <div class="recibo-row"><span class="lbl">Concepto</span><span class="val">${d.tipo}</span></div>
+    ${d.parcial ? `<div class="recibo-row"><span class="lbl">Total adeudado</span><span class="val">${formatMoney(d.montoTotal)}</span></div>` : ''}
+    <div class="recibo-total">
+      <div class="lbl">${d.parcial ? 'IMPORTE ABONADO' : 'TOTAL ABONADO'}</div>
+      <div class="amount">${formatMoney(d.monto)}</div>
+    </div>
+    ${d.parcial ? `<div style="text-align:center;font-size:.85rem;color:var(--warning);font-weight:600;">⚠️ Pago parcial — Saldo restante: ${formatMoney(d.montoTotal - d.monto)}</div>` : ''}
+    <p class="recibo-nota">Este comprobante acredita el pago realizado a través del portal online de García &amp; Asociados mediante Mercado Pago. Para cualquier consulta comunicarse al 11 6806-3444.</p>
+    <div class="recibo-buttons">
+      <button class="btn-imprimir" onclick="window.print()">🖨️ Imprimir</button>
+      <button class="btn-cerrar" onclick="cerrarRecibo()">Cerrar</button>
+    </div>
+  `;
+  document.getElementById('modalRecibo').classList.add('open');
+}
+
+function cerrarRecibo() {
+  document.getElementById('modalRecibo').classList.remove('open');
+}
+
+// ══════════════════════════════════════════════════
+//  CERRAR SESIÓN
+// ══════════════════════════════════════════════════
+function cerrarSesion() {
+  dniActual = ''; nombreActual = ''; registros = []; pagoActual = null;
+  document.getElementById('dniLoginInput').value = '';
+  document.getElementById('btnBuscar').disabled = false;
+  showScreen('screenLogin');
+}
+
+// ══════════════════════════════════════════════════
+//  MANEJO DE RETORNO DESDE MERCADO PAGO
+// ══════════════════════════════════════════════════
+(function checkRetorno() {
+  const params = new URLSearchParams(window.location.search);
+  const status = params.get('status');
+  const abonoId = params.get('id');
+
+  if (!status) return;
+
+  // Limpiar la URL
+  window.history.replaceState({}, '', window.location.pathname);
+
+  if (status === 'success') {
+    showScreen('screenExito');
+  } else if (status === 'failure') {
+    document.getElementById('btnReintentar').onclick = cerrarSesion;
+    showScreen('screenFalla');
+  } else if (status === 'pending') {
+    // Pago pendiente (ej: efectivo en Rapipago)
+    pagoActual = { cliente: '—', dni: '—', expediente: '—', tipo: '—', monto: 0, montoTotal: 0, parcial: false, fecha: new Date().toLocaleDateString('es-AR') };
+    showScreen('screenExito');
+  }
+})();
+</script>
+
+</body>
+</html>
