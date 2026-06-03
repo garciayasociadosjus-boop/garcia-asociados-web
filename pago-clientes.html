@@ -722,6 +722,7 @@
       <p>Tu pago fue procesado correctamente por Mercado Pago.<br>
       En breve el estudio actualizará el estado de tu cuenta.<br>
       Podés imprimir o guardar tu comprobante.</p>
+      <div id="debugLog" style="background:#F3F4F6;border-radius:8px;padding:10px;margin:1rem 0;font-size:.75rem;text-align:left;font-family:monospace;color:#374151;display:none;max-height:200px;overflow-y:auto;"></div>
       <button class="btn-volver" onclick="mostrarReciboPago()">📄 Ver comprobante</button>
       <br><br>
       <button class="btn-volver" style="background:#F3F4F6;color:var(--primary);" onclick="cerrarSesion()">Volver al inicio</button>
@@ -1213,10 +1214,19 @@ function cerrarSesion() {
 // ══════════════════════════════════════════════════
 //  MANEJO DE RETORNO DESDE MERCADO PAGO
 // ══════════════════════════════════════════════════
+function log(msg) {
+  console.log('[PORTAL]', msg);
+  const el = document.getElementById('debugLog');
+  if (el) {
+    el.style.display = 'block';
+    el.innerHTML += msg + '<br>';
+  }
+}
+
 (async function checkRetorno() {
   const params = new URLSearchParams(window.location.search);
   const status = params.get('status');
-  const abonoId = params.get('id');
+  let abonoId = params.get('id');
 
   if (!status) return;
 
@@ -1227,50 +1237,101 @@ function cerrarSesion() {
   const guardado = sessionStorage.getItem('pagoActual');
   if (guardado) {
     try { pagoActual = JSON.parse(guardado); } catch(e) {}
-    sessionStorage.removeItem('pagoActual');
+  }
+
+  // Si no hay abonoId en URL, usar el de sessionStorage
+  if (!abonoId && pagoActual && pagoActual.abonoId) {
+    abonoId = pagoActual.abonoId;
   }
 
   if (status === 'success') {
-    showScreen('screenLoading');
-    document.querySelector('#screenLoading p').textContent = 'Registrando tu pago...';
+    showScreen('screenExito');
+    log('🔄 Iniciando actualización...');
+    log('AbonoId: ' + (abonoId || 'NO DEFINIDO'));
 
-    if (abonoId) {
-      const montoPagado = pagoActual ? pagoActual.monto : 0;
-      const montoTotal  = pagoActual ? pagoActual.montoTotal : 0;
-      const nuevoEstado = (!montoTotal || montoPagado >= montoTotal) ? 'Pagado' : 'Pago Parcial';
+    if (!abonoId) {
+      log('❌ No se puede actualizar sin abonoId');
+      sessionStorage.removeItem('pagoActual');
+      return;
+    }
 
+    const montoPagado = pagoActual ? parseFloat(pagoActual.monto) || 0 : 0;
+    const montoTotal  = pagoActual ? parseFloat(pagoActual.montoTotal) || 0 : 0;
+    const nuevoEstado = (!montoTotal || montoPagado >= montoTotal) ? 'Pagado' : 'Pago Parcial';
+    const fechaPagoStr = new Date().toISOString().split('T')[0];
+
+    log('Estado a guardar: ' + nuevoEstado);
+    log('Monto: ' + montoPagado + ' / Total: ' + montoTotal);
+
+    // ESTRATEGIA 1: PATCH directo a Firebase REST
+    let exito = false;
+    try {
+      log('🔵 Intento 1: PATCH directo a Firebase...');
+      const r1 = await fetch(RTDB_URL + '/planilla_abonos/' + abonoId + '.json', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          estado:      nuevoEstado,
+          montoPagado: montoPagado,
+          fechaPago:   fechaPagoStr,
+          formaPago:   'Mercado Pago'
+        })
+      });
+      log('Respuesta PATCH: ' + r1.status + ' ' + r1.statusText);
+      if (r1.ok) {
+        const txt = await r1.text();
+        log('Body: ' + txt.substring(0, 200));
+        exito = true;
+      }
+    } catch(e) {
+      log('❌ PATCH directo falló: ' + e.message);
+    }
+
+    // ESTRATEGIA 2: Worker /actualizar-pago (si la directa falló)
+    if (!exito) {
       try {
-        const resp = await fetch(WORKER_URL + '/actualizar-pago', {
+        log('🔵 Intento 2: Vía Worker...');
+        const r2 = await fetch(WORKER_URL + '/actualizar-pago', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             abonoId:    abonoId,
             estado:     nuevoEstado,
             montoPagado: montoPagado,
-            fechaPago:  new Date().toISOString().split('T')[0],
+            fechaPago:  fechaPagoStr,
             formaPago:  'Mercado Pago'
           })
         });
-        const result = await resp.json();
-        console.log('Pago actualizado:', result);
+        log('Respuesta Worker: ' + r2.status + ' ' + r2.statusText);
+        const txt2 = await r2.text();
+        log('Body: ' + txt2.substring(0, 200));
+        if (r2.ok) exito = true;
       } catch(e) {
-        console.error('Error actualizando pago:', e);
+        log('❌ Worker falló: ' + e.message);
       }
     }
-    showScreen('screenExito');
+
+    // VERIFICACIÓN: Leer Firebase para confirmar
+    try {
+      log('🔍 Verificando estado actualizado...');
+      const verResp = await fetch(RTDB_URL + '/planilla_abonos/' + abonoId + '.json');
+      const verData = await verResp.json();
+      log('Estado actual en Firebase: ' + (verData?.estado || 'NO ENCONTRADO'));
+      if (verData?.estado === nuevoEstado) {
+        log('✅ ACTUALIZACIÓN CONFIRMADA');
+      } else {
+        log('⚠️ Firebase NO actualizado todavía');
+      }
+    } catch(e) {
+      log('❌ Error verificando: ' + e.message);
+    }
+
+    sessionStorage.removeItem('pagoActual');
 
   } else if (status === 'failure') {
     document.getElementById('btnReintentar').onclick = cerrarSesion;
     showScreen('screenFalla');
-
   } else if (status === 'pending') {
-    if (abonoId) {
-      fetch(WORKER_URL + '/actualizar-pago', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ abonoId: abonoId, estado: 'Pendiente', formaPago: 'Mercado Pago (pendiente)' })
-      }).catch(e => console.error(e));
-    }
     showScreen('screenExito');
   }
 })();
