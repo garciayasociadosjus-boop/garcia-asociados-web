@@ -1265,6 +1265,18 @@ function cerrarSesion() {
   }
 })();
 
+  // Exponer funciones al scope global para los onclick del HTML
+  window.buscarCliente        = buscarCliente;
+  window.cerrarSesion         = cerrarSesion;
+  window.setMontoTotal        = setMontoTotal;
+  window.toggleParcial        = toggleParcial;
+  window.actualizarMontoPago  = actualizarMontoPago;
+  window.iniciarPago          = iniciarPago;
+  window.mostrarRecibo        = mostrarRecibo;
+  window.mostrarReciboPago    = mostrarReciboPago;
+  window.imprimirReciboHistorial = imprimirReciboHistorial;
+  window.cerrarRecibo         = cerrarRecibo;
+
 }); // fin DOMContentLoaded
 </script>
 
