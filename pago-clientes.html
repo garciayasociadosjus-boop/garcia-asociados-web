@@ -918,15 +918,22 @@ function renderHistorial(pagados) {
     const esParcial  = r.estado === 'Pago Parcial';
     const monto      = esParcial ? (parseFloat(r.montoPagado)||0) : (parseFloat(r.monto)||0);
     const montoTotal = parseFloat(r.monto) || 0;
-    const fecha      = r.fechaPago ? new Date(r.fechaPago).toLocaleDateString('es-AR') : (r.mesServicio ? mesLabel(r.mesServicio) : '—');
+    const periodo    = r.mesServicio ? mesLabel(r.mesServicio) : '';
+    const fechaPago  = r.fechaPago ? new Date(r.fechaPago).toLocaleDateString('es-AR') : '';
     const expediente = r.expediente || 'Expediente';
+    const subtitulo  = [
+      tipoLabel(r.tipo),
+      periodo ? 'Período: ' + periodo : '',
+      fechaPago ? 'Pagado: ' + fechaPago : '',
+      r.formaPago || ''
+    ].filter(Boolean).join(' · ');
 
     return `
     <div class="historial-item">
       <div class="historial-icon ${esParcial?'parcial':''}">${esParcial?'⚠️':'✅'}</div>
       <div class="historial-info">
         <h4>${expediente}</h4>
-        <p>${tipoLabel(r.tipo)} · ${fecha}${r.formaPago ? ' · ' + r.formaPago : ''}</p>
+        <p>${subtitulo}</p>
         ${esParcial ? `<p style="color:var(--warning);font-size:.75rem;font-weight:600;">Saldo restante: ${formatMoney(montoTotal-monto)}</p>` : ''}
       </div>
       <div class="historial-monto">
@@ -943,12 +950,13 @@ function imprimirReciboHistorial(r) {
   const esParcial  = r.estado === 'Pago Parcial';
   const monto      = esParcial ? (parseFloat(r.montoPagado)||0) : (parseFloat(r.monto)||0);
   const montoTotal = parseFloat(r.monto) || 0;
-  const fecha      = r.fechaPago ? new Date(r.fechaPago).toLocaleDateString('es-AR') : (r.mesServicio ? mesLabel(r.mesServicio) : new Date().toLocaleDateString('es-AR'));
+  const fecha      = r.fechaPago ? new Date(r.fechaPago).toLocaleDateString('es-AR') : new Date().toLocaleDateString('es-AR');
   abrirReciboConDatos({
     cliente:    r.cliente || nombreActual,
     dni:        r.dniCliente || dniActual,
     expediente: r.expediente || '—',
     tipo:       r.tipo || '—',
+    mesPagado:  r.mesServicio ? mesLabel(r.mesServicio) : '',
     monto:      monto,
     montoTotal: montoTotal,
     parcial:    esParcial,
@@ -990,7 +998,11 @@ function renderDeudas() {
 }
 
 function cardHTML(r, tipo) {
-  const monto = parseFloat(r.monto) || 0;
+  const montoOriginal = parseFloat(r.monto) || 0;
+  const yaPagado = parseFloat(r.montoPagado) || 0;
+  // Para pago parcial, el saldo es lo que falta
+  const esParcial = r.estado === 'Pago Parcial';
+  const monto = esParcial ? Math.max(0, montoOriginal - yaPagado) : montoOriginal;
   const cardId = r.id;
   const urgente = tipo === 'urgente';
 
@@ -1005,7 +1017,7 @@ function cardHTML(r, tipo) {
     </div>
 
     <div class="deuda-monto-total" id="montoDisplay-${cardId}">${formatMoney(monto)}</div>
-    <div class="deuda-monto-label">Total adeudado</div>
+    <div class="deuda-monto-label">${esParcial ? 'Saldo pendiente (de ' + formatMoney(montoOriginal) + ' · ya pagaste ' + formatMoney(yaPagado) + ')' : 'Total adeudado'}</div>
 
     <div class="pago-opciones">
       <label>Monto a pagar:</label>
@@ -1028,7 +1040,7 @@ function cardHTML(r, tipo) {
     </div>
 
     <button class="btn-pagar" id="btnPagar-${cardId}"
-            onclick="iniciarPago('${cardId}', ${monto}, '${(r.expediente||'Honorarios').replace(/'/g,'')}', '${r.tipo||''}')">
+            onclick="iniciarPago('${cardId}', ${monto}, '${(r.expediente||'Honorarios').replace(/'/g,'')}', '${r.tipo||''}', '${r.mesServicio ? mesLabel(r.mesServicio) : ''}', ${yaPagado})">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <rect x="2" y="5" width="20" height="14" rx="2"/>
         <line x1="2" y1="10" x2="22" y2="10"/>
@@ -1081,7 +1093,7 @@ function actualizarMontoPago(cardId) {
 // ══════════════════════════════════════════════════
 //  INICIAR PAGO → MERCADO PAGO
 // ══════════════════════════════════════════════════
-async function iniciarPago(cardId, montoTotal, expediente, tipo) {
+async function iniciarPago(cardId, montoTotal, expediente, tipo, mesPagado, yaPagadoPrev) {
   const monto = pagosSeleccionados[cardId] || montoTotal;
 
   if (!monto || monto <= 0) {
@@ -1103,8 +1115,10 @@ async function iniciarPago(cardId, montoTotal, expediente, tipo) {
     abonoId:    cardId,
     monto:      monto,
     montoTotal: montoTotal,
+    yaPagadoPrev: yaPagadoPrev || 0,
     expediente: expediente,
     tipo:       tipo,
+    mesPagado:  mesPagado || '',
     dni:        dniActual,
     cliente:    nombreActual,
     parcial:    parcial,
@@ -1177,11 +1191,12 @@ function abrirReciboConDatos(d) {
     </div>
     <div class="recibo-title">${d.parcial ? 'Comprobante de Pago Parcial' : 'Comprobante de Pago'}</div>
     <div class="recibo-row"><span class="lbl">Nº comprobante</span><span class="val">${num}</span></div>
-    <div class="recibo-row"><span class="lbl">Fecha</span><span class="val">${new Date().toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'})}</span></div>
+    <div class="recibo-row"><span class="lbl">Fecha</span><span class="val">${d.fecha || new Date().toLocaleDateString('es-AR')}</span></div>
     <div class="recibo-row"><span class="lbl">Cliente</span><span class="val">${d.cliente}</span></div>
     <div class="recibo-row"><span class="lbl">DNI</span><span class="val">${d.dni}</span></div>
     <div class="recibo-row"><span class="lbl">Expediente / Asunto</span><span class="val">${d.expediente}</span></div>
     <div class="recibo-row"><span class="lbl">Concepto</span><span class="val">${d.tipo}</span></div>
+    ${d.mesPagado ? `<div class="recibo-row"><span class="lbl">Período</span><span class="val">${d.mesPagado}</span></div>` : ''}
     ${d.parcial ? `<div class="recibo-row"><span class="lbl">Total adeudado</span><span class="val">${formatMoney(d.montoTotal)}</span></div>` : ''}
     <div class="recibo-total">
       <div class="lbl">${d.parcial ? 'IMPORTE ABONADO' : 'TOTAL ABONADO'}</div>
@@ -1255,13 +1270,18 @@ function log(msg) {
       return;
     }
 
-    const montoPagado = pagoActual ? parseFloat(pagoActual.monto) || 0 : 0;
-    const montoTotal  = pagoActual ? parseFloat(pagoActual.montoTotal) || 0 : 0;
-    const nuevoEstado = (!montoTotal || montoPagado >= montoTotal) ? 'Pagado' : 'Pago Parcial';
+    const montoPagadoAhora = pagoActual ? parseFloat(pagoActual.monto) || 0 : 0;
+    const yaPagadoPrev = pagoActual ? parseFloat(pagoActual.yaPagadoPrev) || 0 : 0;
+    const saldoQueDebia = pagoActual ? parseFloat(pagoActual.montoTotal) || 0 : 0;
+    // montoPagado acumulado total (sumamos el pago previo + el actual)
+    const montoPagadoAcum = yaPagadoPrev + montoPagadoAhora;
+    // Si pagó todo el saldo → Pagado. Si no → sigue siendo Pago Parcial
+    const nuevoEstado = (montoPagadoAhora >= saldoQueDebia) ? 'Pagado' : 'Pago Parcial';
     const fechaPagoStr = new Date().toISOString().split('T')[0];
 
     log('Estado a guardar: ' + nuevoEstado);
-    log('Monto: ' + montoPagado + ' / Total: ' + montoTotal);
+    log('Pagó ahora: ' + montoPagadoAhora + ' / Saldo era: ' + saldoQueDebia);
+    log('Pagado acumulado: ' + montoPagadoAcum);
 
     // CRÍTICO: la planilla guarda como ARRAY, hay que encontrar el índice del item
     let indexEnArray = null;
@@ -1298,7 +1318,7 @@ function log(msg) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           estado:      nuevoEstado,
-          montoPagado: montoPagado,
+          montoPagado: montoPagadoAcum,
           fechaPago:   fechaPagoStr,
           formaPago:   'Mercado Pago'
         })
