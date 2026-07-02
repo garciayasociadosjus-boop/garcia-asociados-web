@@ -88,6 +88,8 @@
             --gradient-primary: linear-gradient(135deg, #0A0E1A 0%, #151B2D 50%, #1F2937 100%);
             --gradient-hero: linear-gradient(135deg, rgba(10, 14, 26, 0.97) 0%, rgba(21, 27, 45, 0.95) 50%, rgba(31, 41, 55, 0.9) 100%);
             --whatsapp: #25d366;
+            --gold: #C9A84C;
+            --gold-dim: rgba(201, 168, 76, 0.35);
             --shadow-elegant: 0 25px 60px rgba(10, 14, 26, 0.2);
             --shadow-hover: 0 35px 80px rgba(10, 14, 26, 0.3);
         }
@@ -620,7 +622,7 @@
             pointer-events: none; 
         }
 
-        .services-container, .team-grid, .team h2 {
+        .services-container, .team-grid, .team h2, .section-eyebrow {
             position: relative;
             z-index: 1;
         }
@@ -673,15 +675,84 @@
             }
         }
 
+        .section-eyebrow {
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
         .services-container { max-width: 1400px; margin: 0 auto; }
         .services h2 { text-align: center; font-family: 'Crimson Text', serif; font-size: 3.5rem; color: var(--primary); margin-bottom: 5rem; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; margin-top: 4rem; }
-        .service-card { background: var(--white); padding: 3rem; border-radius: 25px; box-shadow: var(--shadow-elegant); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(107, 114, 128, 0.1); position: relative; overflow: hidden; text-align: center; }
-        .service-card:hover { transform: translateY(-15px) scale(1.02); box-shadow: var(--shadow-hover); }
-        .service-card h3 { font-family: 'Crimson Text', serif; color: var(--primary); margin-bottom: 2rem; font-size: 1.6rem; }
-        .service-card ul { list-style: none; color: var(--text); text-align: left; }
-        .service-card li { padding: 0.8rem 0; padding-left: 30px; position: relative; }
-        .service-card li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: bold; font-size: 1.2rem; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; margin-top: 4rem; perspective: 1500px; }
+
+        .service-card {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 18px;
+            box-shadow: var(--shadow-elegant);
+            transition: box-shadow 0.4s ease, transform 0.15s ease-out;
+            border: 1px solid rgba(107, 114, 128, 0.1);
+            border-top: 3px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .service-card:hover { box-shadow: var(--shadow-hover); }
+        .service-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(201, 168, 76, 0.14), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .service-card:hover::after { opacity: 1; }
+
+        .service-index {
+            position: absolute;
+            top: 1.6rem;
+            right: 2rem;
+            font-family: 'Crimson Text', serif;
+            font-weight: 700;
+            font-size: 3.2rem;
+            line-height: 1;
+            color: rgba(31, 41, 55, 0.06);
+            z-index: 0;
+        }
+
+        .service-icon {
+            width: 74px;
+            height: 74px;
+            margin: 0 auto 1.8rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-primary);
+            color: var(--gold);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 12px 25px rgba(10, 14, 26, 0.22);
+            position: relative;
+        }
+        .service-icon::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 1px solid var(--gold-dim);
+        }
+
+        .service-card h3 { font-family: 'Crimson Text', serif; color: var(--primary); margin-bottom: 2rem; font-size: 1.6rem; letter-spacing: 0.2px; position: relative; z-index: 1; }
+        .service-card ul { list-style: none; color: var(--text); text-align: left; position: relative; z-index: 1; }
+        .service-card li { padding: 0.8rem 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(107, 114, 128, 0.08); }
+        .service-card li:last-child { border-bottom: none; }
+        .service-card li::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-weight: 600; font-size: 1.05rem; }
 
         .whatsapp-btn {
             background: linear-gradient(45deg, var(--whatsapp), #128c7e);
@@ -715,18 +786,20 @@
         }
 
         .team h2 { text-align: center; font-family: 'Crimson Text', serif; font-size: 3.5rem; color: var(--primary); margin-bottom: 5rem; }
-        .team-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; }
+        .team-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; perspective: 1500px; }
 
         .team-member {
             text-align: center;
             padding: 2.5rem;
             background: var(--white);
-            border-radius: 20px;
-            transition: all 0.4s ease;
+            border-radius: 18px;
+            transition: box-shadow 0.4s ease, transform 0.15s ease-out;
             box-shadow: var(--shadow-elegant);
             border: 1px solid rgba(107, 114, 128, 0.1);
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
+            will-change: transform;
         }
         .team-member::before {
             content: '';
@@ -735,24 +808,54 @@
             left: 50%;
             transform: translateX(-50%);
             width: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent), var(--primary));
+            height: 3px;
+            background: var(--gold);
             transition: width 0.4s ease;
             border-radius: 0 0 4px 4px;
         }
+        .team-member::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(201, 168, 76, 0.12), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
         .team-member:hover {
-            transform: translateY(-8px);
             box-shadow: var(--shadow-hover);
         }
         .team-member:hover::before {
             width: 100%;
         }
-        .team-icon {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
+        .team-member:hover::after {
+            opacity: 1;
         }
+        .team-icon {
+            width: 66px;
+            height: 66px;
+            margin: 0 auto 1.6rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-primary);
+            color: var(--gold);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 10px 22px rgba(10, 14, 26, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        .team-icon::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 1px solid var(--gold-dim);
+        }
+        .team-icon svg { width: 30px; height: 30px; }
 
-        .team-member h4 { font-family: 'Crimson Text', serif; color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; }
+        .team-member h4 { font-family: 'Crimson Text', serif; color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; position: relative; z-index: 1; letter-spacing: 0.2px; }
+        .team-member p { position: relative; z-index: 1; }
 
 
         .contact {
@@ -1208,10 +1311,15 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
 
     <section class="services" id="servicios">
         <div class="services-container">
+            <p class="section-eyebrow">Nuestra Práctica</p>
             <h2>Áreas de Práctica</h2>
             <div class="services-grid">
                 <div class="service-card">
-                    <h3>👨‍👩‍👧‍👦 Derecho de Familia</h3>
+                    <span class="service-index">01</span>
+                    <div class="service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg>
+                    </div>
+                    <h3>Derecho de Familia</h3>
                     <ul>
                     <li>Violencia Familiar - Medidas de protección</li>
                     <li>Regímenes de Comunicación y Cuidado Personal</li>
@@ -1226,7 +1334,11 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
                     </a>
                 </div>
                 <div class="service-card">
-                    <h3>🚗 Accidentes de Tránsito</h3>
+                    <span class="service-index">02</span>
+                    <div class="service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-5A2 2 0 0 1 6.4 6.5h11.2a2 2 0 0 1 1.9 1.5L21 13"/><path d="M3 13h18v4a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1v-1H6.5v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4Z"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>
+                    </div>
+                    <h3>Accidentes de Tránsito</h3>
                     <ul>
                     <li>Asesoramiento Integral a Víctimas</li>
                     <li>Reclamos Administrativos ante aseguradoras</li>
@@ -1241,7 +1353,11 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
                     </a>
                 </div>
                 <div class="service-card">
-                    <h3>⚖️ Derecho Civil</h3>
+                    <span class="service-index">03</span>
+                    <div class="service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/><path d="M9 9h2"/></svg>
+                    </div>
+                    <h3>Derecho Civil</h3>
                     <ul>
                     <li>Sucesiones</li>
                     <li>Contratos</li>
@@ -1261,6 +1377,7 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
     </section>
 
     <section class="team" id="equipo">
+        <p class="section-eyebrow">Colaboradores</p>
         <h2>Equipo Interdisciplinario Asociado</h2>
         <div class="team-grid">
             <div class="team-member">
@@ -1414,6 +1531,28 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
           .to(knockoutSvg, { scale: 30, duration: 2 }, 0) 
           .to(knockoutSvg, { opacity: 0, duration: 0.5 }, "-=0.5")
           .to(scrollableCard, { scrollTop: () => scrollableCard.scrollHeight - scrollableCard.clientHeight, ease: "none", duration: 1.5 }, 1.5);
+
+        // --- EFECTO 3D (tilt + brillo dorado) EN TARJETAS DE SERVICIOS Y EQUIPO ---
+        function initTilt(selector, maxTilt, liftPx) {
+            if (!window.matchMedia('(pointer: fine)').matches) return;
+            document.querySelectorAll(selector).forEach(function (card) {
+                card.addEventListener('mousemove', function (e) {
+                    const r = card.getBoundingClientRect();
+                    const px = (e.clientX - r.left) / r.width;
+                    const py = (e.clientY - r.top) / r.height;
+                    const rx = (0.5 - py) * maxTilt * 2;
+                    const ry = (px - 0.5) * maxTilt * 2;
+                    card.style.transform = 'perspective(1000px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-' + liftPx + 'px)';
+                    card.style.setProperty('--mx', (px * 100) + '%');
+                    card.style.setProperty('--my', (py * 100) + '%');
+                });
+                card.addEventListener('mouseleave', function () {
+                    card.style.transform = '';
+                });
+            });
+        }
+        initTilt('.service-card', 7, 10);
+        initTilt('.team-member', 6, 6);
 
         // --- FACADE DE VIDEO (carga el iframe recién al hacer clic) ---
         function loadVideo(container) {
