@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es-AR">
 <head>
@@ -33,7 +34,7 @@
     <meta name="google-site-verification" content="o1LX4hWlPc0uicWvfL9wugJChFJExTmMSpZy1yXHxRE" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
     <!-- Datos estructurados para Google / motores de IA -->
     <script type="application/ld+json">
@@ -72,29 +73,31 @@
         }
 
         :root {
-            --primary: #0A0E1A;
-            --secondary: #151B2D;
-            --tertiary: #1F2937;
-            --accent: #374151; /* Gris oscuro principal para los paneles */
-            --light-accent: #6B7280; /* Gris más claro */
-            --text: #1F2937;
+            --primary: #05080F;
+            --secondary: #0A0F1E;
+            --tertiary: #131A2B;
+            --accent: #1C2538; /* Azul profundo principal para los paneles */
+            --light-accent: #D4AF37; /* Dorado premium para acentos y hover */
+            --text: #131A2B;
             --light: #F9FAFB;
             --white: #FFFFFF;
             --silver: #E5E7EB; /* Color para el texto del párrafo (Blanco-Gris) */
             --dark-silver: #D1D5DB;
             --platinum: #F3F4F6;
             --champagne: #F9F9F7;
-            --gradient-primary: linear-gradient(135deg, #0A0E1A 0%, #151B2D 50%, #1F2937 100%);
-            --gradient-hero: linear-gradient(135deg, rgba(10, 14, 26, 0.97) 0%, rgba(21, 27, 45, 0.95) 50%, rgba(31, 41, 55, 0.9) 100%);
+            --gradient-primary: linear-gradient(135deg, #05080F 0%, #0A0F1E 50%, #131A2B 100%);
+            --gradient-hero: linear-gradient(135deg, rgba(5, 8, 15, 0.97) 0%, rgba(10, 15, 30, 0.95) 50%, rgba(19, 26, 43, 0.9) 100%);
             --whatsapp: #25d366;
-            --gold: #C9A84C;
-            --gold-dim: rgba(201, 168, 76, 0.35);
-            --shadow-elegant: 0 25px 60px rgba(10, 14, 26, 0.2);
-            --shadow-hover: 0 35px 80px rgba(10, 14, 26, 0.3);
+            --gold: #D4AF37;
+            --gold-light: #F9E2AF;
+            --gold-gradient: linear-gradient(135deg, #996515 0%, #D4AF37 50%, #F9E2AF 100%);
+            --gold-dim: rgba(212, 175, 55, 0.35);
+            --shadow-elegant: 0 25px 60px rgba(5, 8, 15, 0.2);
+            --shadow-hover: 0 35px 80px rgba(5, 8, 15, 0.3);
         }
 
         body {
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
             color: var(--text);
             background: linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%);
@@ -103,15 +106,15 @@
 
         /* Navegación */
         nav {
-            background: rgba(10, 14, 26, 0.98);
+            background: rgba(5, 8, 15, 0.98);
             backdrop-filter: blur(20px);
-            box-shadow: 0 8px 40px rgba(10, 14, 26, 0.4);
+            box-shadow: 0 8px 40px rgba(5, 8, 15, 0.4);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-bottom: 1px solid rgba(55, 65, 81, 0.3);
+            border-bottom: 1px solid rgba(28, 37, 56, 0.3);
         }
 
         .nav-container {
@@ -124,14 +127,17 @@
         }
 
         .logo {
-            font-family: 'Playfair Display', serif;
-            color: var(--white);
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
             font-size: 1.6rem;
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             transition: all 0.3s ease;
-            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-links {
@@ -192,7 +198,7 @@
             align-items: center;
             justify-content: center;
             gap: 7px;
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             white-space: nowrap;
             background: linear-gradient(45deg, var(--whatsapp), #128c7e);
             color: white;
@@ -209,7 +215,7 @@
         }
         .nav-dropdown-btn {
             padding: 10px 20px;
-            border: 1.5px solid rgba(201,168,76,0.6);
+            border: 1.5px solid rgba(212,175,55,0.6);
             border-radius: 30px;
             font-size: 0.82rem;
             cursor: pointer;
@@ -219,16 +225,16 @@
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             white-space: nowrap;
             background: transparent;
-            color: var(--gold, #C9A84C);
+            color: var(--gold, #D4AF37);
             letter-spacing: 0.5px;
         }
         .nav-dropdown-btn:hover,
         .nav-dropdown.open .nav-dropdown-btn {
-            background: rgba(201,168,76,0.1);
-            border-color: var(--gold, #C9A84C);
+            background: rgba(212,175,55,0.1);
+            border-color: var(--gold, #D4AF37);
         }
         .nav-dropdown-btn svg { transition: transform 0.25s; }
         .nav-dropdown.open .nav-dropdown-btn svg { transform: rotate(180deg); }
@@ -257,28 +263,28 @@
             padding: 13px 18px;
             font-size: 0.88rem;
             font-weight: 600;
-            color: #1F2937;
+            color: #131A2B;
             text-decoration: none;
             background: none;
             border: none;
             cursor: pointer;
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             transition: background 0.15s;
             text-align: left;
         }
         .nav-dropdown-menu a:hover,
-        .nav-dropdown-menu button:hover { background: #F9FAFB; color: #0A0E1A; }
+        .nav-dropdown-menu button:hover { background: #F9FAFB; color: #05080F; }
         .nav-dropdown-menu .divider {
             height: 1px; background: #E5E7EB; margin: 4px 0;
         }
         .nav-dropdown-menu .highlight {
-            background: linear-gradient(135deg,#0A0E1A,#1F2937);
+            background: linear-gradient(135deg,#05080F,#131A2B);
             color: white !important;
             margin: 8px;
             border-radius: 8px;
             padding: 11px 14px !important;
         }
-        .nav-dropdown-menu .highlight:hover { opacity: .9; background: linear-gradient(135deg,#0A0E1A,#1F2937) !important; }
+        .nav-dropdown-menu .highlight:hover { opacity: .9; background: linear-gradient(135deg,#05080F,#131A2B) !important; }
 
         .hero {
             background: var(--gradient-hero);
@@ -300,7 +306,7 @@
             height: 100%;
             background: 
                 radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(107, 114, 128, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
                 linear-gradient(45deg, transparent 45%, rgba(255, 255, 255, 0.008) 50%, transparent 55%);
             animation: particleFlow 20s linear infinite;
         }
@@ -321,8 +327,8 @@
             text-align: center;
         }
         .hero .hero-pre-title {
-            font-family: 'Source Sans Pro', sans-serif;
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.8rem, 1.5vw, 1.05rem);
             background: linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 20%, #D1D5DB 40%, #9CA3AF 60%, #D1D5DB 80%, #F9FAFB 100%);
             background-size: 200% 200%;
             -webkit-background-clip: text;
@@ -349,17 +355,18 @@
         }
 
         .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3.5rem, 8vw, 7rem);
-            background: linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 15%, #F9FAFB 25%, #F3F4F6 35%, #E5E7EB 50%, #F3F4F6 65%, #F9FAFB 75%, #FFFFFF 85%, #FFFFFF 100%);
-            background-size: 400% 400%;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.7rem, 6.6vw, 5.4rem);
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 38%, #FBF4E2 46%, var(--gold-light) 50%, #FBF4E2 54%, #FFFFFF 62%, #FFFFFF 100%);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 2rem;
             font-weight: 700;
-            text-shadow: 0 0 120px rgba(255, 255, 255, 0.6);
+            text-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
             line-height: 1.1;
-            animation: whiteFlow 6s ease-in-out infinite, textFloat 8s ease-in-out infinite;
+            animation: whiteFlow 12s ease-in-out infinite, textFloat 8s ease-in-out infinite;
             position: relative;
         }
 
@@ -389,10 +396,10 @@
         }
 
         @keyframes whiteFlow {
-            0%, 100% { background-position: 0% 50%; filter: brightness(1.1) contrast(1.1); }
-            25% { background-position: 25% 25%; filter: brightness(1.15) contrast(1.15) drop-shadow(0 0 30px rgba(255, 255, 255, 0.4)); }
-            50% { background-position: 100% 50%; filter: brightness(1.2) contrast(1.2) drop-shadow(0 0 40px rgba(249, 250, 251, 0.5)); }
-            75% { background-position: 75% 75%; filter: brightness(1.18) contrast(1.18) drop-shadow(0 0 35px rgba(229, 231, 235, 0.4)); }
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 25% 25%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 75% 75%; }
         }
 
         @keyframes textFloat {
@@ -407,17 +414,18 @@
         }
 
         .hero .tagline {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.3rem, 2vw, 1.8rem);
-            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1rem, 1.6vw, 1.35rem);
+            color: var(--gold-light);
             margin-bottom: 1.5rem;
-            font-style: italic;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
         }
         .hero .subtitle {
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: clamp(1rem, 1.5vw, 1.3rem);
             color: rgba(255, 255, 255, 0.85);
             margin-bottom: 3rem;
@@ -426,12 +434,13 @@
             margin-right: auto;
         }
         .welcome-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.5rem, 3vw, 2.1rem);
             color: rgba(255, 255, 255, 0.95);
             margin-top: 3rem;
             margin-bottom: 2rem;
             font-weight: 600;
+            letter-spacing: 1px;
         }
         .video-container {
             position: relative;
@@ -471,7 +480,7 @@
             justify-content: center;
             font-weight: 600;
             text-transform: uppercase;
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             box-shadow: var(--shadow-elegant);
         }
         .hero-cta-btn:hover {
@@ -506,7 +515,7 @@
         .filosofia-revelado { z-index: 1; opacity: 0; }
         .knockout-svg { z-index: 2; width: 90vw; height: 90vh; }
         .knockout-svg .knockout-rect { fill: var(--white); }
-        .knockout-svg text { font-family: 'Playfair Display', serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; font-size: 80px; }
+        .knockout-svg text { font-family: 'Cinzel', serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; font-size: 80px; }
 
         .filosofia-revelado .about-container {
             background: var(--white);
@@ -541,7 +550,7 @@
         }
 
         .about-content h2 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cinzel', serif;
             font-size: 3rem;
             color: var(--white);
             margin-bottom: 2rem;
@@ -577,7 +586,7 @@
 
         .about-card h3 {
             color: var(--light-accent);
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cinzel', serif;
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
         }
@@ -594,7 +603,7 @@
         }
 
         .founder-info h3 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cinzel', serif;
             font-size: 2rem;
             margin-bottom: 1rem;
             color: var(--white);
@@ -685,7 +694,7 @@
         }
 
         .services-container { max-width: 1400px; margin: 0 auto; }
-        .services h2 { text-align: center; font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--primary); margin-bottom: 5rem; }
+        .services h2 { text-align: center; font-family: 'Cinzel', serif; font-size: clamp(2rem, 4vw, 2.6rem); color: var(--primary); margin-bottom: 4rem; letter-spacing: 1px; }
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; margin-top: 4rem; perspective: 1500px; }
 
         .service-card {
@@ -694,7 +703,7 @@
             border-radius: 18px;
             box-shadow: var(--shadow-elegant);
             transition: box-shadow 0.4s ease, transform 0.15s ease-out;
-            border: 1px solid rgba(107, 114, 128, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.1);
             border-top: 3px solid var(--gold);
             position: relative;
             overflow: hidden;
@@ -707,7 +716,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(201, 168, 76, 0.14), transparent 60%);
+            background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(212, 175, 55, 0.14), transparent 60%);
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
@@ -718,11 +727,11 @@
             position: absolute;
             top: 1.6rem;
             right: 2rem;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cinzel', serif;
             font-weight: 700;
             font-size: 3.2rem;
             line-height: 1;
-            color: rgba(31, 41, 55, 0.06);
+            color: rgba(19, 26, 43, 0.06);
             z-index: 0;
         }
 
@@ -736,7 +745,7 @@
             justify-content: center;
             background: var(--gradient-primary);
             color: var(--gold);
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 12px 25px rgba(10, 14, 26, 0.22);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 12px 25px rgba(5, 8, 15, 0.22);
             position: relative;
         }
         .service-icon::after {
@@ -747,9 +756,9 @@
             border: 1px solid var(--gold-dim);
         }
 
-        .service-card h3 { font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 2rem; font-size: 1.6rem; letter-spacing: 0.2px; position: relative; z-index: 1; }
+        .service-card h3 { font-family: 'Cinzel', serif; color: var(--primary); margin-bottom: 2rem; font-size: 1.2rem; letter-spacing: 0.5px; position: relative; z-index: 1; }
         .service-card ul { list-style: none; color: var(--text); text-align: left; position: relative; z-index: 1; }
-        .service-card li { padding: 0.8rem 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(107, 114, 128, 0.08); }
+        .service-card li { padding: 0.8rem 0; padding-left: 30px; position: relative; border-bottom: 1px solid rgba(212, 175, 55, 0.08); }
         .service-card li:last-child { border-bottom: none; }
         .service-card li::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-weight: 600; font-size: 1.05rem; }
 
@@ -768,7 +777,7 @@
             gap: 10px;
             font-weight: 600;
             box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3);
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .whatsapp-btn:hover {
@@ -784,8 +793,11 @@
             margin-top: 1.5rem;
         }
 
-        .team h2 { text-align: center; font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--primary); margin-bottom: 5rem; }
-        .team-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; perspective: 1500px; }
+        .team h2 { text-align: center; font-family: 'Cinzel', serif; font-size: clamp(2rem, 4vw, 2.6rem); color: var(--primary); margin-bottom: 4rem; letter-spacing: 1px; }
+        .team-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; perspective: 1500px; }
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+        }
 
         .team-member {
             text-align: center;
@@ -794,7 +806,7 @@
             border-radius: 18px;
             transition: box-shadow 0.4s ease, transform 0.15s ease-out;
             box-shadow: var(--shadow-elegant);
-            border: 1px solid rgba(107, 114, 128, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.1);
             position: relative;
             overflow: hidden;
             transform-style: preserve-3d;
@@ -816,7 +828,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(201, 168, 76, 0.12), transparent 60%);
+            background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(212, 175, 55, 0.12), transparent 60%);
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
@@ -840,7 +852,7 @@
             justify-content: center;
             background: var(--gradient-primary);
             color: var(--gold);
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 10px 22px rgba(10, 14, 26, 0.2);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 10px 22px rgba(5, 8, 15, 0.2);
             position: relative;
             z-index: 1;
         }
@@ -853,7 +865,7 @@
         }
         .team-icon svg { width: 30px; height: 30px; }
 
-        .team-member h4 { font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; position: relative; z-index: 1; letter-spacing: 0.2px; }
+        .team-member h4 { font-family: 'Cinzel', serif; color: var(--primary); margin-bottom: 1rem; font-size: 1.02rem; position: relative; z-index: 1; letter-spacing: 0.3px; line-height: 1.3; }
         .team-member p { position: relative; z-index: 1; }
 
 
@@ -870,7 +882,7 @@
         }
 
         .contact h2 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cinzel', serif;
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
             color: var(--white);
@@ -926,7 +938,7 @@
         .contact-item:hover .icon {
             transform: scale(1.15) rotate(10deg);
             background: var(--light-accent);
-            box-shadow: 0 0 20px rgba(107, 114, 128, 0.5);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
         }
 
         .contact-item a {
@@ -951,7 +963,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(10, 14, 26, 0.85);
+            background-color: rgba(5, 8, 15, 0.85);
             backdrop-filter: blur(10px);
             animation: fadeIn 0.4s ease;
             display: none;
@@ -968,7 +980,7 @@
             text-align: center;
             animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: var(--shadow-hover);
-            border: 1px solid rgba(107, 114, 128, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
         @keyframes slideIn {
@@ -988,7 +1000,7 @@
         }
 
         .modal h3 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cinzel', serif;
             color: var(--primary);
             margin-bottom: 2rem;
             font-size: 1.8rem;
@@ -998,17 +1010,17 @@
             width: 100%;
             padding: 18px;
             font-size: 1.1rem;
-            border: 2px solid rgba(107, 114, 128, 0.2);
+            border: 2px solid rgba(212, 175, 55, 0.2);
             border-radius: 12px;
             margin-bottom: 1.5rem;
             transition: all 0.3s ease;
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .modal input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(55, 65, 81, 0.2);
+            box-shadow: 0 0 20px rgba(28, 37, 56, 0.2);
         }
 
         .modal-buttons {
@@ -1026,24 +1038,24 @@
             font-size: 1rem;
             transition: all 0.3s ease;
             font-weight: 600;
-            font-family: 'Source Sans Pro', sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .modal-btn-primary {
             background: var(--gradient-primary);
             color: white;
-            box-shadow: 0 4px 20px rgba(10, 14, 26, 0.3);
+            box-shadow: 0 4px 20px rgba(5, 8, 15, 0.3);
         }
 
         .modal-btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 30px rgba(10, 14, 26, 0.4);
+            box-shadow: 0 6px 30px rgba(5, 8, 15, 0.4);
         }
 
         .modal-btn-secondary {
             background: var(--light);
             color: var(--text);
-            border: 1px solid rgba(107, 114, 128, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
 
         .modal-btn-secondary:hover {
@@ -1086,9 +1098,13 @@
             .logo::before {
                 content: 'G & A';
                 font-size: 1.6rem;
-                letter-spacing: 0.5px;
-                font-family: 'Playfair Display', serif;
-                font-weight: 600;
+                letter-spacing: 1px;
+                font-family: 'Cinzel', serif;
+                font-weight: 700;
+                background: var(--gold-gradient);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
             }
 
             /* ---- INICIO NUEVO DISEÑO HÍBRIDO PARA CELULARES ---- */
@@ -1137,7 +1153,7 @@
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
-                box-shadow: 0 10px 30px rgba(10, 14, 26, 0.3);
+                box-shadow: 0 10px 30px rgba(5, 8, 15, 0.3);
                 transition: transform 0.3s ease;
             }
             .fab-main:hover {
@@ -1153,7 +1169,7 @@
                 background-color: var(--white);
                 padding: 10px 20px;
                 border-radius: 30px;
-                box-shadow: 0 5px 15px rgba(10, 14, 26, 0.1);
+                box-shadow: 0 5px 15px rgba(5, 8, 15, 0.1);
                 transition: transform 0.2s ease;
                 white-space: nowrap;
             }
