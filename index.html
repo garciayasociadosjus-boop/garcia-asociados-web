@@ -1484,18 +1484,6 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
 </footer>
     </footer>
 
-    <div id="passwordModal" class="modal">
-        <div class="modal-content">
-            <h3>🔒 Acceso al Portal de Socios</h3>
-            <p style="color: #666; margin-bottom: 2rem;">Ingrese la clave de acceso proporcionada por el estudio</p>
-            <input type="password" id="passwordInput" placeholder="Contraseña" onkeypress="if(event.key==='Enter') checkPassword()">
-            <div id="passwordErrorMessage" class="error-message">Clave incorrecta. Por favor, intente nuevamente.</div>
-            <div class="modal-buttons">
-                <button class="modal-btn modal-btn-secondary" onclick="closeModal('passwordModal')">Cancelar</button>
-                <button class="modal-btn modal-btn-primary" onclick="checkPassword()">Ingresar</button>
-            </div>
-        </div>
-    </div>
 
     <div id="dniModal" class="modal">
         <div class="modal-content">
@@ -1587,42 +1575,20 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
         }
 
         window.onclick = function(event) {
-            const passwordModal = document.getElementById('passwordModal');
             const dniModal = document.getElementById('dniModal');
             const expedienteModal = document.getElementById('expedienteModal');
-            if (event.target == passwordModal) closeModal('passwordModal');
             if (event.target == dniModal) closeModal('dniModal');
             if (event.target == expedienteModal) closeModal('expedienteModal');
         }
 
-        // --- LÓGICA PARA ACCESO INTERNO (CONTRASEÑA) ---
-        const PORTAL_PASSWORD = 'Democracia0507';
+        // --- ACCESO INTERNO → PORTAL (el login real se pide en el portal) ---
         const PORTAL_URL = 'https://garciayasociadosjus-boop.github.io/';
 
+        // Ya no hay clave acá: va directo al portal, que pide el login real (email + contraseña).
         function openPasswordModal() {
             const fabContainer = document.getElementById('fab-container');
             if (fabContainer) fabContainer.classList.remove('open');
-            const modal = document.getElementById('passwordModal');
-            modal.style.display = 'flex';
-            const input = document.getElementById('passwordInput');
-            const error = document.getElementById('passwordErrorMessage');
-            input.value = '';
-            if(error) error.style.display = 'none';
-            input.focus();
-        }
-
-        function checkPassword() {
-            const input = document.getElementById('passwordInput');
-            if (input.value === PORTAL_PASSWORD) {
-                closeModal('passwordModal');
-                window.open(PORTAL_URL, '_blank');
-            } else {
-                const error = document.getElementById('passwordErrorMessage');
-                if(error) error.style.display = 'block';
-                input.value = '';
-                input.focus();
-                setTimeout(() => { if(error) error.style.display = 'none'; }, 3000);
-            }
+            window.open(PORTAL_URL, '_blank');
         }
 
         // --- LÓGICA PARA EXPEDIENTE ONLINE (DNI) ---
