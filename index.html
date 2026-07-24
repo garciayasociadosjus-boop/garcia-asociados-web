@@ -1086,10 +1086,65 @@
             } 
             .hero-content { padding: 2rem; }
             .about-container { grid-template-columns: 1fr; }
-            .services, .team, .contact, footer { padding: 4rem 2rem; }
-            .filosofia-revelado .about-container { padding: 1.5rem; height: auto; }
+            .services, .team, .contact, footer { padding: 4rem 1.25rem; }
+            /* NOSOTROS en celular: la máscara "García & Asociados" cubre TODA la
+               pantalla (el SVG pasa a 100vw/100vh y se recorta con slice desde el JS),
+               y el texto usa un tamaño que entra completo en vertical. */
+            .knockout-svg { width: 100vw; height: 100vh; }
+            .knockout-svg text { font-size: 18px; }
+            .filosofia-revelado .about-container { padding: 1.5rem; }
+
+            /* ---- TARJETAS EN CELULAR (antes se desbordaban / se aplastaban) ---- */
+            /* Servicios: efecto "apilado" al scrollear (como la app de MercadoLibre).
+               overflow:clip recorta el fondo animado PERO deja funcionar el sticky
+               (a diferencia de overflow:hidden, que lo rompía). */
+            .services { overflow: clip; }
+            .services-grid {
+                display: block;
+                margin-top: 2.5rem;
+                perspective: none;
+            }
+            .services-container { padding: 0; }
+            .service-card {
+                position: sticky;
+                margin-bottom: 2rem;
+            }
+            /* top escalonado: cada tarjeta se pega un poco más abajo, así al apilarse
+               se ve el borde de las de atrás (efecto "mazo de cartas") */
+            .service-card:nth-child(1) { top: 82px; }
+            .service-card:nth-child(2) { top: 98px; }
+            .service-card:nth-child(3) { top: 114px; }
+            .service-card:nth-child(4) { top: 130px; }
+            .service-card:last-child { margin-bottom: 0; }
+            /* Equipo: mismo efecto "apilado" al scrollear que Servicios */
+            .team { overflow: clip; }
+            .team-grid {
+                display: block;
+                perspective: none;
+            }
+            .team-member {
+                position: sticky;
+                margin-bottom: 2rem;
+            }
+            .team-member:nth-child(1) { top: 82px; }
+            .team-member:nth-child(2) { top: 98px; }
+            .team-member:nth-child(3) { top: 114px; }
+            .team-member:nth-child(4) { top: 130px; }
+            .team-member:last-child { margin-bottom: 0; }
+            /* Que ninguna tarjeta pase el ancho disponible */
+            .service-card, .team-member { max-width: 100%; }
+
+            /* Contacto: el mail largo se cortaba contra el borde en celular */
+            .contact-item { font-size: 0.95rem; gap: 1rem; }
+            .contact-item .icon { width: 42px; height: 42px; flex-shrink: 0; }
+            .contact-item a { font-size: 0.95rem; word-break: break-word; overflow-wrap: anywhere; }
+
+            /* Pie: dar aire abajo para que el botón flotante "+" no tape el mail */
+            footer { padding-bottom: 7rem; }
+            footer a { overflow-wrap: anywhere; }
             .services h2, .team h2 {
-                font-size: 2.5rem;
+                font-size: clamp(1.5rem, 6.5vw, 2.3rem);
+                overflow-wrap: break-word;
             }
             .logo {
                 font-size: 0; 
@@ -1521,11 +1576,18 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
         const revealedContent = document.querySelector(".filosofia-revelado");
         const scrollableCard = document.querySelector(".filosofia-revelado .about-container");
         const knockoutSvg = document.querySelector(".knockout-svg");
+        // Máscara "García & Asociados" con zoom al scrollear (escritorio Y celular).
+        // En celular el SVG se recorta (slice) para cubrir toda la pantalla vertical
+        // —así no se trasluce el fondo— y el texto usa un tamaño menor (ver CSS móvil).
+        const esCelular = window.matchMedia('(max-width: 768px)').matches;
+        if (knockoutSvg && esCelular) {
+            knockoutSvg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+        }
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: zoomContainer,
                 start: "top top",
-                end: "+=3000",
+                end: esCelular ? "+=2000" : "+=3000",
                 scrub: 1,
                 pin: true,
             }
