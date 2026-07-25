@@ -20,7 +20,7 @@
     <meta property="og:title" content="García & Asociados - Estudio Jurídico en Quilmes, Bernal, Berazategui, Avellaneda y Florencio Varela">
     <meta property="og:description" content="Abogados especialistas en Derecho de Familia, Accidentes de Tránsito y Derecho Civil. Asesoramiento legal personalizado.">
     <meta property="og:url" content="https://garciayasociados.com.ar/">
-    <meta property="og:image" content="https://garciayasociados.com.ar/og-image.jpg">
+    <meta property="og:image" content="https://garciayasociados.com.ar/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="es_AR">
@@ -29,7 +29,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="García & Asociados - Estudio Jurídico">
     <meta name="twitter:description" content="Derecho de Familia, Accidentes de Tránsito y Derecho Civil en Quilmes, Bernal, Berazategui, Avellaneda y Florencio Varela.">
-    <meta name="twitter:image" content="https://garciayasociados.com.ar/og-image.jpg">
+    <meta name="twitter:image" content="https://garciayasociados.com.ar/og-image.png">
 
     <meta name="google-site-verification" content="o1LX4hWlPc0uicWvfL9wugJChFJExTmMSpZy1yXHxRE" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,8 +48,10 @@
       "email": "estudio@garciayasociados.com.ar",
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": "Saavedra 151",
         "addressLocality": "Quilmes",
         "addressRegion": "Buenos Aires",
+        "postalCode": "1878",
         "addressCountry": "AR"
       },
       "areaServed": ["Quilmes", "Bernal", "Berazategui", "Avellaneda", "Florencio Varela"],
@@ -894,9 +896,11 @@
 
         .contact-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 4rem;
-            align-items: center;
+            align-items: start;
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
         .contact-details {
@@ -905,7 +909,7 @@
             gap: 2.5rem;
             text-align: left;
             max-width: 500px;
-            margin: 0 auto;
+            margin: 0;
         }
 
         .contact-item {
@@ -944,6 +948,150 @@
             color: var(--dark-silver);
             text-decoration: underline;
         }
+
+        /* Formulario de consulta (sobrio, sin lenguaje promocional) */
+        .contact-form {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 20px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            text-align: left;
+        }
+        .contact-form h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-light);
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        .contact-form .form-sub {
+            color: var(--silver);
+            font-size: 0.95rem;
+            margin: 0 0 0.4rem;
+            line-height: 1.5;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 0.85rem 1rem;
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder { color: rgba(255, 255, 255, 0.45); }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+        }
+        .contact-form textarea { resize: vertical; min-height: 110px; }
+        .contact-form button {
+            background: var(--gold-gradient);
+            color: var(--primary);
+            border: none;
+            border-radius: 30px;
+            padding: 0.9rem 1.5rem;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .contact-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3); }
+        .contact-form button:disabled { opacity: 0.6; cursor: default; transform: none; }
+        #formMsg { font-size: 0.95rem; margin: 0; min-height: 1.2em; }
+
+        /* ===== NOVEDADES Y CONSEJOS ===== */
+        .novedades { padding: 7rem 2rem; background: #f6f5f2; }
+        .novedades .eyebrow {
+            text-align: center; color: var(--gold);
+            letter-spacing: 0.35em; text-transform: uppercase;
+            font-size: 0.78rem; font-weight: 600; margin-bottom: 0.9rem;
+        }
+        .novedades h2 {
+            text-align: center; font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 2.6rem); color: var(--primary);
+            margin-bottom: 0.9rem; letter-spacing: 0.5px;
+        }
+        .novedades .subtitulo {
+            text-align: center; color: #555; max-width: 640px;
+            margin: 0 auto 3.5rem; line-height: 1.6; font-size: 1.02rem;
+        }
+        .novedades-grid {
+            max-width: 1200px; margin: 0 auto; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;
+        }
+        .novedad-card {
+            background: #fff; border: 1px solid rgba(0, 0, 0, 0.06);
+            border-top: 3px solid var(--gold); border-radius: 16px; padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            display: flex; flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .novedad-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1); }
+        .novedad-tag {
+            align-self: flex-start; font-size: 0.72rem; font-weight: 600;
+            letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent);
+            background: rgba(28, 37, 56, 0.08); padding: 0.35rem 0.75rem;
+            border-radius: 20px; margin-bottom: 1rem;
+        }
+        .novedad-card h3 {
+            font-family: 'Cinzel', serif; color: var(--primary);
+            font-size: 1.15rem; line-height: 1.35; margin-bottom: 0.8rem;
+        }
+        .novedad-card p { color: #555; line-height: 1.6; font-size: 0.97rem; flex-grow: 1; margin-bottom: 1.3rem; }
+        .novedad-link {
+            align-self: flex-start; color: var(--accent); font-weight: 600;
+            text-decoration: none; font-size: 0.9rem;
+            display: inline-flex; align-items: center; gap: 6px; transition: gap 0.2s ease;
+        }
+        .novedad-link:hover { gap: 12px; }
+        @media (max-width: 768px) { .novedades { padding: 4rem 1.25rem; } }
+
+        /* ===== TESTIMONIOS ===== */
+        .testimonios { padding: 6.5rem 2rem; background: var(--gradient-primary); position: relative; }
+        .testimonios .eyebrow {
+            text-align: center; color: var(--gold);
+            letter-spacing: 0.35em; text-transform: uppercase;
+            font-size: 0.78rem; font-weight: 600; margin-bottom: 0.9rem;
+        }
+        .testimonios h2 {
+            text-align: center; font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 2.6rem); color: var(--white);
+            margin-bottom: 0.7rem; letter-spacing: 0.5px;
+        }
+        .testimonios .subtitulo { text-align: center; color: var(--silver); margin: 0 auto 3rem; max-width: 560px; line-height: 1.6; }
+        .testi-grid {
+            max-width: 1150px; margin: 0 auto; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.8rem;
+        }
+        .testi-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 18px; padding: 2rem 1.8rem;
+            display: flex; flex-direction: column;
+        }
+        .testi-stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; margin-bottom: 1rem; }
+        .testi-text { color: var(--silver); line-height: 1.7; font-size: 0.98rem; font-style: italic; flex-grow: 1; margin-bottom: 1.4rem; }
+        .testi-author { display: flex; align-items: center; gap: 0.8rem; }
+        .testi-avatar {
+            width: 42px; height: 42px; border-radius: 50%;
+            background: var(--gold-gradient); color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.05rem; flex-shrink: 0;
+        }
+        .testi-name { color: var(--white); font-weight: 600; font-size: 0.95rem; }
+        .testi-source { color: var(--silver); font-size: 0.8rem; opacity: 0.75; }
+        @media (max-width: 768px) { .testimonios { padding: 4rem 1.25rem; } }
 
         footer { background: var(--primary); color: var(--white); text-align: center; padding: 3rem; }
 
@@ -1130,6 +1278,9 @@
             .contact-item { font-size: 0.95rem; gap: 1rem; }
             .contact-item .icon { width: 42px; height: 42px; flex-shrink: 0; }
             .contact-item a { font-size: 0.95rem; word-break: break-word; overflow-wrap: anywhere; }
+            .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .contact-details { max-width: 100%; margin: 0 auto; }
+            .contact-form { padding: 1.75rem; }
 
             /* Pie: dar aire abajo para que el botón flotante "+" no tape el mail */
             footer { padding-bottom: 7rem; }
@@ -1251,6 +1402,7 @@
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#servicios">Servicios</a></li>
                 <li><a href="#equipo">Equipo</a></li>
+                <li><a href="#novedades">Novedades</a></li>
                 <li><a href="#contacto">Contacto</a></li>
              </ul>
             <div class="nav-buttons">
@@ -1476,6 +1628,73 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
         </div>
     </section>
 
+    <section class="novedades" id="novedades">
+        <p class="eyebrow">Recursos</p>
+        <h2>Novedades y Consejos</h2>
+        <p class="subtitulo">Información general sobre temas legales frecuentes. Cada caso es particular: ante una situación concreta, lo mejor es asesorarte con un profesional.</p>
+        <div class="novedades-grid">
+            <article class="novedad-card">
+                <span class="novedad-tag">Derecho de Familia</span>
+                <h3>Divorcio de común acuerdo: ¿por dónde empezar?</h3>
+                <p>Cuando ambas partes están de acuerdo, el trámite es más ágil. Se presenta una propuesta reguladora —cuidado de los hijos, alimentos y división de bienes— que luego el juez homologa. Un buen asesoramiento inicial evita errores que después son difíciles de corregir.</p>
+                <a class="novedad-link" href="#contacto">Consultá tu situación →</a>
+            </article>
+            <article class="novedad-card">
+                <span class="novedad-tag">Accidentes de Tránsito</span>
+                <h3>Tuviste un accidente: los primeros pasos</h3>
+                <p>Sacá fotos del lugar y de los daños, pedí los datos del otro conductor y de su seguro, y realizá la denuncia correspondiente. Guardá presupuestos y constancias médicas: son la base de cualquier reclamo posterior.</p>
+                <a class="novedad-link" href="#contacto">Consultá tu situación →</a>
+            </article>
+            <article class="novedad-card">
+                <span class="novedad-tag">Derecho de Familia</span>
+                <h3>Alimentos: cómo se fijan y qué se puede reclamar</h3>
+                <p>La cuota de alimentos cubre necesidades como vivienda, educación, salud y vestimenta. Se fija según las necesidades del hijo y las posibilidades de quien debe abonarla, y puede solicitarse su fijación, aumento o reducción cuando cambian las circunstancias.</p>
+                <a class="novedad-link" href="#contacto">Consultá tu situación →</a>
+            </article>
+        </div>
+    </section>
+
+    <section class="testimonios" id="testimonios">
+        <p class="eyebrow">Opiniones</p>
+        <h2>Lo que dicen nuestros clientes</h2>
+        <p class="subtitulo">Reseñas reales publicadas por clientes del estudio en Google.</p>
+        <div class="testi-grid">
+            <article class="testi-card">
+                <div class="testi-stars" aria-label="5 de 5 estrellas">★★★★★</div>
+                <p class="testi-text">"Excelente atención y profesionalismo. Camila siempre se mostró predispuesta a responder mis dudas con claridad y paciencia. Me sentí acompañada en todo momento y con la tranquilidad de estar en buenas manos. Muy recomendados."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar">C</div>
+                    <div>
+                        <div class="testi-name">Charo D.</div>
+                        <div class="testi-source">Reseña en Google</div>
+                    </div>
+                </div>
+            </article>
+            <article class="testi-card">
+                <div class="testi-stars" aria-label="5 de 5 estrellas">★★★★★</div>
+                <p class="testi-text">"Excelente atención desde el primer momento. Siempre dispuestos a escuchar con paciencia, explicar cada detalle de manera clara y brindar soluciones concretas. Se nota la calidez humana."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar">J</div>
+                    <div>
+                        <div class="testi-name">Jesica A.</div>
+                        <div class="testi-source">Reseña en Google</div>
+                    </div>
+                </div>
+            </article>
+            <article class="testi-card">
+                <div class="testi-stars" aria-label="5 de 5 estrellas">★★★★★</div>
+                <p class="testi-text">"Excelente profesional, empática y resolutiva. Siempre dispuesta, con una escucha atenta y muy preparada profesionalmente."</p>
+                <div class="testi-author">
+                    <div class="testi-avatar">L</div>
+                    <div>
+                        <div class="testi-name">Lorena R.</div>
+                        <div class="testi-source">Reseña en Google</div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
     <section class="contact" id="contacto">
         <div class="contact-container">
             <h2>Contacto</h2>
@@ -1483,34 +1702,81 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
                 Estamos aquí para ayudarte. Contáctanos para una consulta inicial y descubre cómo podemos defender tus derechos.
             </p>
             <div class="contact-grid">
-    <div class="contact-details">
-        
-       <!-- Sección de Contacto -->
-    <div class="contact-grid">
-        <div class="contact-details">
-            <!-- Email -->
-            <div class="contact-item">
-                <div class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <div class="contact-details">
+                    <!-- Dirección -->
+                    <div class="contact-item">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Saavedra+151+Quilmes" target="_blank" rel="noopener">Saavedra 151, Quilmes Centro</a>
+                    </div>
+                    <!-- Email -->
+                    <div class="contact-item">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        </div>
+                        <a href="mailto:estudio@garciayasociados.com.ar">estudio@garciayasociados.com.ar</a>
+                    </div>
+                    <!-- Teléfono -->
+                    <div class="contact-item">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        </div>
+                        <a href="tel:+541168063444">11 6806-3444 / 11 7237-1991</a>
+                    </div>
+                    <!-- Instagram -->
+                    <div class="contact-item">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </div>
+                        <a href="https://www.instagram.com/garciayasociadosjus/" target="_blank" rel="noopener">@garciayasociadosjus</a>
+                    </div>
                 </div>
-                <a href="mailto:estudio@garciayasociados.com.ar">estudio@garciayasociados.com.ar</a>
+
+                <!-- FORMULARIO DE CONSULTA (Web3Forms) -->
+                <form id="formConsulta" class="contact-form">
+                    <h3>Agendá tu consulta</h3>
+                    <p class="form-sub">Dejanos tus datos y tu consulta o comentario, y nos comunicamos con vos para coordinar.</p>
+                    <input type="hidden" name="access_key" value="4f4c31b4-d215-40c0-a12d-9b22c85a6c20">
+                    <input type="hidden" name="subject" value="Nueva consulta desde la web">
+                    <input type="hidden" name="from_name" value="Web García &amp; Asociados">
+                    <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+                    <input type="text" name="nombre" placeholder="Nombre y apellido" required>
+                    <input type="email" name="email" placeholder="Correo electrónico" required>
+                    <input type="tel" name="telefono" placeholder="Teléfono (opcional)">
+                    <textarea name="mensaje" placeholder="Tu consulta o comentario" required></textarea>
+                    <button type="submit">Enviar</button>
+                    <p id="formMsg" role="status"></p>
+                </form>
             </div>
-            <!-- Teléfono -->
-            <div class="contact-item">
-                <div class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                </div>
-                <a href="tel:+541168063444">11 6806-3444 / 11 7237-1991</a>
-            </div>
-            <!-- Instagram -->
-            <div class="contact-item">
-                <div class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                </div>
-                <a href="https://www.instagram.com/garciayasociadosjus/" target="_blank">@garciayasociadosjus</a>
-            </div>
-        </div>
-    </div>
+            <script>
+              (function () {
+                var form = document.getElementById('formConsulta');
+                if (!form) return;
+                form.addEventListener('submit', async function (e) {
+                  e.preventDefault();
+                  var msg = document.getElementById('formMsg');
+                  var btn = form.querySelector('button');
+                  btn.disabled = true; btn.textContent = 'Enviando…';
+                  try {
+                    var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) });
+                    var data = await res.json();
+                    if (data.success) {
+                      msg.style.color = '#7CCB8E';
+                      msg.textContent = '¡Gracias! Recibimos tu consulta y nos comunicamos a la brevedad.';
+                      form.reset();
+                    } else {
+                      msg.style.color = '#E58A8A';
+                      msg.textContent = 'No se pudo enviar. Escribinos por WhatsApp o por correo.';
+                    }
+                  } catch (err) {
+                    msg.style.color = '#E58A8A';
+                    msg.textContent = 'No se pudo enviar. Escribinos por WhatsApp o por correo.';
+                  }
+                  btn.disabled = false; btn.textContent = 'Enviar';
+                });
+              })();
+            </script>
 </section>
 <footer>
     <div style="display:flex;justify-content:center;gap:1.5rem;margin-bottom:1.2rem;flex-wrap:wrap;">
@@ -1527,7 +1793,8 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
             estudio@garciayasociados.com.ar
         </a>
     </div>
-    <p>© 2024 García & Asociados - Estudio Jurídico | Todos los derechos reservados</p>
+    <p>© <span id="anioFooter">2026</span> García & Asociados - Estudio Jurídico | Todos los derechos reservados</p>
+    <script>document.getElementById('anioFooter').textContent = new Date().getFullYear();</script>
     <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
         Dra. Camila Florencia García - Letrada patrocinante
     </p>
@@ -1663,7 +1930,9 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
 
         function consultarExpediente() {
             const dniInput = document.getElementById('dniInput');
-            const dni = dniInput.value.trim();
+            // Sacar puntos, espacios y cualquier caracter que no sea número,
+            // así "29.318.482" o "29 318 482" también funcionan (antes se rechazaban).
+            const dni = dniInput.value.replace(/\D/g, '');
             const error = document.getElementById('dniErrorMessage');
 
             const API_URL = 'https://garcia-ia.garciayasociadosjus.workers.dev/api/consulta-expediente';
