@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%230A0F1E'/><text x='50' y='68' font-size='54' font-family='Georgia,serif' text-anchor='middle' fill='%23D4AF37'>G</text></svg>">
 
 <meta name="description" content="Tenemos el placer de invitarte a la inauguración de nuestro nuevo estudio jurídico. Viernes 7 de agosto, de 15:00 a 18:00 hs. Saavedra 151, Quilmes Centro.">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, follow">
 <link rel="canonical" href="https://garciayasociados.com.ar/invitacion.html">
 
 <meta property="og:type" content="website">
@@ -66,6 +66,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none !important}
 
 :root{
   --navy:#0A0F1E;
@@ -300,6 +301,54 @@ main.visible{opacity:1;transform:none}
 .mapa-facade .pin{filter:drop-shadow(0 8px 14px rgba(0,0,0,.5));animation:flotar 3.2s ease-in-out infinite}
 .mapa-facade .txt{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(241,219,154,.8)}
 .mapa iframe{width:100%;aspect-ratio:16/10;border:0;display:block}
+
+/* ── LIBRO DE FIRMAS ── */
+.libro{
+  margin-top:1.6rem;padding:1.4rem 1.1rem 1.5rem;
+  border:1px solid rgba(212,175,55,.26);border-radius:16px;
+  background:rgba(255,255,255,.035);
+}
+.libro h2{
+  font-family:'Cinzel',serif;font-weight:500;font-size:1.02rem;letter-spacing:.14em;
+  color:var(--gold-light);text-align:center;
+}
+.libro .sub{
+  text-align:center;font-size:.82rem;color:rgba(255,255,255,.55);
+  line-height:1.65;margin:.5rem auto 1.1rem;max-width:34ch;
+}
+.libro form{display:grid;gap:.7rem}
+.libro textarea{min-height:104px;resize:vertical;line-height:1.6;font-family:'Montserrat',sans-serif}
+.libro .enviar-firma{
+  display:flex;align-items:center;justify-content:center;gap:.6rem;
+  padding:1rem;border-radius:14px;cursor:pointer;
+  border:1px solid rgba(212,175,55,.6);
+  background:linear-gradient(135deg,rgba(156,122,30,.4) 0%,rgba(212,175,55,.28) 100%);
+  color:#F6F1E2;font-family:'Montserrat',sans-serif;font-size:.92rem;font-weight:500;
+  transition:transform .18s ease, box-shadow .25s ease;
+}
+.libro .enviar-firma:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.32)}
+.libro .enviar-firma[disabled]{opacity:.6;cursor:default;transform:none}
+.libro .aviso-firma{text-align:center;font-size:.8rem;line-height:1.6;min-height:1.2em}
+.pergamino{
+  position:relative;margin-top:.4rem;padding:1.6rem 1.3rem 1.4rem;border-radius:8px;text-align:center;
+  background:linear-gradient(155deg,var(--paper) 0%,var(--paper-2) 100%);
+  box-shadow:0 18px 44px rgba(5,8,15,.4);
+  animation:fadeUp .8s ease both;
+}
+.pergamino::before{content:"";position:absolute;inset:9px;border:1px solid var(--line);border-radius:3px;pointer-events:none}
+.pergamino .msj{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(1.02rem,4.2vw,1.2rem);color:var(--ink);line-height:1.7;
+  white-space:pre-wrap;word-break:break-word;
+}
+.pergamino .rubrica{
+  font-family:'Parisienne',cursive;font-size:clamp(1.7rem,7vw,2.2rem);
+  color:var(--ink);margin-top:.9rem;line-height:1.2;
+}
+.pergamino .fecha{
+  font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-soft);margin-top:.5rem;
+}
 
 /* ── HOJA INFERIOR (sheet) ── */
 .sheet-bg{
@@ -566,6 +615,28 @@ main.visible{opacity:1;transform:none}
       <span class="txt">Ver el mapa</span>
     </div>
   </div>
+
+  <!-- LIBRO DE FIRMAS -->
+  <section class="libro" id="libro">
+    <h2>Libro de firmas</h2>
+    <p class="sub">Dejanos unas palabras para este comienzo. Las guardamos todas ♡</p>
+
+    <form id="formFirma" novalidate>
+      <input type="hidden" name="access_key" value="4f4c31b4-d215-40c0-a12d-9b22c85a6c20">
+      <input type="hidden" name="subject" value="Nueva firma en el libro de la inauguración">
+      <input type="hidden" name="from_name" value="Libro de firmas — Inauguración García &amp; Asoc.">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <input class="campo" type="text" name="nombre" id="firmaNombre" placeholder="Tu nombre" maxlength="60" autocomplete="name" required>
+      <textarea class="campo" name="mensaje" id="firmaMensaje" placeholder="Tu mensaje para el estudio…" maxlength="500" required></textarea>
+      <button type="submit" class="enviar-firma" id="firmaBtn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 20c3.5 0 3.5-3 5-9s3.2-6 4.5-4.5S13 12 11 16s-4 4-5.5 2.5"/><path d="M13 18h8"/></svg>
+        Firmar el libro
+      </button>
+      <p class="aviso-firma" id="firmaAviso" role="status" aria-live="polite"></p>
+    </form>
+
+    <div id="firmaHecha" hidden></div>
+  </section>
 
   <!-- GENERADOR DE INVITACIONES -->
   <details class="enviar" id="enviar">
@@ -888,6 +959,76 @@ main.visible{opacity:1;transform:none}
     if(await copiar(mensajePersonal())) aviso('Mensaje copiado, pegalo donde quieras ✨');
   });
   if(location.hash === '#enviar'){ $('enviar').open = true; }
+
+  /* ═══ LIBRO DE FIRMAS ═══ */
+  var formFirma = $('formFirma'), avisoFirma = $('firmaAviso'), firmaBtn = $('firmaBtn');
+  var CLAVE_FIRMA = 'ga-firma-inauguracion';
+
+  function mostrarFirma(datos){
+    var caja = $('firmaHecha');
+    caja.hidden = false;
+    caja.innerHTML = '';
+
+    var perg = document.createElement('div');
+    perg.className = 'pergamino';
+
+    var msj = document.createElement('p');
+    msj.className = 'msj';
+    msj.textContent = '“' + datos.mensaje + '”';
+
+    var rub = document.createElement('p');
+    rub.className = 'rubrica';
+    rub.textContent = datos.nombre;
+
+    var fch = document.createElement('p');
+    fch.className = 'fecha';
+    fch.textContent = datos.fecha;
+
+    perg.appendChild(msj); perg.appendChild(rub); perg.appendChild(fch);
+    caja.appendChild(perg);
+
+    formFirma.hidden = true;
+    document.querySelector('#libro .sub').textContent = '¡Gracias por tus palabras! Quedaron guardadas ♡';
+  }
+
+  try{
+    var guardada = JSON.parse(localStorage.getItem(CLAVE_FIRMA) || 'null');
+    if(guardada && guardada.mensaje) mostrarFirma(guardada);
+  }catch(e){}
+
+  if(invitado && !$('firmaNombre').value) $('firmaNombre').value = invitado;
+
+  formFirma.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var nombre = $('firmaNombre').value.trim();
+    var mensaje = $('firmaMensaje').value.trim();
+    if(!nombre || !mensaje){
+      avisoFirma.style.color = '#E58A8A';
+      avisoFirma.textContent = 'Completá tu nombre y tu mensaje.';
+      return;
+    }
+    firmaBtn.disabled = true;
+    avisoFirma.style.color = 'rgba(241,219,154,.8)';
+    avisoFirma.textContent = 'Firmando…';
+    try{
+      var res = await fetch('https://api.web3forms.com/submit', {method:'POST', body:new FormData(formFirma)});
+      var data = await res.json();
+      if(!data.success) throw new Error('rechazado');
+      var firma = {
+        nombre:nombre, mensaje:mensaje,
+        fecha:new Date().toLocaleDateString('es-AR', {day:'numeric', month:'long', year:'numeric'})
+      };
+      try{ localStorage.setItem(CLAVE_FIRMA, JSON.stringify(firma)); }catch(e){}
+      avisoFirma.textContent = '';
+      mostrarFirma(firma);
+      confeti();
+    }catch(err){
+      firmaBtn.disabled = false;
+      avisoFirma.style.color = '#E58A8A';
+      avisoFirma.innerHTML = 'No se pudo enviar. Probá de nuevo o mandanos tu mensaje por '
+        + '<a href="https://wa.me/' + EV.tel + '?text=' + enc(mensaje) + '" target="_blank" rel="noopener" style="color:#F1DB9A">WhatsApp</a>.';
+    }
+  });
 
   /* ═══ POLVO DORADO ═══ */
   var cv = $('dust'), ctx = cv.getContext('2d'), motas = [], W, H;
