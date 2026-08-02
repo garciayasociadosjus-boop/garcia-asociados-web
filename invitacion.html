@@ -487,6 +487,11 @@ main.visible{opacity:1;transform:none}
   background:rgba(0,0,0,.35);border:1px solid rgba(212,175,55,.2);border-radius:10px;
   padding:.7rem .8rem;word-break:break-all;line-height:1.5;
 }
+.a-mano{
+  margin-top:.5rem;padding-top:.9rem;display:grid;gap:.7rem;
+  border-top:1px dashed rgba(212,175,55,.2);
+}
+.a-mano .ayuda{font-size:.76rem;opacity:.85}
 .qr-wrap{
   display:grid;place-items:center;gap:.6rem;margin-top:.4rem;
   background:#fff;border-radius:14px;padding:1rem;
@@ -729,18 +734,32 @@ main.visible{opacity:1;transform:none}
   <details class="enviar" id="enviar" hidden>
     <summary>Enviar invitaciones personalizadas</summary>
     <div class="panel">
-      <p class="ayuda">Escribí el nombre de la persona y generá su link personalizado: al abrirlo va a ver su nombre en el sobre. Después lo enviás por WhatsApp en un toque.</p>
+      <p class="ayuda">Escribí el nombre y listo: se arma el link personalizado, y al abrirlo la persona va a ver su nombre en el sobre.</p>
       <input class="campo" id="genNombre" type="text" placeholder="Nombre de la persona invitada" autocomplete="off">
-      <input class="campo" id="genTel" type="tel" placeholder="WhatsApp (opcional) — ej: 1168063444" autocomplete="off">
       <div class="link-out" id="genLink">https://garciayasociados.com.ar/invitacion.html</div>
-      <button class="btn principal" id="genWhats">
+
+      <button class="btn principal" id="genEnviar">
         <span class="bi"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.096.539 4.066 1.482 5.784L0 24l6.346-1.466A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg></span>
-        <span class="bt">Enviar por WhatsApp<small>Abre el chat con el mensaje ya escrito</small></span>
+        <span class="bt">Elegir contacto en WhatsApp<small>Se abre tu lista de chats: no hace falta el número</small></span>
       </button>
+      <button class="btn" id="genCompartir">
+        <span class="bi"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></span>
+        <span class="bt">Enviar por otra vía<small>Instagram, mail, mensaje: elegís de tus contactos</small></span>
+      </button>
+
       <button class="btn" id="genCopiar">
         <span class="bi"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></span>
         <span class="bt">Copiar mensaje + link<small>Para pegarlo donde quieras</small></span>
       </button>
+
+      <div class="a-mano">
+        <p class="ayuda">¿Preferís el número a mano? Escribilo y te abre ese chat directo.</p>
+        <input class="campo" id="genTel" type="tel" name="tel" inputmode="tel" placeholder="Ej: 11 6806-3444" autocomplete="tel">
+        <button class="btn" id="genWhats">
+          <span class="bi"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.096.539 4.066 1.482 5.784L0 24l6.346-1.466A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg></span>
+          <span class="bt">Abrir ese chat de WhatsApp<small>Con el mensaje ya escrito</small></span>
+        </button>
+      </div>
       <div class="qr-wrap">
         <svg role="img" aria-label="Codigo QR de la invitacion" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 296 296"><path transform="scale(8)" stroke="#0a0f1e" d="M2 2.5h7m3 0h2m2 0h1m3 0h1m2 0h2m3 0h7m-33 1h1m5 0h1m1 0h1m1 0h1m1 0h3m2 0h1m2 0h1m1 0h1m3 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m2 0h3m2 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h1m5 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h3m3 0h1m2 0h1m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m2 0h4m3 0h1m3 0h1m3 0h1m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-25 1h4m2 0h1m3 0h1m3 0h1m1 0h1m-25 1h1m5 0h1m1 0h2m3 0h3m1 0h1m4 0h5m2 0h3m-32 1h1m2 0h3m2 0h2m2 0h1m2 0h2m1 0h2m1 0h1m1 0h1m4 0h3m-31 1h1m5 0h2m2 0h3m2 0h2m1 0h1m1 0h3m5 0h1m1 0h2m-29 1h2m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m5 0h10m-32 1h1m1 0h2m1 0h2m1 0h1m2 0h1m1 0h2m1 0h3m1 0h1m2 0h2m1 0h2m3 0h1m-31 1h2m1 0h1m4 0h1m1 0h1m1 0h2m1 0h2m2 0h2m1 0h1m2 0h2m1 0h1m1 0h2m-32 1h2m1 0h1m1 0h1m1 0h2m3 0h1m3 0h1m1 0h1m1 0h1m2 0h3m4 0h1m-32 1h2m1 0h1m3 0h1m1 0h2m2 0h1m1 0h1m3 0h1m3 0h1m1 0h1m2 0h3m1 0h1m-33 1h1m3 0h1m1 0h5m1 0h3m2 0h1m1 0h1m2 0h4m1 0h3m2 0h1m-30 1h3m1 0h2m1 0h1m1 0h1m1 0h4m1 0h3m1 0h1m2 0h1m2 0h2m1 0h1m-33 1h1m4 0h4m1 0h1m1 0h1m2 0h1m3 0h1m1 0h1m1 0h3m1 0h1m1 0h2m1 0h1m-33 1h2m1 0h3m1 0h2m5 0h6m3 0h3m2 0h5m-33 1h1m2 0h4m1 0h1m1 0h1m2 0h2m1 0h1m3 0h2m2 0h2m1 0h3m1 0h2m-33 1h1m3 0h1m2 0h1m4 0h2m2 0h1m1 0h1m1 0h1m1 0h3m2 0h4m-31 1h1m3 0h1m1 0h1m1 0h2m1 0h1m3 0h4m1 0h2m2 0h2m1 0h1m3 0h1m-32 1h1m2 0h1m3 0h1m1 0h1m1 0h3m8 0h2m1 0h3m1 0h4m-33 1h9m3 0h1m2 0h2m1 0h3m3 0h6m-22 1h2m1 0h1m2 0h3m1 0h3m1 0h3m3 0h1m1 0h1m1 0h1m-33 1h7m5 0h2m1 0h2m1 0h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m-31 1h1m5 0h1m2 0h3m1 0h4m2 0h1m2 0h3m3 0h3m-31 1h1m1 0h3m1 0h1m5 0h1m1 0h2m2 0h2m1 0h1m2 0h6m-30 1h1m1 0h3m1 0h1m2 0h6m1 0h2m2 0h1m2 0h3m1 0h2m3 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m3 0h1m1 0h4m1 0h2m1 0h3m-33 1h1m5 0h1m3 0h1m1 0h1m2 0h2m1 0h3m1 0h1m2 0h6m-31 1h7m1 0h1m2 0h1m2 0h1m2 0h1m1 0h1m2 0h6m1 0h1m1 0h1"/></svg>
         <span>QR de la invitación</span>
@@ -1040,6 +1059,22 @@ main.visible{opacity:1;transform:none}
   }
   function refrescar(){ gL.textContent = linkPersonal(); }
   gN.addEventListener('input', refrescar); refrescar();
+
+  // sin escribir el número: WhatsApp abre su propia lista de chats
+  $('genEnviar').addEventListener('click', function(){
+    window.open('https://wa.me/?text=' + enc(mensajePersonal()), '_blank');
+  });
+
+  // el resto de las vías pasan por la hoja de compartir del teléfono,
+  // que muestra los contactos sugeridos y las demás aplicaciones
+  $('genCompartir').addEventListener('click', async function(){
+    var txt = mensajePersonal();
+    if(navigator.share){
+      try{ await navigator.share({text:txt}); return; }
+      catch(e){ if(e && e.name === 'AbortError') return; }
+    }
+    if(await copiar(txt)) aviso('Tu teléfono no ofrece compartir: te lo copié ✨');
+  });
 
   $('genWhats').addEventListener('click', function(){
     var tel = gT.value.replace(/\D/g,'');
