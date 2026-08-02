@@ -693,8 +693,10 @@ main.visible{opacity:1;transform:none}
     <div id="firmaHecha" hidden></div>
   </section>
 
-  <!-- GENERADOR DE INVITACIONES -->
-  <details class="enviar" id="enviar">
+  <!-- GENERADOR DE INVITACIONES · sólo para el estudio.
+       Nace oculto y únicamente se muestra al entrar con #enviar,
+       así quien recibe la invitación no lo ve nunca. -->
+  <details class="enviar" id="enviar" hidden>
     <summary>Enviar invitaciones personalizadas</summary>
     <div class="panel">
       <p class="ayuda">Escribí el nombre de la persona y generá su link personalizado: al abrirlo va a ver su nombre en el sobre. Después lo enviás por WhatsApp en un toque.</p>
@@ -1022,7 +1024,9 @@ main.visible{opacity:1;transform:none}
     if(await copiar(mensajePersonal())) aviso('Mensaje copiado, pegalo donde quieras ✨');
   });
   // el link del panel entra derecho: sin sobre y con el panel ya desplegado
-  if(location.hash === '#enviar'){
+  var esPanel = /^#(enviar|panel)$/i.test(location.hash) || /(\?|&)enviar\b/i.test(location.search);
+  if(esPanel){
+    $('enviar').hidden = false;
     $('enviar').open = true;
     abierto = true;
     raiz.classList.remove('intro');
