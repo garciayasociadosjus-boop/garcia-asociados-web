@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>García &amp; Asociados — Documentación</title>
+<meta name="description" content="Complete sus datos y adjunte la documentación para iniciar su consulta con el estudio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0a0a0f; --ink-60:rgba(10,10,15,.6); --ink-40:rgba(10,10,15,.4);
+  --ink-10:rgba(10,10,15,.1); --cream:#f5f2ec; --gold:#c9a96e; --gold-dark:#8a6a10;
+  --gold-light:#e8d9bb; --white:#fff; --err:#b3452f;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--cream);font-family:'DM Sans',sans-serif;color:var(--ink);
+  min-height:100vh;-webkit-text-size-adjust:100%}
+.wrap{max-width:640px;margin:0 auto;padding:0 18px 60px}
+
+header{background:var(--ink);padding:26px 18px 22px;text-align:center;margin-bottom:22px}
+header .balanza{width:44px;height:44px;display:block;margin:0 auto 10px}
+header h1{font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--cream);
+  font-size:1.7rem;letter-spacing:.06em;line-height:1.15}
+header h1 span{color:var(--gold)}
+header .sub{color:rgba(245,242,236,.55);font-size:.72rem;letter-spacing:.22em;
+  text-transform:uppercase;margin-top:7px}
+
+h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.45rem;
+  letter-spacing:.02em;margin-bottom:6px}
+.lead{color:var(--ink-60);font-size:.92rem;line-height:1.55;margin-bottom:20px}
+
+.pasos{display:flex;gap:6px;margin:0 0 22px}
+.pasos i{flex:1;height:3px;background:var(--ink-10);border-radius:2px}
+.pasos i.on{background:var(--gold)}
+.paso{display:none}
+.paso.activo{display:block;animation:entra .3s ease}
+@keyframes entra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.materias{display:grid;gap:9px}
+.materia{display:flex;align-items:center;gap:12px;background:var(--white);
+  border:1px solid var(--ink-10);border-radius:12px;padding:15px 16px;cursor:pointer;
+  transition:border-color .15s,transform .15s;text-align:left;font:inherit;width:100%}
+.materia:hover{border-color:var(--gold)}
+.materia:active{transform:scale(.99)}
+.materia.sel{border-color:var(--gold);background:#fffdf8;box-shadow:0 0 0 1px var(--gold)}
+.materia b{font-weight:500;font-size:.98rem}
+.materia .n{width:26px;height:26px;flex:0 0 26px;border-radius:50%;background:var(--gold-light);
+  color:var(--gold-dark);display:grid;place-items:center;font-size:.8rem;font-weight:600}
+.materia.sel .n{background:var(--gold);color:var(--white)}
+
+.bloque{background:var(--white);border:1px solid var(--ink-10);border-radius:14px;
+  padding:17px;margin-bottom:14px}
+.bloque > h3{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:1.15rem;
+  margin-bottom:3px}
+.bloque > .nota{color:var(--ink-40);font-size:.79rem;margin-bottom:14px;line-height:1.45}
+.campos{display:grid;gap:11px}
+.campos.dos{grid-template-columns:1fr 1fr}
+@media(max-width:460px){.campos.dos{grid-template-columns:1fr}}
+label{display:block;font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-40);margin-bottom:4px}
+input[type=text],input[type=date],input[type=tel],input[type=email],textarea,select{width:100%;
+  padding:10px 12px;border:1px solid var(--ink-10);border-radius:9px;font:inherit;
+  font-size:.95rem;background:var(--cream);font-family:inherit}
+textarea{resize:vertical;min-height:76px}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold);background:var(--white)}
+input.falta{border-color:var(--err);background:#fdf6f4}
+
+.check{display:flex;align-items:center;gap:9px;background:var(--cream);border-radius:9px;
+  padding:11px 12px;cursor:pointer}
+.check input{width:19px;height:19px;accent-color:var(--gold);flex:0 0 19px}
+.check span{font-size:.88rem;text-transform:none;letter-spacing:0;color:var(--ink)}
+
+.opciones{display:grid;gap:8px}
+.opcion{display:flex;align-items:center;gap:10px;background:var(--cream);border:1px solid var(--ink-10);
+  border-radius:9px;padding:12px;cursor:pointer;font-size:.9rem}
+.opcion input{width:18px;height:18px;accent-color:var(--gold)}
+.opcion.sel{border-color:var(--gold);background:#fffdf8}
+
+.fotos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px}
+.fotos.una{grid-template-columns:1fr}
+.foto{position:relative;border:1.5px dashed var(--ink-10);border-radius:11px;
+  aspect-ratio:1.55;display:grid;place-items:center;cursor:pointer;overflow:hidden;
+  background:var(--cream);text-align:center;padding:8px}
+.foto:hover{border-color:var(--gold)}
+.foto span{font-size:.78rem;color:var(--ink-40);line-height:1.35}
+.foto span b{display:block;color:var(--ink);font-weight:500;font-size:.84rem;margin-bottom:2px}
+.foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.foto .x{position:absolute;top:6px;right:6px;background:rgba(10,10,15,.72);color:#fff;
+  border:none;border-radius:50%;width:24px;height:24px;font-size:.9rem;cursor:pointer;z-index:2}
+.foto.lista{border-style:solid;border-color:var(--gold)}
+.foto input{display:none}
+
+/* Galeria: varias fotos del mismo tipo (vehiculo, pruebas, lesiones) */
+.galeria{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:11px}
+.galeria .g{position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;border:1px solid var(--ink-10)}
+.galeria .g img{width:100%;height:100%;object-fit:cover}
+.galeria .g button{position:absolute;top:3px;right:3px;background:rgba(10,10,15,.72);color:#fff;
+  border:none;border-radius:50%;width:21px;height:21px;font-size:.78rem;cursor:pointer}
+.galeria .add{display:grid;place-items:center;border:1.5px dashed var(--ink-10);border-radius:9px;
+  aspect-ratio:1;cursor:pointer;color:var(--ink-40);font-size:1.5rem;background:var(--cream)}
+.galeria .add:hover{border-color:var(--gold)}
+.galeria .add input{display:none}
+.contador{font-size:.78rem;color:var(--ink-40);margin-bottom:11px}
+.contador.poco{color:var(--err)}
+
+.hijo{border:1px solid var(--ink-10);border-radius:11px;padding:14px;margin-bottom:11px;
+  background:var(--cream)}
+.hijo .cab{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}
+.hijo .cab b{font-weight:500;font-size:.9rem}
+.quitar{background:none;border:none;color:var(--err);font:inherit;font-size:.8rem;
+  cursor:pointer;text-decoration:underline}
+
+.btn{display:block;width:100%;padding:14px;border-radius:11px;border:none;font:inherit;
+  font-weight:600;font-size:.95rem;cursor:pointer;margin-top:8px;transition:opacity .15s}
+.btn.oro{background:var(--gold);color:var(--white)}
+.btn.oro:hover{opacity:.9}
+.btn.linea{background:transparent;border:1px solid var(--ink-10);color:var(--ink-60)}
+.btn.tinta{background:var(--ink);color:var(--cream)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+.aviso{background:#fffdf8;border-left:3px solid var(--gold);border-radius:8px;
+  padding:12px 14px;font-size:.83rem;color:var(--ink-60);line-height:1.5;margin-bottom:16px}
+.error{color:var(--err);font-size:.83rem;margin-top:10px;display:none}
+
+.ok{text-align:center;padding:30px 0}
+.ok .tick{width:62px;height:62px;border-radius:50%;background:var(--gold);color:#fff;
+  display:grid;place-items:center;margin:0 auto 18px;font-size:1.9rem}
+.codigo{font-family:'Cormorant Garamond',serif;font-size:2rem;letter-spacing:.14em;
+  color:var(--gold-dark);margin:12px 0}
+
+/* Contacto */
+.modal{position:fixed;inset:0;background:rgba(10,10,15,.6);display:none;align-items:flex-end;
+  justify-content:center;z-index:50;padding:0}
+.modal.abierto{display:flex}
+.hoja{background:var(--cream);width:100%;max-width:640px;border-radius:18px 18px 0 0;
+  padding:22px 20px calc(26px + env(safe-area-inset-bottom));animation:sube .25s ease}
+@keyframes sube{from{transform:translateY(100%)}to{transform:none}}
+.hoja h3{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.3rem;margin-bottom:14px}
+.redes{display:grid;gap:8px;margin-bottom:8px}
+.red{display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--ink-10);
+  border-radius:11px;padding:13px 15px;text-decoration:none;color:var(--ink);font-size:.92rem}
+.red:hover{border-color:var(--gold)}
+.red .ico{width:30px;height:30px;flex:0 0 30px;border-radius:8px;background:var(--gold-light);
+  display:grid;place-items:center;color:var(--gold-dark);font-weight:600;font-size:.8rem}
+.red small{display:block;color:var(--ink-40);font-size:.76rem;margin-top:1px}
+
+footer{text-align:center;color:var(--ink-40);font-size:.72rem;letter-spacing:.14em;
+  text-transform:uppercase;padding:26px 0 10px}
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="balanza" viewBox="0 0 350 350" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="175" cy="40" r="14" fill="#c9a96e" stroke="#8a6a10" stroke-width="3"/>
+    <circle cx="175" cy="40" r="7" fill="#e8d9bb"/>
+    <rect x="168" y="40" width="16" height="280" rx="8" fill="#c9a96e"/>
+    <rect x="25" y="48" width="300" height="14" rx="7" fill="#c9a96e"/>
+    <rect x="110" y="308" width="130" height="14" rx="7" fill="#c9a96e"/>
+    <line x1="35" y1="58" x2="15" y2="185" stroke="#c9a96e" stroke-width="3"/>
+    <line x1="35" y1="58" x2="55" y2="185" stroke="#c9a96e" stroke-width="3"/>
+    <line x1="315" y1="58" x2="295" y2="185" stroke="#c9a96e" stroke-width="3"/>
+    <line x1="315" y1="58" x2="335" y2="185" stroke="#c9a96e" stroke-width="3"/>
+    <ellipse cx="35" cy="198" rx="55" ry="12" fill="#8a6a10"/>
+    <ellipse cx="315" cy="198" rx="55" ry="12" fill="#8a6a10"/>
+  </svg>
+  <h1>García <span>&amp;</span> Asociados</h1>
+  <div class="sub">Estudio Jurídico</div>
+</header>
+
+<div class="wrap">
+  <div class="pasos"><i class="on" id="p1"></i><i id="p2"></i><i id="p3"></i></div>
+
+  <!-- ═══ PASO 1 ═══ -->
+  <section class="paso activo" id="paso1">
+    <h2>Bienvenido al estudio</h2>
+    <p class="lead">Para agilizar su consulta necesitamos algunos datos y documentos.
+       Le va a llevar unos minutos y puede hacerlo desde el celular.</p>
+    <p class="lead" style="margin-bottom:14px"><b style="color:var(--ink)">Usted consultó por:</b></p>
+    <div class="materias" id="materias"></div>
+    <button class="btn oro" id="btnPaso1" disabled onclick="irA(2)">Continuar</button>
+    <button class="btn linea" onclick="abrirContacto()">Contáctenos</button>
+  </section>
+
+  <!-- ═══ PASO 2 ═══ -->
+  <section class="paso" id="paso2">
+    <h2 id="tituloMateria">Documentación</h2>
+    <p class="lead">Saque las fotos con el celular, derechas y con buena luz.
+       Si algo no lo tiene a mano, puede dejarlo para después.</p>
+    <div class="aviso">Los documentos se envían directamente al estudio.
+      No se publican ni se comparten con terceros.</div>
+    <div id="bloques"></div>
+    <button class="btn oro" onclick="revisar()">Continuar</button>
+    <button class="btn linea" onclick="irA(1)">Volver</button>
+    <div class="error" id="errorPaso2"></div>
+  </section>
+
+  <!-- ═══ PASO 3 ═══ -->
+  <section class="paso" id="paso3">
+    <h2>Revise antes de enviar</h2>
+    <p class="lead">Si algo está mal, puede volver y corregirlo.</p>
+    <div class="bloque"><div id="resumen" style="font-size:.9rem;line-height:1.75"></div></div>
+    <button class="btn oro" onclick="enviar()">Enviar al estudio</button>
+    <button class="btn linea" onclick="irA(2)">Volver y corregir</button>
+    <button class="btn tinta" onclick="abrirContacto()">Contáctenos</button>
+    <button class="btn linea" onclick="nuevaConsulta()">Hacer otra consulta</button>
+  </section>
+
+  <!-- ═══ CIERRE ═══ -->
+  <section class="paso" id="paso4">
+    <div class="ok">
+      <div class="tick">✓</div>
+      <h2>Recibimos su consulta</h2>
+      <p class="lead">Guarde este número. Se lo vamos a pedir cuando nos escriba.</p>
+      <div class="codigo" id="codigoCliente">GA-0000</div>
+      <p class="lead" id="textoCierre">Nos comunicamos dentro de las próximas 48 horas hábiles.</p>
+    </div>
+    <button class="btn tinta" onclick="abrirContacto()">Contáctenos</button>
+    <button class="btn linea" onclick="location.reload()">Hacer otra consulta</button>
+  </section>
+
+  <footer>García &amp; Asociados · Estudio Jurídico</footer>
+</div>
+
+<!-- ═══ CONTACTO ═══ -->
+<div class="modal" id="modalContacto" onclick="if(event.target===this)cerrarContacto()">
+  <div class="hoja">
+    <h3>Contáctenos</h3>
+    <div class="redes">
+      <a class="red" href="https://wa.me/5491168063444" target="_blank" rel="noopener">
+        <span class="ico">WA</span><span>WhatsApp<small>+54 11 6806-3444</small></span></a>
+      <a class="red" href="tel:+541168063444">
+        <span class="ico">TEL</span><span>Teléfono<small>11 6806-3444</small></span></a>
+      <a class="red" href="tel:+541172371991">
+        <span class="ico">TEL</span><span>Teléfono<small>11 7237-1991</small></span></a>
+      <a class="red" href="mailto:estudio@garciayasociados.com.ar">
+        <span class="ico">@</span><span>estudio@garciayasociados.com.ar<small>Correo del estudio</small></span></a>
+      <a class="red" href="https://www.instagram.com/garciayasociadosjus" target="_blank" rel="noopener">
+        <span class="ico">IG</span><span>Instagram<small>@garciayasociadosjus</small></span></a>
+      <a class="red" href="https://garciayasociados.com.ar/" target="_blank" rel="noopener">
+        <span class="ico">WEB</span><span>garciayasociados.com.ar<small>Sitio del estudio</small></span></a>
+    </div>
+    <button class="btn linea" onclick="cerrarContacto()">Cerrar</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════════
+// Cada materia declara QUE bloques necesita. Asi agregar una consulta nueva es
+// sumar una linea aca y no tocar la pantalla: el paso 2 se arma solo.
+// ═══════════════════════════════════════════════════════════════════════════════
+const MATERIAS = [
+  { id:'divorcio',    nom:'Divorcio',                   otraParte:'Datos del cónyuge',
+    bloques:['divorcio'] },
+  { id:'alimentos',   nom:'Alimentos',                  otraParte:'Datos del demandado',
+    bloques:['empleador','hijos'] },
+  { id:'comunicacion',nom:'Comunicación con los hijos', otraParte:'Datos de la otra parte',
+    bloques:['hijos'] },
+  { id:'cuidado',     nom:'Cuidado personal de hijos',  otraParte:'Datos de la otra parte',
+    bloques:['hijos'] },
+  { id:'nombre',      nom:'Cambio de nombre',           otraParte:'',
+    bloques:['cambioNombre'] },
+  { id:'filiacion',   nom:'Filiación',                  otraParte:'Datos del demandado',
+    bloques:['filiacion','hijos'] },
+  { id:'violencia',   nom:'Violencia familiar',         otraParte:'Datos del denunciado',
+    bloques:['violencia','hijos'] },
+  { id:'cese',        nom:'Cese de cuota alimentaria',  otraParte:'Datos de la otra parte',
+    bloques:['expediente','hijos'] },
+  { id:'siniestro',   nom:'Siniestro automotor',        otraParte:'',
+    bloques:['siniestro'], sinDemandado:true },
+  { id:'otros',       nom:'Otros',                      otraParte:'Datos de la otra parte',
+    bloques:[] }
+];
+
+let materiaSel = null;
+const fotos = {};        // id -> dataURL  (documentos de a uno)
+const galerias = {};     // id -> [dataURL]  (varias fotos del mismo tipo)
+let nHijos = 0;
+
+// ── Paso 1 ────────────────────────────────────────────────────────────────────
+const contM = document.getElementById('materias');
+MATERIAS.forEach((m, i) => {
+  const b = document.createElement('button');
+  b.className = 'materia'; b.type = 'button';
+  b.innerHTML = '<span class="n">' + (i + 1) + '</span><b>' + m.nom + '</b>';
+  b.onclick = () => {
+    document.querySelectorAll('.materia').forEach(x => x.classList.remove('sel'));
+    b.classList.add('sel');
+    materiaSel = m;
+    document.getElementById('btnPaso1').disabled = false;
+  };
+  contM.appendChild(b);
+});
+
+function irA(n) {
+  document.querySelectorAll('.paso').forEach(p => p.classList.remove('activo'));
+  document.getElementById('paso' + n).classList.add('activo');
+  for (let i = 1; i <= 3; i++) document.getElementById('p' + i).classList.toggle('on', i <= n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (n === 2 && !document.getElementById('bloques').dataset.armado) armarPaso2();
+}
+
+// ── Piezas reutilizables ──────────────────────────────────────────────────────
+const campo = (id, lab, extra) => '<div><label>' + lab + '</label><input type="' +
+  ((extra && extra.tipo) || 'text') + '" id="' + id + '"' +
+  ((extra && extra.ph) ? ' placeholder="' + extra.ph + '"' : '') +
+  ((extra && extra.val) ? ' value="' + extra.val + '"' : '') +
+  ((extra && extra.num) ? ' inputmode="numeric"' : '') + '></div>';
+
+const dosCampos = (a, b) => '<div class="campos dos">' + a + b + '</div>';
+
+const fotoDoc = (id, titulo, sub) =>
+  '<label class="foto" id="f_' + id + '"><span><b>' + titulo + '</b>' + (sub || 'tocar para la foto') + '</span>' +
+  '<input type="file" accept="image/*" capture="environment" onchange="verFoto(this,\'f_' + id + '\')"></label>';
+
+const parDni = (pre, titulo, sub) => '<div class="fotos">' +
+  fotoDoc(pre + '_frente', titulo + ' frente', sub) + fotoDoc(pre + '_dorso', titulo + ' dorso', sub) + '</div>';
+
+const galeria = (id, titulo, nota, minimo) =>
+  '<div style="margin-bottom:4px"><label>' + titulo + '</label></div>' +
+  (nota ? '<div class="nota" style="margin-bottom:8px">' + nota + '</div>' : '') +
+  '<div class="galeria" id="gal_' + id + '"></div>' +
+  (minimo ? '<div class="contador poco" id="cnt_' + id + '">0 de ' + minimo + ' fotos</div>' : '');
+
+const domicilio = (pre, conEntreCalles) =>
+  dosCampos(campo(pre + '_calle', 'Calle'), campo(pre + '_numero', 'Número')) +
+  (conEntreCalles ? campo(pre + '_entre', 'Entre calles', { ph: 'Ej: entre Mitre y Belgrano' }) : '') +
+  dosCampos(campo(pre + '_localidad', 'Localidad'), campo(pre + '_partido', 'Partido')) +
+  campo(pre + '_provincia', 'Provincia', { val: 'Buenos Aires' });
+
+// ── Armado del paso 2 ─────────────────────────────────────────────────────────
+function armarPaso2() {
+  document.getElementById('tituloMateria').textContent = materiaSel.nom;
+  const B = materiaSel.bloques || [];
+  let h = '';
+
+  // ── Cliente (siempre) ──
+  h += '<div class="bloque"><h3>Sus datos</h3><div class="nota">DNI del frente y del dorso</div>' +
+    parDni('dni', 'DNI') +
+    '<div class="campos">' +
+      campo('c_nombre', 'Nombre completo') +
+      dosCampos(campo('c_dni', 'DNI', { num: 1, ph: '30111222' }), campo('c_cuil', 'CUIL / CUIT', { num: 1, ph: '20-30111222-3' })) +
+      dosCampos(campo('c_tel', 'Teléfono', { tipo: 'tel' }), campo('c_mail', 'Mail', { tipo: 'email' })) +
+      domicilio('c') +
+    '</div></div>';
+
+  // ── Otra parte ──
+  if (materiaSel.otraParte) {
+    h += '<div class="bloque"><h3>' + materiaSel.otraParte + '</h3>' +
+      '<div class="nota">Si tiene el DNI, saque las fotos. Si no, complete lo que sepa.</div>' +
+      parDni('dem', 'DNI', 'si lo tiene') +
+      '<div class="campos">' +
+        campo('d_nombre', 'Nombre completo') +
+        dosCampos(campo('d_dni', 'DNI', { num: 1 }), campo('d_cuil', 'CUIL / CUIT', { num: 1 })) +
+        domicilio('d', true) +
+      '</div></div>';
+  }
+
+  // ── Filiación: qué es el demandado ──
+  if (B.includes('filiacion')) {
+    h += '<div class="bloque"><h3>El demandado es</h3>' +
+      '<div class="opciones">' +
+        '<label class="opcion"><input type="radio" name="tipoDemandado" value="reconocio"> Padre que reconoció al menor</label>' +
+        '<label class="opcion"><input type="radio" name="tipoDemandado" value="biologico"> Padre biológico</label>' +
+      '</div></div>';
+  }
+
+  // ── Divorcio ──
+  if (B.includes('divorcio')) {
+    h += '<div class="bloque"><h3>Partida de matrimonio</h3>' +
+      '<div class="nota">Foto de la partida y los datos del matrimonio.</div>' +
+      '<div class="fotos una">' + fotoDoc('partida_matrimonio', 'Partida de matrimonio', 'si la tiene') + '</div>' +
+      '<div class="campos">' +
+        dosCampos(campo('m_fecha', 'Fecha del matrimonio', { tipo: 'date' }), campo('m_lugar', 'Lugar')) +
+        campo('m_registro', 'Registro civil / tomo y acta', { ph: 'Si lo recuerda' }) +
+      '</div></div>';
+
+    h += '<div class="bloque"><h3>Hijos en común</h3>' +
+      '<label class="check" style="margin-bottom:12px"><input type="checkbox" id="tieneHijos" onchange="toggleBloque(\'hijosDiv\',this.checked)">' +
+      '<span>Tenemos hijos en común</span></label>' +
+      '<div id="hijosDiv" style="display:none"><div class="nota">DNI y partida de nacimiento de cada uno.</div>' +
+      '<div id="hijos"></div>' +
+      '<button class="btn linea" type="button" onclick="agregarHijo()">+ Agregar otro hijo/a</button></div></div>';
+
+    h += '<div class="bloque"><h3>Bienes</h3>' +
+      '<label class="check" style="margin-bottom:12px"><input type="checkbox" id="tieneBienes" onchange="toggleBloque(\'bienesDiv\',this.checked)">' +
+      '<span>Hay bienes a dividir</span></label>' +
+      '<div id="bienesDiv" style="display:none">' +
+        galeria('bienes', 'Escrituras o títulos', 'Inmuebles, automotores. Saque foto de cada uno.') +
+        '<div class="campos">' + campo('b_detalle', 'Detalle de los bienes', { ph: 'Ej: departamento en Quilmes, auto Fiat 2018' }) + '</div>' +
+      '</div></div>';
+  }
+
+  // ── Cese de cuota ──
+  if (B.includes('expediente')) {
+    h += '<div class="bloque"><h3>La causa donde se fijó la cuota</h3>' +
+      '<div class="nota">Si tiene el expediente a mano, estos datos aceleran mucho el trámite.</div>' +
+      '<div class="campos">' +
+        campo('x_expediente', 'Número de expediente') +
+        campo('x_juzgado', 'Juzgado donde tramita', { ph: 'Ej: Juzgado de Familia N° 3 de Quilmes' }) +
+        campo('x_caratula', 'Carátula', { ph: 'Si la recuerda' }) +
+      '</div></div>';
+  }
+
+  // ── Violencia familiar ──
+  if (B.includes('violencia')) {
+    h += '<div class="bloque"><h3>Denuncia previa</h3>' +
+      '<div class="nota">Si ya hizo la denuncia en la comisaría o en la fiscalía, adjunte la constancia.</div>' +
+      '<div class="fotos una">' + fotoDoc('denuncia', 'Denuncia policial o fiscalía', 'si la tiene') + '</div>' +
+      '<div class="campos">' +
+        dosCampos(campo('v_dependencia', 'Comisaría o fiscalía'), campo('v_fecha', 'Fecha', { tipo: 'date' })) +
+        campo('v_causa', 'Número de causa / IPP', { ph: 'Si lo tiene' }) +
+      '</div></div>';
+  }
+
+  // ── Cambio de nombre ──
+  if (B.includes('cambioNombre')) {
+    h += '<div class="bloque"><h3>Su partida de nacimiento</h3>' +
+      '<div class="fotos una">' + fotoDoc('partida_propia', 'Partida de nacimiento', 'tocar para la foto') + '</div>' +
+      '<div class="campos">' +
+        campo('n_apellidoPretendido', 'Apellido que pretende llevar') +
+      '</div></div>';
+
+    h += '<div class="bloque"><h3>Padres biológicos</h3>' +
+      '<div class="nota">Nombre y apellido completos de ambos, como figuran en la partida.</div>' +
+      '<div class="campos">' +
+        campo('n_madre', 'Madre — nombre y apellido') +
+        campo('n_padre', 'Padre — nombre y apellido') +
+      '</div></div>';
+
+    h += '<div class="bloque"><h3>Pruebas</h3>' +
+      galeria('pruebas', 'Todo lo que muestre que usa ese apellido',
+              'Informes psicológicos, cuadernos del colegio, credenciales, tarjetas, sobres, diplomas. Cuanto más, mejor.') +
+      '<div class="campos">' +
+        '<div><label>¿Desde cuándo lo usa y por qué?</label><textarea id="n_relato" placeholder="Contános brevemente tu situación."></textarea></div>' +
+      '</div></div>';
+  }
+
+  // ── Empleador (alimentos) ──
+  if (B.includes('empleador')) {
+    h += '<div class="bloque"><h3>Dónde trabaja la otra parte</h3>' +
+      '<div class="nota">Sirve para pedir la retención de la cuota. Si no lo sabe con exactitud, ponga lo que recuerde.</div>' +
+      '<div class="campos">' + campo('e_nombre', 'Nombre o razón social') + domicilio('e') + '</div></div>';
+  }
+
+  // ── Hijos ──
+  if (B.includes('hijos')) {
+    h += '<div class="bloque"><h3>Hijos / hijas</h3>' +
+      '<div class="nota">DNI de cada uno y la partida de nacimiento. Si no tiene la partida, complete los datos y la pedimos nosotros.</div>' +
+      '<div id="hijos"></div>' +
+      '<button class="btn linea" type="button" onclick="agregarHijo()">+ Agregar otro hijo/a</button></div>';
+  }
+
+  // ── Siniestro automotor ──
+  if (B.includes('siniestro')) {
+    h += '<div class="bloque"><h3>Sus documentos</h3>' +
+      parDni('lic', 'Licencia de conducir') + '</div>';
+
+    h += '<div class="bloque"><h3>El vehículo</h3>' +
+      '<div class="nota">Cédula verde o azul, y el título si lo tiene.</div>' +
+      parDni('ced', 'Cédula del vehículo') +
+      parDni('tit', 'Título de propiedad', 'si lo tiene') +
+      '<div class="campos">' +
+        dosCampos(campo('s_dominio', 'Dominio / patente'), campo('s_marca', 'Marca y modelo')) +
+        dosCampos(campo('s_fecha', 'Fecha del siniestro', { tipo: 'date' }), campo('s_lugar', 'Lugar del hecho')) +
+      '</div></div>';
+
+    h += '<div class="bloque"><h3>Fotos del vehículo</h3>' +
+      galeria('vehiculo', 'Al menos 4 fotos', 'Que se vea bien la parte dañada, y una donde se lea la patente.', 4) +
+      '</div>';
+
+    h += '<div class="bloque"><h3>Presupuesto de reparación</h3>' +
+      '<div class="nota">Con el detalle de mano de obra y repuestos.</div>' +
+      galeria('presupuesto', 'Presupuesto') +
+      '</div>';
+
+    h += '<div class="bloque"><h3>¿Hubo lesiones?</h3>' +
+      '<label class="check" style="margin-bottom:12px"><input type="checkbox" id="hayLesiones" onchange="toggleBloque(\'lesionesDiv\',this.checked)">' +
+      '<span>Sí, hubo personas lesionadas</span></label>' +
+      '<div id="lesionesDiv" style="display:none">' +
+        galeria('lesiones', 'Certificados médicos, historia clínica y fotos') +
+        '<div class="campos">' +
+          '<div><label>Detalle de las lesiones</label><textarea id="s_lesiones" placeholder="Quién resultó lesionado y qué lesiones tuvo."></textarea></div>' +
+        '</div>' +
+      '</div></div>';
+
+    h += '<div class="bloque"><h3>Cómo ocurrió</h3><div class="campos">' +
+      '<div><label>Relato del hecho</label><textarea id="s_relato" placeholder="Contános cómo fue el accidente."></textarea></div>' +
+      '</div></div>';
+
+    h += '<div class="aviso">Una vez que recibamos todo, desde el estudio de la Dra. Camila García ' +
+      'procedemos con el armado del reclamo y le enviamos la <b>Carta de Patrocinio</b> para su firma ' +
+      'y posterior presentación.</div>';
+  }
+
+  const cont = document.getElementById('bloques');
+  cont.innerHTML = h;
+  cont.dataset.armado = '1';
+
+  // galerias declaradas en el html recien creado
+  document.querySelectorAll('.galeria').forEach(g => pintarGaleria(g.id.replace('gal_', '')));
+  if (B.includes('hijos') && nHijos === 0) agregarHijo();
+}
+
+function toggleBloque(id, mostrar) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = mostrar ? '' : 'none';
+  if (mostrar && id === 'hijosDiv' && nHijos === 0) agregarHijo();
+}
+
+// ── Fotos ─────────────────────────────────────────────────────────────────────
+function verFoto(input, id) {
+  const f = input.files && input.files[0];
+  if (!f) return;
+  const fr = new FileReader();
+  fr.onload = () => {
+    fotos[id] = fr.result;
+    const c = document.getElementById(id);
+    c.classList.add('lista');
+    const vieja = c.querySelector('img'); if (vieja) vieja.remove();
+    const img = document.createElement('img'); img.src = fr.result; c.appendChild(img);
+    if (!c.querySelector('.x')) {
+      const x = document.createElement('button');
+      x.className = 'x'; x.type = 'button'; x.textContent = '×';
+      x.onclick = (ev) => { ev.preventDefault(); ev.stopPropagation(); borrarFoto(id); };
+      c.appendChild(x);
+    }
+  };
+  fr.readAsDataURL(f);
+}
+function borrarFoto(id) {
+  delete fotos[id];
+  const c = document.getElementById(id);
+  c.classList.remove('lista');
+  const i = c.querySelector('img'); if (i) i.remove();
+  const x = c.querySelector('.x'); if (x) x.remove();
+  const inp = c.querySelector('input'); if (inp) inp.value = '';
+}
+
+// ── Galerias (varias fotos) ───────────────────────────────────────────────────
+function pintarGaleria(id) {
+  const cont = document.getElementById('gal_' + id);
+  if (!cont) return;
+  const lista = galerias[id] || [];
+  cont.innerHTML = lista.map((src, i) =>
+    '<div class="g"><img src="' + src + '"><button type="button" onclick="quitarDeGaleria(\'' + id + '\',' + i + ')">×</button></div>'
+  ).join('') +
+  '<label class="add">+<input type="file" accept="image/*" capture="environment" multiple ' +
+  'onchange="sumarAGaleria(this,\'' + id + '\')"></label>';
+
+  const cnt = document.getElementById('cnt_' + id);
+  if (cnt) {
+    const min = parseInt(cnt.textContent.match(/de (\d+)/)?.[1] || '0', 10);
+    cnt.textContent = lista.length + ' de ' + min + ' fotos';
+    cnt.classList.toggle('poco', lista.length < min);
+  }
+}
+function sumarAGaleria(input, id) {
+  const files = [...(input.files || [])];
+  galerias[id] = galerias[id] || [];
+  let pendientes = files.length;
+  files.forEach(f => {
+    const fr = new FileReader();
+    fr.onload = () => { galerias[id].push(fr.result); if (--pendientes === 0) pintarGaleria(id); };
+    fr.readAsDataURL(f);
+  });
+}
+function quitarDeGaleria(id, i) {
+  (galerias[id] || []).splice(i, 1);
+  pintarGaleria(id);
+}
+
+// ── Hijos ─────────────────────────────────────────────────────────────────────
+function agregarHijo() {
+  const i = ++nHijos;
+  const d = document.createElement('div');
+  d.className = 'hijo'; d.id = 'hijo' + i;
+  d.innerHTML =
+    '<div class="cab"><b>Hijo/a ' + i + '</b>' +
+      (i > 1 ? '<button class="quitar" type="button" onclick="quitarHijo(' + i + ')">quitar</button>' : '') + '</div>' +
+    parDni('h' + i, 'DNI') +
+    '<div class="fotos una">' + fotoDoc('h' + i + '_partida', 'Partida de nacimiento', 'si la tiene') + '</div>' +
+    '<div class="campos">' +
+      campo('h' + i + '_nombre', 'Nombre completo') +
+      dosCampos(campo('h' + i + '_dni', 'DNI', { num: 1 }), campo('h' + i + '_fnac', 'Fecha de nacimiento', { tipo: 'date' })) +
+      dosCampos(campo('h' + i + '_lugar', 'Lugar de nacimiento'), campo('h' + i + '_hospital', 'Hospital o institución')) +
+      campo('h' + i + '_convive', 'Con quién vive', { ph: 'Ej: con la madre' }) +
+      dosCampos(campo('h' + i + '_calle', 'Calle'), campo('h' + i + '_numero', 'Número')) +
+      dosCampos(campo('h' + i + '_localidad', 'Localidad'), campo('h' + i + '_partido', 'Partido')) +
+      campo('h' + i + '_provincia', 'Provincia', { val: 'Buenos Aires' }) +
+      '<label class="check"><input type="checkbox" id="h' + i + '_discapacidad">' +
+      '<span>Tiene discapacidad acreditada (CUD)</span></label>' +
+    '</div>';
+  document.getElementById('hijos').appendChild(d);
+}
+function quitarHijo(i) {
+  const e = document.getElementById('hijo' + i); if (e) e.remove();
+}
+
+// ── NOMBRES Y COMPRESION DE LAS FOTOS ────────────────────────────────────────
+// Nombre con el que se guarda cada foto en Drive. Sin esto, en la carpeta quedarian
+// archivos "f_ced_dorso.jpg" y habria que abrirlos uno por uno para saber cual es cual.
+const NOMBRES_DOC = {
+  f_dni_frente:'DNI cliente - frente', f_dni_dorso:'DNI cliente - dorso',
+  f_dem_frente:'DNI otra parte - frente', f_dem_dorso:'DNI otra parte - dorso',
+  f_lic_frente:'Licencia de conducir - frente', f_lic_dorso:'Licencia de conducir - dorso',
+  f_ced_frente:'Cedula del vehiculo - frente', f_ced_dorso:'Cedula del vehiculo - dorso',
+  f_tit_frente:'Titulo de propiedad - frente', f_tit_dorso:'Titulo de propiedad - dorso',
+  f_partida_matrimonio:'Partida de matrimonio',
+  f_partida_propia:'Partida de nacimiento del cliente',
+  f_denuncia:'Denuncia policial o fiscalia'
+};
+const NOMBRES_GAL = {
+  vehiculo:'Foto del vehiculo', presupuesto:'Presupuesto', lesiones:'Lesiones',
+  pruebas:'Prueba', bienes:'Escritura o titulo'
+};
+function nombreDoc(id) {
+  if (NOMBRES_DOC[id]) return NOMBRES_DOC[id];
+  const h = /^f_h(\d+)_(frente|dorso|partida)$/.exec(id);
+  if (h) return 'Hijo ' + h[1] + ' - ' + (h[2] === 'partida' ? 'partida de nacimiento' : 'DNI ' + h[2]);
+  return id.replace(/^f_/, '').replace(/_/g, ' ');
+}
+
+// Las fotos de un celular pesan 3 o 4 MB cada una. Sin achicarlas, una consulta con diez
+// fotos son 40 MB por una conexion de datos: se corta a la mitad y el cliente se queda
+// creyendo que mando todo. A 1600px de lado largo y calidad 0,82 se leen perfecto y
+// pesan unos 300 KB.
+function comprimir(dataURL) {
+  return new Promise(function (resolve) {
+    const img = new Image();
+    img.onload = function () {
+      const MAX = 1600;
+      let w = img.width, h = img.height;
+      if (Math.max(w, h) > MAX) {
+        const k = MAX / Math.max(w, h);
+        w = Math.round(w * k); h = Math.round(h * k);
+      }
+      const c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      resolve(c.toDataURL('image/jpeg', 0.82));
+    };
+    img.onerror = function () { resolve(dataURL); };
+    img.src = dataURL;
+  });
+}
+
+// ── Revision ──────────────────────────────────────────────────────────────────
+const val = id => (document.getElementById(id) || {}).value ? document.getElementById(id).value.trim() : '';
+const chk = id => !!(document.getElementById(id) || {}).checked;
+
+function revisar() {
+  // Lo minimo para poder llamarlo. Frenarlo por un dato que no tiene a mano solo
+  // logra que abandone el formulario a la mitad.
+  const faltan = [];
+  [['c_nombre', 'su nombre'], ['c_dni', 'su DNI'], ['c_tel', 'un teléfono']].forEach(([id, txt]) => {
+    const el = document.getElementById(id);
+    if (!val(id)) { faltan.push(txt); if (el) el.classList.add('falta'); }
+    else if (el) el.classList.remove('falta');
+  });
+  // Para siniestros el mail no es opcional: por ahi va la carta de patrocinio.
+  if (materiaSel.id === 'siniestro' && !val('c_mail')) {
+    faltan.push('su mail');
+    const el = document.getElementById('c_mail'); if (el) el.classList.add('falta');
+  }
+  const err = document.getElementById('errorPaso2');
+  if (faltan.length) {
+    err.textContent = 'Nos falta ' + faltan.join(', ') + ' para poder contactarlo.';
+    err.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  err.style.display = 'none';
+  armarResumen();
+  irA(3);
+}
+
+function armarResumen() {
+  const li = (k, v) => v ? '<div><span style="color:var(--ink-40)">' + k + ':</span> ' + v + '</div>' : '';
+  let h = '<div style="font-weight:600;margin-bottom:8px">' + materiaSel.nom + '</div>';
+  h += li('Nombre', val('c_nombre')) + li('DNI', val('c_dni')) + li('CUIL', val('c_cuil'));
+  h += li('Teléfono', val('c_tel')) + li('Mail', val('c_mail'));
+  h += li('Domicilio', [val('c_calle'), val('c_numero'), val('c_localidad'), val('c_partido'), val('c_provincia')].filter(Boolean).join(', '));
+  if (val('d_nombre')) h += '<div style="margin-top:9px;font-weight:600">' + materiaSel.otraParte + '</div>' + li('Nombre', val('d_nombre')) + li('DNI', val('d_dni'));
+  if (val('e_nombre')) h += '<div style="margin-top:9px;font-weight:600">Empleador</div>' + li('Razón social', val('e_nombre'));
+  if (val('x_expediente') || val('x_juzgado')) h += '<div style="margin-top:9px;font-weight:600">Causa</div>' + li('Expediente', val('x_expediente')) + li('Juzgado', val('x_juzgado'));
+  if (val('s_dominio')) h += '<div style="margin-top:9px;font-weight:600">Vehículo</div>' + li('Dominio', val('s_dominio')) + li('Marca', val('s_marca'));
+  const hs = [];
+  for (let i = 1; i <= nHijos; i++) {
+    if (!document.getElementById('hijo' + i)) continue;
+    if (val('h' + i + '_nombre')) hs.push(val('h' + i + '_nombre') + (chk('h' + i + '_discapacidad') ? ' (con CUD)' : ''));
+  }
+  if (hs.length) h += '<div style="margin-top:9px;font-weight:600">Hijos</div><div>' + hs.join(' · ') + '</div>';
+  const nG = Object.values(galerias).reduce((n, a) => n + a.length, 0);
+  h += '<div style="margin-top:12px;color:var(--ink-40)">' + (Object.keys(fotos).length + nG) + ' foto(s) adjunta(s)</div>';
+  document.getElementById('resumen').innerHTML = h;
+}
+
+// ── Contacto y nueva consulta ─────────────────────────────────────────────────
+function abrirContacto() { document.getElementById('modalContacto').classList.add('abierto'); }
+function cerrarContacto() { document.getElementById('modalContacto').classList.remove('abierto'); }
+
+function nuevaConsulta() {
+  const q = prompt('¿Qué necesita consultar?\n\nEscriba su consulta y elija cómo prefiere que lo contactemos.');
+  if (!q) return;
+  const quiere = confirm('¿Prefiere que lo llamemos por teléfono?\n\nAceptar = que me llamen\nCancelar = prefiero por mail');
+  const txt = 'Consulta desde la web: ' + q + (quiere ? ' — Prefiero que me llamen.' : ' — Prefiero respuesta por mail.');
+  if (quiere) {
+    window.open('https://wa.me/5491168063444?text=' + encodeURIComponent(txt), '_blank');
+  } else {
+    window.location.href = 'mailto:estudio@garciayasociados.com.ar?subject=' +
+      encodeURIComponent('Consulta desde la web') + '&body=' + encodeURIComponent(txt);
+  }
+}
+
+// ── ENVIO ─────────────────────────────────────────────────────────────────────
+// Va a un Apps Script que crea una carpeta por consulta en el Drive del estudio y
+// manda un mail avisando. La URL sale de "Implementar → Aplicación web" y termina
+// en /exec. Ver bienvenido/APPS-SCRIPT-consultas.gs.
+const ENVIO_URL = 'https://script.google.com/macros/s/AKfycbzVM6WjdnyOljPs9Jh5APyqy1lxdPGZbNPIgdHqDBLZI8uCPfX_rFAxung5QM0CpcJb/exec';
+
+async function enviar() {
+  const btn = event && event.target;
+  const codigo = 'GA-' + new Date().getFullYear() + '-' +
+                 String(Math.floor(Math.random() * 9000) + 1000);
+
+  const datos = {
+    codigo: codigo,
+    materia: materiaSel.id, materiaNombre: materiaSel.nom,
+    cliente: { nombre: val('c_nombre'), dni: val('c_dni'), cuil: val('c_cuil'),
+      telefono: val('c_tel'), mail: val('c_mail'),
+      domicilio: { calle: val('c_calle'), numero: val('c_numero'), localidad: val('c_localidad'),
+        partido: val('c_partido'), provincia: val('c_provincia') } },
+    otraParte: { nombre: val('d_nombre'), dni: val('d_dni'), cuil: val('d_cuil'),
+      tipo: (document.querySelector('input[name=tipoDemandado]:checked') || {}).value || '',
+      domicilio: { calle: val('d_calle'), numero: val('d_numero'), entreCalles: val('d_entre'),
+        localidad: val('d_localidad'), partido: val('d_partido'), provincia: val('d_provincia') } },
+    empleador: { nombre: val('e_nombre'), calle: val('e_calle'), numero: val('e_numero'),
+      localidad: val('e_localidad'), partido: val('e_partido'), provincia: val('e_provincia') },
+    causa: { expediente: val('x_expediente'), juzgado: val('x_juzgado'), caratula: val('x_caratula') },
+    matrimonio: { fecha: val('m_fecha'), lugar: val('m_lugar'), registro: val('m_registro') },
+    bienes: { hay: chk('tieneBienes'), detalle: val('b_detalle') },
+    violencia: { dependencia: val('v_dependencia'), fecha: val('v_fecha'), causa: val('v_causa') },
+    cambioNombre: { apellidoPretendido: val('n_apellidoPretendido'), madre: val('n_madre'),
+      padre: val('n_padre'), relato: val('n_relato') },
+    siniestro: { dominio: val('s_dominio'), marca: val('s_marca'), fecha: val('s_fecha'),
+      lugar: val('s_lugar'), relato: val('s_relato'),
+      hayLesiones: chk('hayLesiones'), lesiones: val('s_lesiones') },
+    hijos: [],
+    archivos: []
+  };
+  for (let i = 1; i <= nHijos; i++) {
+    if (!document.getElementById('hijo' + i)) continue;
+    datos.hijos.push({ nombre: val('h' + i + '_nombre'), dni: val('h' + i + '_dni'),
+      fechaNac: val('h' + i + '_fnac'), lugarNac: val('h' + i + '_lugar'),
+      hospital: val('h' + i + '_hospital'), conviveCon: val('h' + i + '_convive'),
+      discapacidad: chk('h' + i + '_discapacidad'),
+      domicilio: { calle: val('h' + i + '_calle'), numero: val('h' + i + '_numero'),
+        localidad: val('h' + i + '_localidad'), partido: val('h' + i + '_partido'),
+        provincia: val('h' + i + '_provincia') } });
+  }
+
+  const textoOrig = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = 'Preparando las fotos…'; }
+
+  try {
+    // Se comprimen antes de armar el paquete: es lo que hace la diferencia entre
+    // un envio de 2 MB y uno de 40 que no llega.
+    const pend = [];
+    Object.keys(fotos).forEach(function (id) { pend.push({ id: nombreDoc(id), src: fotos[id] }); });
+    Object.keys(galerias).forEach(function (g) {
+      galerias[g].forEach(function (src, i) {
+        pend.push({ id: (NOMBRES_GAL[g] || g) + ' ' + (i + 1), src: src });
+      });
+    });
+
+    for (let i = 0; i < pend.length; i++) {
+      if (btn) btn.textContent = 'Preparando fotos… ' + (i + 1) + ' de ' + pend.length;
+      const chico = await comprimir(pend[i].src);
+      datos.archivos.push({ nombre: pend[i].id + '.jpg', tipo: 'image/jpeg', b64: chico });
+    }
+
+    if (btn) btn.textContent = 'Enviando…';
+
+    if (ENVIO_URL.indexOf('PEGAR_ACA') === 0) {
+      // Todavia sin conectar: se muestra por consola para poder probar la pantalla.
+      console.log('FALTA CONFIGURAR ENVIO_URL. Paquete armado:', datos);
+      alert('El formulario todavía no está conectado al Drive del estudio.\n\n' +
+            'Falta pegar la URL del Apps Script en ENVIO_URL.');
+    } else {
+      // text/plain a proposito: evita el preflight, que es lo que Apps Script rechaza.
+      const r = await fetch(ENVIO_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(datos)
+      });
+      const res = await r.json().catch(function () { return null; });
+      if (res && res.ok === false) throw new Error(res.error || 'el servidor rechazó el envío');
+    }
+
+    document.getElementById('codigoCliente').textContent = codigo;
+    if (materiaSel.id === 'siniestro') {
+      document.getElementById('textoCierre').textContent =
+        'Vamos a armar el reclamo y le enviamos la Carta de Patrocinio por mail para su firma.';
+    }
+    irA(4);
+    document.querySelectorAll('.pasos i').forEach(function (x) { x.classList.add('on'); });
+
+  } catch (err) {
+    // Nunca dejar al cliente sin salida: si el envio falla, que pueda escribir igual.
+    console.error(err);
+    if (confirm('No pudimos enviar la documentación. Puede ser la conexión.\n\n' +
+                '¿Querés escribirnos por WhatsApp para que te ayudemos?')) {
+      window.open('https://wa.me/5491168063444?text=' + encodeURIComponent(
+        'Hola, intenté enviar la documentación desde la web y no pudo completarse. ' +
+        'Mi consulta es por ' + materiaSel.nom + '.'), '_blank');
+    }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = textoOrig || 'Enviar al estudio'; }
+  }
+}
+</script>
+</body>
+</html>
