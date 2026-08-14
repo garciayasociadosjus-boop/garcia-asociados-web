@@ -118,7 +118,8 @@ input.falta{border-color:var(--err);background:#fdf6f4}
 .galeria .g{position:relative;aspect-ratio:1;border-radius:9px;overflow:hidden;border:1px solid var(--ink-10)}
 .galeria .g img{width:100%;height:100%;object-fit:cover}
 /* Un PDF no se puede previsualizar: se muestra la etiqueta para que sepa que entro. */
-.galeria .g .pdf{display:grid;place-items:center;width:100%;height:100%;background:var(--ink);
+.galeria .g .pdf, .foto .pdf{display:grid;place-items:center;width:100%;height:100%;
+  position:absolute;inset:0;border-radius:inherit;background:var(--ink);
   color:var(--gold);font-size:.82rem;font-weight:600;letter-spacing:.1em}
 .galeria .g button{position:absolute;top:3px;right:3px;background:rgba(10,10,15,.72);color:#fff;
   border:none;border-radius:50%;width:21px;height:21px;font-size:.78rem;cursor:pointer}
@@ -343,8 +344,8 @@ const campo = (id, lab, extra) => '<div><label>' + lab + '</label><input type="'
 const dosCampos = (a, b) => '<div class="campos dos">' + a + b + '</div>';
 
 const fotoDoc = (id, titulo, sub) =>
-  '<label class="foto" id="f_' + id + '"><span><b>' + titulo + '</b>' + (sub || 'tocar para la foto') + '</span>' +
-  '<input type="file" accept="image/*" capture="environment" onchange="verFoto(this,\'f_' + id + '\')"></label>';
+  '<label class="foto" id="f_' + id + '"><span><b>' + titulo + '</b>' + (sub || 'foto, galería o PDF') + '</span>' +
+  '<input type="file" accept="image/*,application/pdf" onchange="verFoto(this,\'f_' + id + '\')"></label>';
 
 const parDni = (pre, titulo, sub) => '<div class="fotos">' +
   fotoDoc(pre + '_frente', titulo + ' frente', sub) + fotoDoc(pre + '_dorso', titulo + ' dorso', sub) + '</div>';
@@ -563,8 +564,15 @@ function verFoto(input, id) {
     fotos[id] = fr.result;
     const c = document.getElementById(id);
     c.classList.add('lista');
-    const vieja = c.querySelector('img'); if (vieja) vieja.remove();
-    const img = document.createElement('img'); img.src = fr.result; c.appendChild(img);
+    const vieja = c.querySelector('img, .pdf'); if (vieja) vieja.remove();
+    if (esPDF(fr.result)) {
+      // Un PDF no se puede previsualizar: se muestra la etiqueta para que el cliente vea
+      // que entro y no lo vuelva a adjuntar tres veces creyendo que fallo.
+      const p = document.createElement('span'); p.className = 'pdf'; p.textContent = 'PDF';
+      c.appendChild(p);
+    } else {
+      const img = document.createElement('img'); img.src = fr.result; c.appendChild(img);
+    }
     if (!c.querySelector('.x')) {
       const x = document.createElement('button');
       x.className = 'x'; x.type = 'button'; x.textContent = '×';
