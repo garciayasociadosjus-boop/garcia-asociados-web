@@ -1,0 +1,251 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   García & Asociados — hoja de estilos de las páginas internas.
+
+   Reutiliza los mismos tokens, tipografías y colores de la home para que las
+   páginas nuevas se sientan parte del mismo sitio y no de uno paralelo. La home
+   lleva su CSS embebido; acá va aparte porque lo comparten varias páginas y así
+   se descarga una sola vez.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:root {
+    --primary: #05080F;
+    --secondary: #0A0F1E;
+    --tertiary: #131A2B;
+    --accent: #1C2538;
+    --gold: #D4AF37;
+    --gold-light: #F9E2AF;
+    --text: #131A2B;
+    --light: #F9FAFB;
+    --white: #FFFFFF;
+    --silver: #E5E7EB;
+    --platinum: #F3F4F6;
+    --champagne: #F9F9F7;
+    --whatsapp: #25d366;
+    --borde: #E3E1DA;
+    --gradient-primary: linear-gradient(135deg, #05080F 0%, #0A0F1E 50%, #131A2B 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 300;
+    color: var(--text);
+    background: var(--champagne);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .logo { font-family: 'Cinzel', Georgia, serif; font-weight: 700; line-height: 1.25; }
+
+/* ── Barra superior ───────────────────────────────────────────────────────── */
+.barra {
+    background: var(--gradient-primary);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(5, 8, 15, .25);
+}
+.contenedor { max-width: 900px; margin: 0 auto; padding: 0 22px; }
+.barra .contenedor { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.barra .logo { color: var(--white); font-size: 1.05rem; text-decoration: none; letter-spacing: .5px; }
+.barra .logo span { color: var(--gold); }
+.barra nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.barra nav a {
+    color: var(--silver); text-decoration: none; font-size: .82rem;
+    letter-spacing: .4px; transition: color .2s;
+}
+.barra nav a:hover { color: var(--gold); }
+
+/* ── Camino de migas ──────────────────────────────────────────────────────── */
+.migas { background: var(--platinum); padding: 10px 0; font-size: .78rem; border-bottom: 1px solid var(--borde); }
+.migas a { color: var(--accent); text-decoration: none; }
+.migas a:hover { text-decoration: underline; }
+.migas span { color: #6B7280; }
+
+/* ── Cuerpo ───────────────────────────────────────────────────────────────── */
+main { padding: 42px 0 60px; }
+main h1 { font-size: clamp(1.6rem, 4.5vw, 2.3rem); color: var(--primary); margin-bottom: 6px; }
+.bajada { color: #5A6474; font-size: .92rem; margin-bottom: 26px; }
+
+/* El bloque de respuesta directa: lo primero que lee una persona apurada y lo
+   primero que un buscador puede citar. Va siempre arriba de todo. */
+.respuesta {
+    background: var(--white);
+    border-left: 4px solid var(--gold);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-bottom: 34px;
+    box-shadow: 0 2px 14px rgba(19, 26, 43, .06);
+    font-size: 1.02rem;
+    color: var(--tertiary);
+}
+
+main h2 {
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
+    color: var(--primary);
+    margin: 40px 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--borde);
+}
+main h3 { font-size: 1.02rem; color: var(--accent); margin: 26px 0 8px; }
+main p { margin-bottom: 15px; }
+main ul, main ol { margin: 0 0 18px 22px; }
+main li { margin-bottom: 8px; }
+
+main a { color: #1F4B8E; }
+main a:hover { color: var(--gold); }
+
+/* Pasos numerados de cada trámite */
+.pasos { list-style: none; margin-left: 0; counter-reset: paso; }
+.pasos li {
+    counter-increment: paso;
+    position: relative;
+    padding-left: 44px;
+    margin-bottom: 16px;
+}
+.pasos li::before {
+    content: counter(paso);
+    position: absolute; left: 0; top: 1px;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--accent); color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .82rem; font-weight: 600;
+    font-family: 'Cinzel', Georgia, serif;
+}
+
+/* Aviso de urgencia: violencia, plazos que vencen */
+.urgente {
+    background: #FDF3F2;
+    border-left: 4px solid #B3452F;
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin: 22px 0;
+    font-size: .93rem;
+}
+.urgente strong { color: #8E3324; }
+
+.dato {
+    background: var(--white);
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 22px 0;
+    font-size: .93rem;
+}
+
+/* Preguntas frecuentes */
+.faq { margin-top: 12px; }
+.faq details {
+    background: var(--white);
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 0 20px;
+}
+.faq summary {
+    cursor: pointer;
+    padding: 15px 0;
+    font-weight: 600;
+    font-size: .95rem;
+    color: var(--accent);
+    list-style: none;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: '+ '; color: var(--gold); font-weight: 700; }
+.faq details[open] summary::before { content: '– '; }
+.faq details > p, .faq details > ul { padding-bottom: 16px; margin-bottom: 0; font-size: .93rem; }
+
+/* Tarjetas de servicio */
+.tarjetas { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin: 22px 0; }
+.tarjeta {
+    background: var(--white); border: 1px solid var(--borde);
+    border-radius: 8px; padding: 22px; text-decoration: none; color: inherit;
+    transition: transform .18s, box-shadow .18s, border-color .18s;
+    display: block;
+}
+.tarjeta:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(19,26,43,.10); border-color: var(--gold); }
+.tarjeta h3 { margin: 0 0 8px; color: var(--primary); }
+.tarjeta p { font-size: .88rem; color: #5A6474; margin: 0; }
+
+/* Llamado a la acción */
+.cta {
+    background: var(--gradient-primary);
+    color: var(--white);
+    border-radius: 10px;
+    padding: 30px;
+    margin: 44px 0 10px;
+    text-align: center;
+}
+.cta h2 { color: var(--white); border: none; margin: 0 0 10px; padding: 0; }
+.cta p { color: var(--silver); font-size: .93rem; margin-bottom: 20px; }
+.boton {
+    display: inline-block; background: var(--whatsapp); color: var(--white);
+    padding: 13px 30px; border-radius: 50px; text-decoration: none;
+    font-weight: 600; font-size: .92rem; transition: transform .15s, filter .15s;
+}
+.boton:hover { transform: translateY(-2px); filter: brightness(1.06); color: var(--white); }
+.boton.secundario { background: transparent; border: 1px solid var(--gold); color: var(--gold); margin-left: 8px; }
+
+.revisado { font-size: .78rem; color: #6B7280; margin-top: 34px; font-style: italic; }
+
+/* ── Pie ──────────────────────────────────────────────────────────────────── */
+footer { background: var(--primary); color: var(--silver); padding: 40px 0 26px; font-size: .85rem; }
+footer h4 { font-family: 'Cinzel', Georgia, serif; color: var(--gold); font-size: .92rem; margin-bottom: 12px; }
+footer a { color: var(--silver); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+.pie-grilla { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.pie-grilla ul { list-style: none; margin: 0; }
+.pie-grilla li { margin-bottom: 6px; }
+.pie-legal {
+    border-top: 1px solid rgba(255,255,255,.10);
+    margin-top: 26px; padding-top: 16px;
+    font-size: .76rem; color: #8A93A3; line-height: 1.6;
+}
+
+/* ── CELULAR ──────────────────────────────────────────────────────────────
+   Dos cosas que se miden y que estaban mal: el texto quedaba por debajo de 14px,
+   que es el piso para leer comodo en un telefono, y los enlaces tenian menos de
+   40px de alto, que es lo minimo para acertarles con el dedo. */
+@media (max-width: 760px) {
+    body { font-size: 16px; }
+    .barra .contenedor { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .barra nav { gap: 4px 16px; }
+    .barra nav a { font-size: .95rem; padding: 8px 0; display: inline-block; }
+    .barra .logo { font-size: 1.15rem; }
+
+    .migas { font-size: .85rem; padding: 12px 0; }
+
+    main { padding: 26px 0 42px; }
+    main p, main li { font-size: 1rem; }
+    .bajada { font-size: 1rem; }
+    .respuesta { padding: 16px 18px; font-size: 1.04rem; }
+    .urgente, .dato { font-size: 1rem; padding: 16px 18px; }
+
+    .faq summary { font-size: 1rem; padding: 16px 0; }
+    .faq details > p, .faq details > ul { font-size: 1rem; }
+
+    .pasos li { padding-left: 40px; }
+
+    .cta { padding: 26px 20px; }
+    .cta p { font-size: 1rem; }
+    .boton { display: block; margin: 0 0 10px; padding: 15px 24px; font-size: 1rem; }
+    .boton.secundario { margin-left: 0; }
+
+    footer { font-size: .95rem; }
+    .pie-grilla a { display: inline-block; padding: 7px 0; }
+    .pie-legal { font-size: .92rem; }
+    .revisado { font-size: .92rem; }
+
+    /* Las migas eran enlaces de 16px de alto: imposible acertarles con el dedo. */
+    .migas a, .migas span { display: inline-block; padding: 6px 0; }
+    .barra .logo { padding: 6px 0; display: inline-block; }
+
+    /* Los enlaces que son navegacion —los de "Seguir leyendo"— necesitan alto para
+       el dedo. Los enlaces dentro de un parrafo se dejan como estan: cambiarles la
+       altura rompe el interlineado del texto. */
+    main li > a:only-child { display: inline-block; padding: 8px 0; }
+}

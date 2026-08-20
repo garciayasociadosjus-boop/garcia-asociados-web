@@ -1,3 +1,9 @@
 User-agent: *
 Allow: /
-Sitemap: https://garciayasociadosjus-boop.github.io/garcia-asociados-web/sitemap.xml
+
+# Herramientas para clientes: no son contenido publico y no deben aparecer en
+# buscadores. No se bloquean con Disallow a proposito: si se bloqueara el rastreo,
+# el buscador nunca leeria la etiqueta noindex de esas paginas y las que ya
+# estuvieran indexadas seguirian ahi.
+
+Sitemap: https://garciayasociados.com.ar/sitemap.xml
