@@ -1719,6 +1719,29 @@
         @media (max-width: 1000px) {
             .nav-links a.destacado { border: none; border-radius: 0; padding: 15px 18px; }
         }
+    
+        /* El botón de sonido va encima del video, arriba a la derecha, lejos de los
+           controles de YouTube que están abajo. */
+        .video-sonido {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 2;
+            font-family: inherit;
+            font-size: .82rem;
+            font-weight: 600;
+            color: var(--white);
+            background: rgba(0, 0, 0, .68);
+            border: 1px solid rgba(255, 255, 255, .3);
+            border-radius: 999px;
+            padding: 8px 14px;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+        .video-sonido:hover { background: rgba(0, 0, 0, .85); border-color: var(--gold); }
+        @media (max-width: 560px) {
+            .video-sonido { font-size: .75rem; padding: 7px 11px; top: 8px; right: 8px; }
+        }
     </style>
 </head>
 <body>
@@ -2200,10 +2223,90 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
         initTilt('.service-card', 7, 10);
         initTilt('.team-member', 6, 6);
 
-        // --- FACADE DE VIDEO (carga el iframe recién al hacer clic) ---
-        function loadVideo(container) {
-            container.outerHTML = '<div class="video-container"><iframe src="https://www.youtube.com/embed/su2897o0z9Y?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+        // --- EL VIDEO ARRANCA SOLO, SIN SONIDO ---
+        // Antes era una miniatura con un botón de play: rápido, pero parecía una foto
+        // congelada. Ahora arranca solo cuando entra en pantalla, en silencio y en loop.
+        //
+        // Por qué no es sólo "poner autoplay": el reproductor de YouTube pesa casi un mega
+        // y cargarlo en cada visita se paga en la velocidad de la página, que es de las
+        // cosas que Google mide para posicionar. Por eso se carga recién cuando el video
+        // entra en pantalla, y después de que la página terminó de cargar.
+        var VIDEO_ID = 'su2897o0z9Y';
+
+        function urlVideo(conSonido) {
+            // youtube-nocookie: como ahora carga solo, sin que nadie lo pida, no
+            // corresponde encima plantarle las cookies de Google a todo el que entra.
+            return 'https://www.youtube-nocookie.com/embed/' + VIDEO_ID
+                 + '?autoplay=1&mute=' + (conSonido ? '0' : '1')
+                 + '&loop=1&playlist=' + VIDEO_ID
+                 + '&playsinline=1&rel=0&modestbranding=1';
         }
+
+        function armarVideo(container, conSonido) {
+            var caja = document.createElement('div');
+            caja.className = 'video-container';
+            caja.id = 'videoVivo';
+
+            var marco = document.createElement('iframe');
+            marco.src = urlVideo(conSonido);
+            marco.title = 'Bienvenidos — Estudio Jurídico García & Asociados';
+            marco.setAttribute('frameborder', '0');
+            marco.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+            marco.setAttribute('allowfullscreen', '');
+            caja.appendChild(marco);
+
+            if (!conSonido) {
+                // Mucha gente no se da cuenta de que está en silencio y se pierde el
+                // video. El botón lo dice con todas las letras.
+                var son = document.createElement('button');
+                son.type = 'button';
+                son.className = 'video-sonido';
+                son.textContent = '🔇 Activar sonido';
+                son.addEventListener('click', function () {
+                    armarVideo(document.getElementById('videoVivo'), true);
+                });
+                caja.appendChild(son);
+            }
+
+            container.parentNode.replaceChild(caja, container);
+        }
+
+        // Al hacer clic en la miniatura, arranca con sonido: si lo tocó, lo quiere ver.
+        function loadVideo(container) { armarVideo(container, true); }
+
+        (function () {
+            var facade = document.getElementById('videoFacade');
+            if (!facade) return;
+
+            // Menos animaciones: hay gente a la que el movimiento le hace mal, y esa
+            // configuración del sistema existe para que se la respete.
+            var quietito = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            // Ahorro de datos: un video que arranca solo se come los datos de alguien
+            // que pidió expresamente que no.
+            var pocosDatos = navigator.connection && (navigator.connection.saveData ||
+                             /2g/.test(navigator.connection.effectiveType || ''));
+
+            if (quietito || pocosDatos || !('IntersectionObserver' in window)) return;  // queda la miniatura
+
+            var arrancado = false;
+            var mirar = new IntersectionObserver(function (entradas) {
+                entradas.forEach(function (e) {
+                    if (!e.isIntersecting || arrancado) return;
+                    arrancado = true;
+                    mirar.disconnect();
+                    var f = document.getElementById('videoFacade');
+                    if (f) armarVideo(f, false);
+                });
+            }, { rootMargin: '150px' });
+
+            // Después de que cargó la página: si no, el reproductor le compite el ancho
+            // de banda al texto y la primera impresión es una página que tarda.
+            if (document.readyState === 'complete') mirar.observe(facade);
+            else window.addEventListener('load', function () {
+                var f = document.getElementById('videoFacade');
+                if (f) mirar.observe(f);
+            });
+        })();
 
         // --- LÓGICA GENERAL Y CALENDLY ---
         const CALENDLY_URL = 'https://calendly.com/garciayasociados/30min';
