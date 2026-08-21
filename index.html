@@ -1720,27 +1720,80 @@
             .nav-links a.destacado { border: none; border-radius: 0; padding: 15px 18px; }
         }
     
-        /* El botón de sonido va encima del video, arriba a la derecha, lejos de los
-           controles de YouTube que están abajo. */
-        .video-sonido {
+
+    
+        /* ── LA PORTADA DEL VIDEO ─────────────────────────────────────────
+           Antes acá había una miniatura con el botón de play de YouTube: el logo
+           rojo de otra empresa en el medio de la home, encima de un fotograma con
+           la cara a medio hablar. Se lo cubre con una portada propia. */
+        .video-portada { cursor: pointer; overflow: hidden; }
+        .video-foto {
             position: absolute;
-            top: 12px;
-            right: 12px;
-            z-index: 2;
-            font-family: inherit;
-            font-size: .82rem;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .6s ease;
+        }
+        /* El velo cumple dos funciones: que el texto se lea sobre cualquier imagen, y
+           bajarle el protagonismo al fotograma, que es lo que se veía como "video en
+           pausa". Más oscuro abajo, que es donde va el título. */
+        .video-velo {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                        rgba(5, 8, 15, .30) 0%,
+                        rgba(5, 8, 15, .18) 42%,
+                        rgba(5, 8, 15, .82) 100%);
+        }
+        .video-play {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 78px; height: 78px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary);
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .45);
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+        .video-play svg { margin-left: 3px; }   /* el triángulo se ve centrado, no el rectángulo que lo contiene */
+        .video-pie {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            padding: 1.5rem 1.75rem;
+            text-align: left;
+        }
+        .video-ojo {
+            display: block;
+            font-size: .7rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: .2rem;
+        }
+        .video-titulo {
+            display: block;
+            font-size: 1.25rem;
             font-weight: 600;
             color: var(--white);
-            background: rgba(0, 0, 0, .68);
-            border: 1px solid rgba(255, 255, 255, .3);
-            border-radius: 999px;
-            padding: 8px 14px;
-            cursor: pointer;
-            backdrop-filter: blur(4px);
+            line-height: 1.3;
         }
-        .video-sonido:hover { background: rgba(0, 0, 0, .85); border-color: var(--gold); }
+        .video-portada:hover .video-play { transform: translate(-50%, -50%) scale(1.08); }
+        .video-portada:hover .video-foto { transform: scale(1.03); }
+        .video-portada:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+        /* Quien pidió menos animaciones no ve el acercamiento al pasar el mouse. */
+        @media (prefers-reduced-motion: reduce) {
+            .video-foto, .video-play { transition: none; }
+            .video-portada:hover .video-play { transform: translate(-50%, -50%); }
+            .video-portada:hover .video-foto { transform: none; }
+        }
         @media (max-width: 560px) {
-            .video-sonido { font-size: .75rem; padding: 7px 11px; top: 8px; right: 8px; }
+            .video-play { width: 60px; height: 60px; }
+            .video-play svg { width: 24px; height: 24px; }
+            .video-pie { padding: 1.1rem 1.2rem; }
+            .video-titulo { font-size: 1.05rem; }
         }
     </style>
 </head>
@@ -1792,9 +1845,17 @@
             </div>
 
             <h2 class="welcome-title">¡Bienvenidos!</h2>
-            <div class="video-container" id="videoFacade" onclick="loadVideo(this)" style="cursor:pointer;background:#000 url('https://img.youtube.com/vi/su2897o0z9Y/maxresdefault.jpg') center/cover no-repeat;">
-                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.25);">
-                    <svg width="80" height="80" viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg>
+            <div class="video-container video-portada" id="videoFacade" onclick="loadVideo(this)"
+                 role="button" tabindex="0" aria-label="Reproducir el video de bienvenida">
+                <img class="video-foto" src="https://img.youtube.com/vi/su2897o0z9Y/maxresdefault.jpg"
+                     alt="La Dra. Camila García en el estudio, en Quilmes" loading="lazy" width="1280" height="720">
+                <div class="video-velo"></div>
+                <div class="video-play" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="30" height="30"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+                </div>
+                <div class="video-pie">
+                    <span class="video-ojo">Video</span>
+                    <span class="video-titulo">Bienvenidos al estudio</span>
                 </div>
             </div>
 
@@ -2223,88 +2284,36 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
         initTilt('.service-card', 7, 10);
         initTilt('.team-member', 6, 6);
 
-        // --- EL VIDEO ARRANCA SOLO, SIN SONIDO ---
-        // Antes era una miniatura con un botón de play: rápido, pero parecía una foto
-        // congelada. Ahora arranca solo cuando entra en pantalla, en silencio y en loop.
+        // --- EL VIDEO SE CARGA AL TOCARLO ---
+        // El reproductor de YouTube pesa casi un mega. Cargarlo en cada visita se paga en
+        // la velocidad de la página, que es de las cosas que Google mide para posicionar,
+        // así que hasta que alguien lo toca acá sólo hay una imagen.
         //
-        // Por qué no es sólo "poner autoplay": el reproductor de YouTube pesa casi un mega
-        // y cargarlo en cada visita se paga en la velocidad de la página, que es de las
-        // cosas que Google mide para posicionar. Por eso se carga recién cuando el video
-        // entra en pantalla, y después de que la página terminó de cargar.
-        var VIDEO_ID = 'su2897o0z9Y';
-
-        function urlVideo(conSonido) {
-            // youtube-nocookie: como ahora carga solo, sin que nadie lo pida, no
-            // corresponde encima plantarle las cookies de Google a todo el que entra.
-            return 'https://www.youtube-nocookie.com/embed/' + VIDEO_ID
-                 + '?autoplay=1&mute=' + (conSonido ? '0' : '1')
-                 + '&loop=1&playlist=' + VIDEO_ID
-                 + '&playsinline=1&rel=0&modestbranding=1';
-        }
-
-        function armarVideo(container, conSonido) {
+        // Hubo una versión que lo arrancaba solo y sin sonido. Se sacó: no se había
+        // pedido, y encima a quien tiene "menos animaciones" activado en su sistema le
+        // seguía quedando la imagen quieta, que era justo lo que se quería evitar.
+        function loadVideo(container) {
             var caja = document.createElement('div');
             caja.className = 'video-container';
-            caja.id = 'videoVivo';
-
             var marco = document.createElement('iframe');
-            marco.src = urlVideo(conSonido);
+            // youtube-nocookie: nadie carga cookies de Google hasta que decide ver el video.
+            marco.src = 'https://www.youtube-nocookie.com/embed/su2897o0z9Y'
+                      + '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
             marco.title = 'Bienvenidos — Estudio Jurídico García & Asociados';
             marco.setAttribute('frameborder', '0');
             marco.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
             marco.setAttribute('allowfullscreen', '');
             caja.appendChild(marco);
-
-            if (!conSonido) {
-                // Mucha gente no se da cuenta de que está en silencio y se pierde el
-                // video. El botón lo dice con todas las letras.
-                var son = document.createElement('button');
-                son.type = 'button';
-                son.className = 'video-sonido';
-                son.textContent = '🔇 Activar sonido';
-                son.addEventListener('click', function () {
-                    armarVideo(document.getElementById('videoVivo'), true);
-                });
-                caja.appendChild(son);
-            }
-
             container.parentNode.replaceChild(caja, container);
         }
 
-        // Al hacer clic en la miniatura, arranca con sonido: si lo tocó, lo quiere ver.
-        function loadVideo(container) { armarVideo(container, true); }
-
+        // Con el teclado también: la portada es un botón, y un botón se activa con Enter
+        // o con la barra espaciadora.
         (function () {
-            var facade = document.getElementById('videoFacade');
-            if (!facade) return;
-
-            // Menos animaciones: hay gente a la que el movimiento le hace mal, y esa
-            // configuración del sistema existe para que se la respete.
-            var quietito = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            // Ahorro de datos: un video que arranca solo se come los datos de alguien
-            // que pidió expresamente que no.
-            var pocosDatos = navigator.connection && (navigator.connection.saveData ||
-                             /2g/.test(navigator.connection.effectiveType || ''));
-
-            if (quietito || pocosDatos || !('IntersectionObserver' in window)) return;  // queda la miniatura
-
-            var arrancado = false;
-            var mirar = new IntersectionObserver(function (entradas) {
-                entradas.forEach(function (e) {
-                    if (!e.isIntersecting || arrancado) return;
-                    arrancado = true;
-                    mirar.disconnect();
-                    var f = document.getElementById('videoFacade');
-                    if (f) armarVideo(f, false);
-                });
-            }, { rootMargin: '150px' });
-
-            // Después de que cargó la página: si no, el reproductor le compite el ancho
-            // de banda al texto y la primera impresión es una página que tarda.
-            if (document.readyState === 'complete') mirar.observe(facade);
-            else window.addEventListener('load', function () {
-                var f = document.getElementById('videoFacade');
-                if (f) mirar.observe(f);
+            var f = document.getElementById('videoFacade');
+            if (!f) return;
+            f.addEventListener('keydown', function (ev) {
+                if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); loadVideo(f); }
             });
         })();
 
