@@ -1317,7 +1317,7 @@
 
 
         /* Responsive */
-        @media (max-width: 1150px) {
+        @media (max-width: 1000px) {   /* mismo corte que la hamburguesa: sin hueco */
             .nav-links { display: none; }
         }
 
@@ -1520,7 +1520,7 @@
         .menu-movil-btn.abierto span:nth-child(2) { opacity: 0; }
         .menu-movil-btn.abierto span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1000px) {   /* la hamburguesa toma el relevo justo donde el menú se esconde */
             .menu-movil-btn { display: flex; order: 3; }
 
             .nav-container { flex-wrap: wrap; gap: .5rem; }
@@ -1573,6 +1573,48 @@
             .floating-action-button { bottom: 18px; right: 14px; }
             .hero-content { padding-bottom: 6.5rem !important; }
         }
+    
+        /* ── MENÚ QUE NO SE DESBORDA ──────────────────────────────────────
+           Con diez items y 2,5rem de separación el menú no entraba: se partía
+           en varios renglones y el botón de la derecha quedaba cortado fuera de
+           la pantalla. Ahora son siete, la separación se achica sola cuando la
+           pantalla es más angosta, y nada puede empujar al bloque de botones
+           fuera de su lugar. */
+        /* Solo de 1001 px para arriba: es el único ancho donde el menú es una
+           fila horizontal. Sin esta condición estas reglas le ganaban a las de
+           celular —estar dentro de un @media no suma especificidad, gana la
+           última— y dejaban la hamburguesa fuera de la pantalla. */
+        @media (min-width: 1001px) {
+            .nav-container { gap: 1.5rem; flex-wrap: nowrap; }
+            .nav-links {
+                gap: clamp(0.9rem, 1.6vw, 2rem);   /* se ajusta al ancho disponible */
+                flex-wrap: nowrap;
+                white-space: nowrap;
+                min-width: 0;                       /* deja que el bloque se encoja */
+            }
+            .nav-links a { font-size: clamp(.86rem, 1.05vw, 1rem); }
+            .nav-buttons { flex-shrink: 0; }        /* los botones nunca se cortan */
+        }
+
+        /* Entre 769 y 1150 px —tablets y notebooks chicas— el menú completo no
+           entra junto a los dos botones. Se achica la tipografía antes de
+           esconder nada: perder el menú es peor que tenerlo apretado. */
+        @media (min-width: 1001px) and (max-width: 1250px) {
+            .nav-container { padding: 1rem 1.25rem; gap: .9rem; }
+            .nav-links { gap: .85rem; }
+            .nav-links a { font-size: .82rem; }
+            .nav-whatsapp-btn, .nav-dropdown-btn { font-size: .76rem; padding: 8px 12px; }
+        }
+    
+        /* ── NOSOTROS EN PANTALLAS ANGOSTAS ───────────────────────────────
+           Los hijos de un grid traen min-width:auto y no bajan del ancho de su
+           contenido: .about-content quedaba de 323 px dentro de un contenedor de
+           275 y hacía que la página entera se arrastrara de costado. */
+        .about-container > *, .about-content, .founder-info { min-width: 0; }
+        @media (max-width: 400px) {
+            .about-content, .founder-info, .about-card { padding: 20px; }
+            .about-container { padding: 16px; }
+        }
     </style>
 </head>
 <body>
@@ -1581,17 +1623,14 @@
             <a href="#inicio" class="logo">García & Asociados</a>
             <button id="btnMenuMovil" class="menu-movil-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="listaNav" onclick="alternarMenuMovil()"><span></span><span></span><span></span></button>
             <ul class="nav-links" id="listaNav">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#equipo">Equipo</a></li>
-                <li><a href="/abogado-familia-quilmes/">Derecho de Familia</a></li>
-                <li><a href="/servicios/">Servicios legales</a></li>
+                <li><a href="/abogado-familia-quilmes/">Familia</a></li>
+                <li><a href="/servicios/">Servicios</a></li>
                 <li><a href="/clientes/">Clientes</a></li>
-                <li><a href="/preguntas-frecuentes/">Preguntas</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#novedades">Novedades</a></li>
+                <li><a href="/preguntas-frecuentes/">Preguntas</a></li>
                 <li><a href="#contacto">Contacto</a></li>
-             </ul>
+            </ul>
             <div class="nav-buttons">
                 <a href="https://wa.me/5491168063444?text=Hola%2C%20me%20pongo%20en%20contacto%20desde%20la%20web%20del%20estudio.%20Necesito%20asesoramiento%20jur%C3%ADdico" target="_blank" class="nav-whatsapp-btn">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.096.539 4.066 1.482 5.784L0 24l6.346-1.466A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.005-1.371l-.358-.214-3.712.859.882-3.617-.234-.371A9.797 9.797 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
