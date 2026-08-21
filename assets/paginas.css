@@ -327,3 +327,18 @@ footer a:hover { color: var(--gold); }
     .consulta { padding: 1.25rem; }
     .consulta-form .boton { width: 100%; }
 }
+
+
+/* "Clientes" no es un enlace más del menú: es para gente que ya contrató al
+   estudio, así que se marca en dorado, que es el color de la casa. */
+.barra nav a.destacado {
+    color: var(--gold);
+    border: 1px solid rgba(212, 175, 55, .55);
+    border-radius: 999px;
+    padding: 5px 14px;
+}
+.barra nav a.destacado:hover { background: rgba(212, 175, 55, .12); color: var(--gold); }
+@media (max-width: 700px) {
+    /* En el menú apretado del teléfono la píldora queda rarísima: se deja el color. */
+    .barra nav a.destacado { border: none; border-radius: 0; padding: 0; }
+}

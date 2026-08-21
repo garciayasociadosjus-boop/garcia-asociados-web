@@ -43,7 +43,7 @@
   "@type": "LegalService",
   "@id": "https://garciayasociados.com.ar/#estudio",
   "name": "Estudio Jurídico García & Asociados",
-      "alternateName": "García & Asociados",
+  "alternateName": "García & Asociados",
   "legalName": "Estudio Jurídico García & Asociados",
   "url": "https://garciayasociados.com.ar/",
   "telephone": "+5491168063444",
@@ -56,21 +56,7 @@
     "postalCode": "1878",
     "addressCountry": "AR"
   },
-  "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday"
-          ],
-          "opens": "10:00",
-          "closes": "17:00"
-        }
-      ],
-      "areaServed": [
+  "areaServed": [
     {
       "@type": "City",
       "name": "Quilmes"
@@ -102,18 +88,22 @@
     }
   ],
   "sameAs": [
-        "https://www.instagram.com/garciayasociadosjus/",
-        "https://maps.google.com/?cid=13469647480227681401"
+    "https://www.instagram.com/garciayasociadosjus/",
+    "https://maps.google.com/?cid=13469647480227681401"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
       ],
-  "knowsAbout": [
-    "Derecho de Familia",
-    "Alimentos",
-    "Divorcio",
-    "Violencia familiar",
-    "Accidentes de tránsito",
-    "Daños y perjuicios",
-    "Sucesiones",
-    "Amparos de salud"
+      "opens": "10:00",
+      "closes": "17:00"
+    }
   ],
   "contactPoint": [
     {
@@ -130,7 +120,53 @@
       "areaServed": "AR",
       "availableLanguage": "Spanish"
     }
+  ],
+  "knowsAbout": [
+    "Derecho de Familia",
+    "Alimentos",
+    "Divorcio",
+    "Violencia familiar",
+    "Accidentes de tránsito",
+    "Daños y perjuicios",
+    "Sucesiones",
+    "Amparos de salud"
   ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://garciayasociados.com.ar/#camila-garcia",
+  "name": "Dra. Camila Florencia García",
+  "givenName": "Camila Florencia",
+  "familyName": "García",
+  "jobTitle": "Abogada — Socia fundadora",
+  "description": "Abogada especializada en Derecho de Familia, con matrícula en el Colegio de Abogados de Quilmes y en el C.P.A.C.F. Más de diez años de ejercicio profesional.",
+  "worksFor": {
+    "@id": "https://garciayasociados.com.ar/#estudio"
+  },
+  "knowsLanguage": "es-AR",
+  "areaServed": [
+    "Quilmes",
+    "Bernal",
+    "Berazategui",
+    "Avellaneda",
+    "Florencio Varela"
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://garciayasociados.com.ar/#sitio",
+  "url": "https://garciayasociados.com.ar/",
+  "name": "Estudio Jurídico García & Asociados",
+  "inLanguage": "es-AR",
+  "publisher": {
+    "@id": "https://garciayasociados.com.ar/#estudio"
+  }
 }
     </script>
     <script type="application/ld+json">
@@ -313,83 +349,6 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
         }
-
-        /* Dropdown Área Clientes */
-        .nav-dropdown {
-            position: relative;
-        }
-        .nav-dropdown-btn {
-            padding: 10px 20px;
-            border: 1.5px solid rgba(212,175,55,0.6);
-            border-radius: 30px;
-            font-size: 0.82rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            font-family: 'Montserrat', sans-serif;
-            white-space: nowrap;
-            background: transparent;
-            color: var(--gold, #D4AF37);
-            letter-spacing: 0.5px;
-        }
-        .nav-dropdown-btn:hover,
-        .nav-dropdown.open .nav-dropdown-btn {
-            background: rgba(212,175,55,0.1);
-            border-color: var(--gold, #D4AF37);
-        }
-        .nav-dropdown-btn svg { transition: transform 0.25s; }
-        .nav-dropdown.open .nav-dropdown-btn svg { transform: rotate(180deg); }
-
-        .nav-dropdown-menu {
-            display: none;
-            position: absolute;
-            top: calc(100% + 10px);
-            right: 0;
-            background: white;
-            border-radius: 14px;
-            box-shadow: 0 20px 50px rgba(10,14,26,0.18);
-            min-width: 220px;
-            overflow: hidden;
-            z-index: 9999;
-            border: 1px solid #E5E7EB;
-        }
-        .nav-dropdown.open .nav-dropdown-menu { display: block; }
-
-        .nav-dropdown-menu a,
-        .nav-dropdown-menu button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 13px 18px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: #131A2B;
-            text-decoration: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            transition: background 0.15s;
-            text-align: left;
-        }
-        .nav-dropdown-menu a:hover,
-        .nav-dropdown-menu button:hover { background: #F9FAFB; color: #05080F; }
-        .nav-dropdown-menu .divider {
-            height: 1px; background: #E5E7EB; margin: 4px 0;
-        }
-        .nav-dropdown-menu .highlight {
-            background: linear-gradient(135deg,#05080F,#131A2B);
-            color: white !important;
-            margin: 8px;
-            border-radius: 8px;
-            padding: 11px 14px !important;
-        }
-        .nav-dropdown-menu .highlight:hover { opacity: .9; background: linear-gradient(135deg,#05080F,#131A2B) !important; }
 
         .hero {
             background: var(--gradient-hero);
@@ -1555,14 +1514,11 @@
                 gap: .4rem;
                 flex-shrink: 1;
                 min-width: 0;
-            }
-            .nav-whatsapp-btn, .nav-dropdown-btn {
+            }.nav-whatsapp-btn {
                 font-size: .74rem;
                 padding: 8px 10px;
                 white-space: nowrap;
             }
-            .nav-dropdown, .nav-dropdown-btn { max-width: 46vw; }
-            .nav-dropdown-btn { overflow: hidden; text-overflow: ellipsis; }
         }
     
         @media (max-width: 768px) {
@@ -1602,8 +1558,7 @@
         @media (min-width: 1001px) and (max-width: 1250px) {
             .nav-container { padding: 1rem 1.25rem; gap: .9rem; }
             .nav-links { gap: .85rem; }
-            .nav-links a { font-size: .82rem; }
-            .nav-whatsapp-btn, .nav-dropdown-btn { font-size: .76rem; padding: 8px 12px; }
+            .nav-links a { font-size: .82rem; }.nav-whatsapp-btn { font-size: .76rem; padding: 8px 12px; }
         }
     
         /* ── NOSOTROS EN PANTALLAS ANGOSTAS ───────────────────────────────
@@ -1615,6 +1570,119 @@
             .about-content, .founder-info, .about-card { padding: 20px; }
             .about-container { padding: 16px; }
         }
+    
+        /* ── CONSULTA DEL EXPEDIENTE EN LA HOME ───────────────────────────
+           Fondo oscuro para que se separe de las secciones que la rodean: es la
+           única parte de la home que no le habla a alguien que todavía no es
+           cliente, y tiene que leerse como otra cosa. */
+        .consulta-exp {
+            background: var(--gradient-primary);
+            padding: 5rem 1.5rem;
+        }
+        .consulta-exp-caja {
+            max-width: 780px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(212, 175, 55, .35);
+            border-radius: 14px;
+            padding: 2.5rem;
+        }
+        .consulta-exp-ojo {
+            display: inline-block;
+            font-size: .75rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: .75rem;
+        }
+        .consulta-exp h2 { color: var(--white); margin: 0 0 .75rem; }
+        .consulta-exp-intro { color: var(--dark-silver); margin: 0 0 1.5rem; line-height: 1.7; }
+        .consulta-exp-form { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+        .consulta-exp-label {
+            flex: 1 0 100%;
+            font-size: .78rem;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--dark-silver);
+        }
+        .consulta-exp-input {
+            flex: 1 1 260px;
+            min-width: 0;                      /* si no, se desborda en pantallas angostas */
+            padding: 15px 18px;
+            font-size: 1.05rem;
+            font-family: inherit;
+            color: var(--white);
+            background: rgba(0, 0, 0, .35);
+            border: 1px solid rgba(255, 255, 255, .18);
+            border-radius: 8px;
+        }
+        .consulta-exp-input::placeholder { color: rgba(255, 255, 255, .38); }
+        .consulta-exp-input:focus {
+            outline: 2px solid var(--gold);
+            outline-offset: 1px;
+            border-color: transparent;
+        }
+        .consulta-exp-boton {
+            flex: 0 0 auto;
+            padding: 15px 30px;
+            font-family: inherit;
+            font-size: .95rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: var(--gold);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background .25s ease;
+        }
+        .consulta-exp-boton:hover { background: var(--gold-light, #F0D678); }
+        .consulta-exp-boton:disabled { opacity: .65; cursor: default; }
+        .consulta-exp-ayuda { font-size: .85rem; color: rgba(255,255,255,.5); margin: .7rem 0 0; }
+        .consulta-exp-legal {
+            font-size: .85rem;
+            color: rgba(255, 255, 255, .5);
+            margin: 1.5rem 0 0;
+            padding-top: 1.25rem;
+            border-top: 1px solid rgba(255, 255, 255, .12);
+        }
+        .consulta-exp-salida { display: none; }
+        .consulta-exp-salida.visible {
+            display: block;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: var(--champagne);
+            color: var(--text);
+        }
+        .consulta-exp-salida.aviso { background: #FEF6E7; }
+        .consulta-exp-salida.cargando { color: rgba(255,255,255,.75); background: rgba(0,0,0,.25); font-style: italic; }
+        /* El resumen llega en texto plano con sus saltos de línea: pre-wrap los respeta
+           sin tener que convertirlos a <br>, que obligaría a insertar HTML. */
+        .consulta-exp-texto { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.75; }
+        .consulta-exp-acciones { margin-top: 1.5rem; }
+
+        /* "Clientes" no es un enlace más del menú: es para gente que ya contrató al
+           estudio. Se marca en dorado, que es el color de la casa. */
+        .nav-links a.destacado {
+            color: var(--gold);
+            border: 1px solid rgba(212, 175, 55, .55);
+            border-radius: 999px;
+            padding: 6px 16px;
+        }
+        .nav-links a.destacado:hover { background: rgba(212, 175, 55, .12); }
+
+        @media (max-width: 620px) {
+            .consulta-exp { padding: 3.5rem 1rem; }
+            .consulta-exp-caja { padding: 1.5rem; }
+            .consulta-exp-boton { width: 100%; }
+        }
+        /* En el menú desplegable del teléfono la píldora quedaría rarísima: ahí los
+           enlaces son filas de ancho completo. Se deja sólo el color. */
+        @media (max-width: 1000px) {
+            .nav-links a.destacado { border: none; border-radius: 0; padding: 15px 18px; }
+        }
     </style>
 </head>
 <body>
@@ -1625,7 +1693,7 @@
             <ul class="nav-links" id="listaNav">
                 <li><a href="/abogado-familia-quilmes/">Familia</a></li>
                 <li><a href="/servicios/">Servicios</a></li>
-                <li><a href="/clientes/">Clientes</a></li>
+                <li><a href="/clientes/" class="destacado">Clientes</a></li>
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#novedades">Novedades</a></li>
                 <li><a href="/preguntas-frecuentes/">Preguntas</a></li>
@@ -1637,26 +1705,7 @@
                     WhatsApp
                 </a>
 
-                <div class="nav-dropdown" id="navDropdown">
-                    <button class="nav-dropdown-btn" onclick="toggleNavDropdown()">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                        Área Clientes
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-                    </button>
-                    <div class="nav-dropdown-menu">
-                        <a href="/pago-clientes.html" class="highlight">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-                            Portal de Pagos
-                        </a>
-                        <div class="divider"></div>
-                        <button onclick="openDniModal(); closeNavDropdown()">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                            Consultar Expediente
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                
     </nav>
 
     <div class="floating-action-button" id="fab-container">
@@ -1764,7 +1813,8 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
                     </div>
                     <h3>Derecho de Familia</h3>
                     <ul>
-                    <li><a href="/violencia-familiar-quilmes/" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(212,175,55,.5);">Violencia Familiar - Medidas de protección</a></li>
+                    <li><a href="/violencia-familiar-quilmes/" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(212,175,55,.5);">Violencia Familiar - Medidas de protección</a>
+                    <a href="/servicios/derecho-de-familia/" class="service-link" style="display:inline-block;margin-top:12px;font-size:.82rem;letter-spacing:.3px;color:#D4AF37;text-decoration:none;border-bottom:1px solid rgba(212,175,55,.45);padding-bottom:2px;">Ver alimentos, divorcio y cuidado personal →</a></li>
                     <li><a href="/regimen-comunicacion-quilmes/" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(212,175,55,.5);">Régimen de Comunicación</a> y <a href="/cuidado-personal-quilmes/" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(212,175,55,.5);">Cuidado Personal</a></li>
                     <li><a href="/abogado-alimentos-quilmes/" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(212,175,55,.5);">Alimentos - Fijación, aumento y reducción</a></li>
                     <li><a href="/abogado-divorcio-quilmes/" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(212,175,55,.5);">Divorcios Unilaterales y de Común Acuerdo</a></li>
@@ -1924,6 +1974,28 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
         </div>
     </section>
 
+
+    <!-- CONSULTA DEL EXPEDIENTE
+         Antes esto vivía detrás del botón dorado "Área Clientes": desplegable, modal,
+         tres clics. Ahora está a la vista, que es lo que un cliente entra a buscar.
+         Es la misma consulta que hay en /clientes/, contra el worker del estudio. -->
+    <section class="consulta-exp" id="consultar">
+        <div class="consulta-exp-caja">
+            <span class="consulta-exp-ojo">Ya soy cliente del estudio</span>
+            <h2>Consultar mi expediente</h2>
+            <p class="consulta-exp-intro">Ingrese su número de documento, sin puntos. Justina, la asistente del estudio, arma el resumen de sus causas con lo que la Dra. García dejó anotado.</p>
+            <form class="consulta-exp-form" onsubmit="consultarExpediente(event)">
+                <label class="consulta-exp-label" for="dniHome">Número de documento</label>
+                <input class="consulta-exp-input" id="dniHome" type="text" inputmode="numeric"
+                       autocomplete="off" placeholder="Por ejemplo 28456789">
+                <button class="consulta-exp-boton" type="submit" id="btnConsultarHome">Consultar</button>
+            </form>
+            <p class="consulta-exp-ayuda">Sin puntos ni espacios. Sólo los números.</p>
+            <div class="consulta-exp-salida" id="salidaHome" role="status" aria-live="polite"></div>
+            <p class="consulta-exp-legal">Este resumen es informativo y no reemplaza una consulta. Ante cualquier duda sobre su caso, escríbanos.</p>
+        </div>
+    </section>
+
     <section class="contact" id="contacto">
         <div class="contact-container">
             <h2>Contacto</h2>
@@ -2028,32 +2100,7 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
         Dra. Camila Florencia García - Letrada patrocinante
     </p>
 </footer>
-    </footer>
 
-
-    <div id="dniModal" class="modal">
-        <div class="modal-content">
-            <h3>🔍 Consulta de Expediente Online</h3>
-            <p style="color: #666; margin-bottom: 2rem;">Ingrese su DNI (sin puntos) para ver el estado de su expediente.</p>
-            <input type="text" id="dniInput" placeholder="Su número de DNI" onkeypress="if(event.key==='Enter') consultarExpediente()">
-            <div id="dniErrorMessage" class="error-message">Por favor, ingrese un DNI válido.</div>
-            <div class="modal-buttons">
-                <button class="modal-btn modal-btn-secondary" onclick="closeModal('dniModal')">Cancelar</button>
-                <button class="modal-btn modal-btn-primary" onclick="consultarExpediente()">Consultar</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="expedienteModal" class="modal">
-        <div class="modal-content" style="max-width: 700px; text-align: left;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h3 style="margin-bottom: 0;">📄 Resumen de Actuaciones</h3>
-                <span onclick="closeModal('expedienteModal')" style="cursor: pointer; font-size: 2.5rem; color: #aaa; font-weight: 300; line-height: 1;">×</span>
-            </div>
-            <div id="expedienteContent" style="white-space: pre-wrap; line-height: 1.7; max-height: 60vh; overflow-y: auto; background: #f9f9f9; padding: 1.5rem; border-radius: 10px; border: 1px solid #eee; color: #333;">
-                </div>
-        </div>
-    </div>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -2122,18 +2169,6 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
             return false;
         }
 
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) modal.style.display = 'none';
-        }
-
-        window.onclick = function(event) {
-            const dniModal = document.getElementById('dniModal');
-            const expedienteModal = document.getElementById('expedienteModal');
-            if (event.target == dniModal) closeModal('dniModal');
-            if (event.target == expedienteModal) closeModal('expedienteModal');
-        }
-
         // --- ACCESO INTERNO → PORTAL (el login real se pide en el portal) ---
         const PORTAL_URL = 'https://garciayasociadosjus-boop.github.io/';
 
@@ -2144,71 +2179,7 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
             window.open(PORTAL_URL, '_blank');
         }
 
-        // --- LÓGICA PARA EXPEDIENTE ONLINE (DNI) ---
-        function openDniModal() {
-            const fabContainer = document.getElementById('fab-container');
-            if (fabContainer) fabContainer.classList.remove('open');
-            const modal = document.getElementById('dniModal');
-            modal.style.display = 'flex';
-            const input = document.getElementById('dniInput');
-            const error = document.getElementById('dniErrorMessage');
-            input.value = '';
-            if(error) error.style.display = 'none';
-            input.focus();
-        }
-
-        function consultarExpediente() {
-            const dniInput = document.getElementById('dniInput');
-            // Sacar puntos, espacios y cualquier caracter que no sea número,
-            // así "29.318.482" o "29 318 482" también funcionan (antes se rechazaban).
-            const dni = dniInput.value.replace(/\D/g, '');
-            const error = document.getElementById('dniErrorMessage');
-
-            const API_URL = 'https://garcia-ia.garciayasociadosjus.workers.dev/api/consulta-expediente';
-
-            if (!dni || isNaN(dni)) {
-                if(error) error.style.display = 'block';
-                setTimeout(() => { if(error) error.style.display = 'none'; }, 3000);
-                return;
-            }
-
-            closeModal('dniModal');
-            const resultadoModal = document.getElementById('expedienteModal');
-            const contenido = document.getElementById('expedienteContent');
-
-            if(resultadoModal) resultadoModal.style.display = 'flex';
-            if(contenido) contenido.innerHTML = '<p style="text-align: center;">Buscando y procesando su información... 🤖<br>Esto puede tardar unos segundos.</p>';
-
-            fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ dni: dni }),
-            })
-            .then(response => {
-                if (!response.ok) { throw new Error('Respuesta no válida del servidor.'); }
-                return response.text();
-            })
-            .then(data => {
-                const whatsappLink = `https://wa.me/5491168063444?text=Hola%2C%20acabo%20de%20revisar%20mi%20expediente%20online%20y%20tengo%20una%20consulta.`;
-                const justinaLink = `https://gemini.google.com/gem/18ab3383dcdf`;
-
-                if(contenido) {
-                    const textoFormateado = data.replace(/\n/g, '<br>');
-
-                    contenido.innerHTML = `
-                    <div style="padding-bottom: 1.5rem;">${textoFormateado}</div>
-                    <div style="border-top: 1px solid #eee; margin-top: 1rem; padding-top: 1.5rem; text-align: center; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
-                    <a href="${justinaLink}" target="_blank" class="modal-btn modal-btn-secondary" style="text-decoration: none;">🤖 Consultar a JUSTINA IA</a>
-                    <a href="${whatsappLink}" target="_blank" class="modal-btn modal-btn-primary" style="text-decoration: none;">💬 Contactar al Estudio</a>
-                    </div>
-                    `;
-                }
-            })
-            .catch((error) => {
-                console.error('Error en la consulta:', error);
-                if(contenido) contenido.innerHTML = '<p style="color: red; text-align: center;"><strong>Ocurrió un error.</strong><br>No se pudo obtener la información. Por favor, intente más tarde o contacte al estudio para verificar sus datos.</p>';
-            });
-        }
+        
 
 
         // --- LÓGICA PARA BOTÓN FLOTANTE (FAB) ---
@@ -2229,18 +2200,6 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
             });
         }
 
-        // Dropdown Área Clientes
-        function toggleNavDropdown() {
-            document.getElementById('navDropdown').classList.toggle('open');
-        }
-        function closeNavDropdown() {
-            document.getElementById('navDropdown').classList.remove('open');
-        }
-        // Cerrar dropdown al hacer click fuera
-        document.addEventListener('click', function(e) {
-            const dd = document.getElementById('navDropdown');
-            if (dd && !dd.contains(e.target)) dd.classList.remove('open');
-        });
     </script>
 
     <script>
@@ -2264,5 +2223,79 @@ Ha escrito diversos libros, entre ellos "La problemática del embarazo y el part
             });
         });
     </script>
-</body>
+
+    <script>
+    // El expediente lo arma el worker del estudio: lee las notas de la causa y se las
+    // hace explicar a Justina. Acá sólo se manda el documento y se muestra lo que vuelve.
+    //
+    // La respuesta viene en texto plano, no en HTML. Se inserta con textContent y NO con
+    // innerHTML: aunque una nota de la causa trajera un signo raro, se ve como texto y no
+    // se ejecuta. Antes esto usaba innerHTML con un replace de saltos de línea.
+    (function () {
+        var API = 'https://garcia-ia.garciayasociadosjus.workers.dev/api/consulta-expediente';
+        var WA  = 'https://wa.me/5491168063444?text=Hola%2C%20consult%C3%A9%20mi%20expediente%20en%20la%20web%20y%20tengo%20una%20duda.';
+
+        window.consultarExpediente = function (ev) {
+            if (ev) ev.preventDefault();
+            var campo  = document.getElementById('dniHome');
+            var salida = document.getElementById('salidaHome');
+            var boton  = document.getElementById('btnConsultarHome');
+            var dni    = (campo.value || '').replace(/\D/g, '');
+
+            if (dni.length < 7 || dni.length > 8) {
+                mostrar(salida, 'aviso', 'Revise el número: un documento tiene 7 u 8 cifras. Escríbalo sin puntos.', false);
+                campo.focus();
+                return;
+            }
+
+            boton.disabled = true;
+            boton.textContent = 'Buscando…';
+            // Se avisa que puede tardar: son varios segundos reales, y sin aviso la
+            // pantalla quieta parece rota y la gente vuelve a tocar el botón.
+            mostrar(salida, 'cargando', 'Buscando sus expedientes y armando el resumen. Puede demorar unos segundos.');
+
+            fetch(API, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ dni: dni })
+            })
+            .then(function (r) { return r.text().then(function (t) { return { ok: r.ok, estado: r.status, texto: t }; }); })
+            .then(function (r) {
+                if (!r.ok && r.estado !== 429) throw new Error(r.texto || 'sin respuesta');
+                mostrar(salida, r.ok ? 'ok' : 'aviso', r.texto);
+            })
+            .catch(function () {
+                mostrar(salida, 'aviso', 'No pudimos consultar en este momento. Intente de nuevo en unos minutos, o escríbanos por WhatsApp.');
+            })
+            .then(function () {
+                boton.disabled = false;
+                boton.textContent = 'Consultar';
+            });
+        };
+
+        function mostrar(donde, tipo, texto, conAccion) {
+            donde.className = 'consulta-exp-salida visible ' + tipo;
+            donde.textContent = '';
+
+            var cuerpo = document.createElement('div');
+            cuerpo.className = 'consulta-exp-texto';
+            cuerpo.textContent = texto;          // texto, nunca HTML
+            donde.appendChild(cuerpo);
+
+            // El botón de WhatsApp sale cuando contestó el servidor. En un error de tecleo
+            // no corresponde: hay que corregir el número, no escribirle a nadie.
+            if (tipo === 'cargando' || conAccion === false) return;
+
+            var pie = document.createElement('div');
+            pie.className = 'consulta-exp-acciones';
+            var wa = document.createElement('a');
+            wa.className = 'consulta-exp-boton';
+            wa.href = WA; wa.target = '_blank'; wa.rel = 'noopener';
+            wa.textContent = 'Tengo una duda sobre esto';
+            pie.appendChild(wa);
+            donde.appendChild(pie);
+        }
+    })();
+    </script>
+    </body>
 </html>
