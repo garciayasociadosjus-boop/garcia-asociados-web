@@ -171,7 +171,7 @@
       "name": "¿Cómo accedo a mi expediente?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "El estudio le envía el enlace de acceso cuando se inicia la causa. No es una página pública ni aparece en buscadores: se entra por ese enlace, y ahí figuran los movimientos del juzgado y la documentación de su caso."
+        "text": "Desde la sección Consultar mi expediente de esta misma página, con su número de documento y sin puntos. Ahí aparece el resumen de sus causas con los movimientos que el estudio fue registrando. Si no aparece nada, escríbanos por WhatsApp y lo revisamos."
       }
     },
     {
@@ -211,7 +211,7 @@
       "name": "¿Mis datos están protegidos?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Las páginas de clientes no son públicas ni están indexadas en buscadores: se accede sólo por el enlace que envía el estudio. La información de las causas de familia es sensible y se trata como tal."
+        "text": "La consulta del expediente muestra únicamente lo que el estudio anotó para informarle a usted: las notas internas de trabajo no salen de la oficina. Las páginas de documentación, pagos y firma no están indexadas y se accede por el enlace que envía el estudio. La información de las causas de familia es sensible y se trata como tal."
       }
     }
   ]
@@ -243,9 +243,25 @@
                 El estudio sincroniza las novedades de los organismos judiciales de manera automática varias veces por día, de modo que lo que figura allí está al día y ninguna notificación queda esperando a que alguien la mire.</p>
             </div>
 
+
+            <section id="consultar" class="consulta">
+                <h2>Consultar mi expediente</h2>
+                <p class="consulta-intro">Ingrese su número de documento, sin puntos. Justina, la asistente del estudio, arma el resumen de sus causas con lo que la Dra. García dejó anotado.</p>
+                <form class="consulta-form" onsubmit="consultarExpediente(event)">
+                    <label class="consulta-label" for="dni">Número de documento</label>
+                    <input class="consulta-input" id="dni" name="dni" type="text"
+                           inputmode="numeric" autocomplete="off"
+                           placeholder="Por ejemplo 28456789" aria-describedby="consulta-ayuda">
+                    <button class="boton" type="submit" id="btnConsultar">Consultar</button>
+                </form>
+                <p class="consulta-ayuda" id="consulta-ayuda">Sin puntos ni espacios. Sólo los números.</p>
+                <div class="consulta-salida" id="salida" role="status" aria-live="polite"></div>
+                <p class="consulta-legal">Este resumen es informativo y no reemplaza una consulta. Ante cualquier duda sobre su caso, escríbanos.</p>
+            </section>
+
             <h2>Qué puede hacer desde acá</h2>
             <div class="tarjetas">
-                <a class="tarjeta" href="https://garciayasociados.com.ar/expediente.html">
+                <a class="tarjeta" href="#consultar">
                     <h3>Consultar el expediente</h3>
                     <p>Los movimientos del juzgado y los documentos de su causa, actualizados varias veces por día.</p>
                 </a>
@@ -264,7 +280,7 @@
             </div>
 
             <div class="dato">
-                <strong>Estas páginas no son públicas.</strong> No aparecen en buscadores y se accede por el enlace que le envía el estudio. Si todavía no lo tiene, pídalo por WhatsApp.
+                <strong>Su expediente se consulta con su número de documento.</strong> El resto de las páginas de clientes —documentación, pagos y firma— no aparecen en buscadores y se accede por el enlace que le envía el estudio. Si no lo tiene, pídalo por WhatsApp.
             </div>
 
             <h2>Cómo funciona el seguimiento</h2>
@@ -279,7 +295,7 @@
         <div class="faq">
             <details>
                 <summary>¿Cómo accedo a mi expediente?</summary>
-                <p>El estudio le envía el enlace de acceso cuando se inicia la causa. No es una página pública ni aparece en buscadores: se entra por ese enlace, y ahí figuran los movimientos del juzgado y la documentación de su caso.</p>
+                <p>Desde la sección Consultar mi expediente de esta misma página, con su número de documento y sin puntos. Ahí aparece el resumen de sus causas con los movimientos que el estudio fue registrando. Si no aparece nada, escríbanos por WhatsApp y lo revisamos.</p>
             </details>
             <details>
                 <summary>¿Cada cuánto se actualiza?</summary>
@@ -299,7 +315,7 @@
             </details>
             <details>
                 <summary>¿Mis datos están protegidos?</summary>
-                <p>Las páginas de clientes no son públicas ni están indexadas en buscadores: se accede sólo por el enlace que envía el estudio. La información de las causas de familia es sensible y se trata como tal.</p>
+                <p>La consulta del expediente muestra únicamente lo que el estudio anotó para informarle a usted: las notas internas de trabajo no salen de la oficina. Las páginas de documentación, pagos y firma no están indexadas y se accede por el enlace que envía el estudio. La información de las causas de familia es sensible y se trata como tal.</p>
             </details>
         </div>
 
@@ -320,6 +336,83 @@
             <p class="revisado">Última revisión: 2026-08-21</p>
         </div>
     </main>
+
+    <script>
+    // El expediente lo arma el worker del estudio, que lee las notas de la causa y se
+    // las hace explicar a Justina. Todo el trabajo pasa allá: acá sólo se manda el
+    // documento y se muestra lo que vuelve.
+    //
+    // La respuesta viene en texto plano, no en HTML. Se inserta con textContent y NO con
+    // innerHTML: así, aunque una nota de la causa tuviera un signo raro, se ve como
+    // texto y no se ejecuta como código.
+    var API = 'https://garcia-ia.garciayasociadosjus.workers.dev/api/consulta-expediente';
+    var WA  = 'https://wa.me/5491168063444?text=Hola%2C%20consult%C3%A9%20mi%20expediente%20en%20la%20web%20y%20tengo%20una%20duda.';
+
+    function consultarExpediente(ev) {
+        if (ev) ev.preventDefault();
+        var campo  = document.getElementById('dni');
+        var salida = document.getElementById('salida');
+        var boton  = document.getElementById('btnConsultar');
+        var dni    = (campo.value || '').replace(/\D/g, '');
+
+        if (dni.length < 7 || dni.length > 8) {
+            mostrar(salida, 'aviso', 'Revise el número: un documento tiene 7 u 8 cifras. Escríbalo sin puntos.', false);
+            campo.focus();
+            return;
+        }
+
+        boton.disabled = true;
+        boton.textContent = 'Buscando…';
+        // Se avisa que puede tardar: son varios segundos reales, y sin aviso la
+        // pantalla quieta parece rota y la gente toca el botón de nuevo.
+        mostrar(salida, 'cargando', 'Buscando sus expedientes y armando el resumen. Puede demorar unos segundos.');
+
+        fetch(API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ dni: dni })
+        })
+        .then(function (r) { return r.text().then(function (t) { return { ok: r.ok, estado: r.status, texto: t }; }); })
+        .then(function (r) {
+            if (!r.ok && r.estado !== 429) throw new Error(r.texto || 'sin respuesta');
+            mostrar(salida, r.ok ? 'ok' : 'aviso', r.texto);
+        })
+        .catch(function () {
+            mostrar(salida, 'aviso', 'No pudimos consultar en este momento. Intente de nuevo en unos minutos, o escríbanos por WhatsApp.');
+        })
+        .then(function () {
+            boton.disabled = false;
+            boton.textContent = 'Consultar';
+        });
+    }
+
+    function mostrar(donde, tipo, texto, conAccion) {
+        donde.className = 'consulta-salida visible ' + tipo;
+        donde.textContent = '';
+
+        var cuerpo = document.createElement('div');
+        cuerpo.className = 'consulta-texto';
+        cuerpo.textContent = texto;          // texto, nunca HTML
+        donde.appendChild(cuerpo);
+
+        // El botón de WhatsApp sale cuando contestó el servidor. En un error de tecleo
+        // no corresponde: la persona tiene que corregir el número, no escribirle a nadie.
+        if (tipo === 'cargando' || conAccion === false) return;
+
+        var pie = document.createElement('div');
+        pie.className = 'consulta-acciones';
+        var wa = document.createElement('a');
+        wa.className = 'boton';
+        wa.href = WA;
+        wa.target = '_blank';
+        wa.rel = 'noopener';
+        wa.textContent = 'Tengo una duda sobre esto';
+        pie.appendChild(wa);
+        donde.appendChild(pie);
+
+        donde.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    </script>
     <footer>
         <div class="contenedor">
             <div class="pie-grilla">
