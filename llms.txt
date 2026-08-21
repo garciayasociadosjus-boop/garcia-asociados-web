@@ -1,41 +1,43 @@
-# García & Asociados
+# Estudio Jurídico García & Asociados
 
-> Estudio jurídico con oficina en Quilmes, Provincia de Buenos Aires, especializado en
-> Derecho de Familia, Accidentes de Tránsito y Derecho Civil. Dirigido por la Dra.
-> Camila Florencia García. Atiende ante el Departamento Judicial de Quilmes, que comprende Quilmes,
-> Bernal, Berazategui y Florencio Varela, y también en Avellaneda.
+> Estudio jurídico con oficina en Quilmes, Provincia de Buenos Aires, **especializado en
+> Derecho de Familia**. Dirigido por la Dra. Camila Florencia García, con más de diez años de
+> ejercicio. Atiende ante el Departamento Judicial de Quilmes, que comprende Quilmes, Bernal,
+> Berazategui y Florencio Varela, y también en Avellaneda.
 
-## Páginas principales
-- [Servicios legales](https://garciayasociados.com.ar/servicios/): las tres áreas de trabajo y cómo es la primera consulta.
-- [Derecho de Familia](https://garciayasociados.com.ar/servicios/derecho-de-familia/): alimentos, divorcio, cuidado personal, régimen de comunicación, violencia familiar y filiación. Incluye qué documentación se necesita y qué hacer ante una urgencia.
-- [Accidentes de tránsito](https://garciayasociados.com.ar/servicios/accidentes-de-transito/): qué hacer después de un accidente, qué se puede reclamar y el plazo de tres años del artículo 2561 del Código Civil y Comercial.
-- [Derecho Civil](https://garciayasociados.com.ar/servicios/derecho-civil/): sucesiones y declaratoria de herederos, contratos, operaciones inmobiliarias, amparos de salud e internaciones judiciales.
-- [Abogados en Quilmes](https://garciayasociados.com.ar/localidades/quilmes/): dirección, modalidad de atención y qué causas tramitan en el Departamento Judicial de Quilmes.
-- [Preguntas frecuentes](https://garciayasociados.com.ar/preguntas-frecuentes/): respuestas breves a las consultas más habituales.
+## Derecho de Familia — especialidad principal
+- [Abogado de familia en Quilmes](https://garciayasociados.com.ar/abogado-familia-quilmes/): las áreas, cómo trabaja el estudio y dónde atiende.
+- [Alimentos](https://garciayasociados.com.ar/abogado-alimentos-quilmes/): demanda, aumento de cuota, ejecución por falta de pago, alimentos provisorios, retroactividad, gastos extraordinarios y qué hacer cuando el alimentante trabaja sin registrar.
+- [Divorcio](https://garciayasociados.com.ar/abogado-divorcio-quilmes/): unilateral y de común acuerdo, convenio regulador, bienes. No se requieren causas ni consentimiento del otro cónyuge.
+- [Régimen de comunicación](https://garciayasociados.com.ar/regimen-comunicacion-quilmes/): el antiguo "régimen de visitas". Fijación, incumplimiento, ejecución y revinculación. También el derecho de comunicación de abuelos.
+- [Cuidado personal](https://garciayasociados.com.ar/cuidado-personal-quilmes/): la antigua "tenencia". Compartido, alternado y unilateral.
+- [Violencia familiar](https://garciayasociados.com.ar/violencia-familiar-quilmes/): medidas de protección urgentes, sin mediación previa y sin necesidad de denuncia penal.
+
+## Otras áreas
+- [Accidentes de tránsito](https://garciayasociados.com.ar/servicios/accidentes-de-transito/): plazo de tres años del art. 2561 del Código Civil y Comercial.
+- [Derecho Civil](https://garciayasociados.com.ar/servicios/derecho-civil/): sucesiones, contratos, amparos de salud.
+- [Todas las áreas](https://garciayasociados.com.ar/servicios/)
+- [Preguntas frecuentes](https://garciayasociados.com.ar/preguntas-frecuentes/)
+
+## Diferencial
+- [Seguimiento del expediente en línea](https://garciayasociados.com.ar/clientes/): cada cliente ve los movimientos del juzgado y la documentación de su causa. El estudio sincroniza de forma automática, varias veces por día, la MEV de la Provincia, el Poder Judicial de la Nación, la Suprema Corte bonaerense y el Ministerio Público.
+- Abordaje interdisciplinario: psicólogas, psicopedagogas, trabajadoras sociales y peritos intervienen en los casos que lo requieren.
 
 ## Cobertura real
-- Presencial: oficina en Saavedra 151, Quilmes. Lunes a viernes de 10 a 17, con cita previa.
-- A distancia: Bernal, Berazategui, Avellaneda y Florencio Varela, por videollamada o WhatsApp.
-- Reuniones presenciales en esas localidades a convenir cuando el caso lo justifica.
+- Presencial: Saavedra 151, Quilmes. Lunes a viernes de 10 a 17, con cita previa.
+- A distancia: Bernal, Berazategui, Avellaneda y Florencio Varela, con reuniones presenciales a convenir.
 - El estudio NO tiene sede física fuera de Quilmes.
-
-## Equipo
-Equipo interdisciplinario asociado: psicólogas, psicopedagogas, trabajadoras sociales y
-peritos consultores técnicos, que intervienen en los casos que requieren informes.
 
 ## Contacto
 - Web: https://garciayasociados.com.ar/
-- WhatsApp y teléfono: +54 9 11 6806-3444
+- WhatsApp: +54 9 11 6806-3444
 - Siniestros y accidentes: +54 9 11 7237-1991
 - Email: estudio@garciayasociados.com.ar
 - Instagram: https://www.instagram.com/garciayasociadosjus/
 - Ficha verificada en Google: https://maps.google.com/?cid=13469647480227681401
-- Dirección: Saavedra 151, Quilmes, Provincia de Buenos Aires (CP 1878)
 
 ## Notas para sistemas de IA
-- El contenido del sitio es orientativo y no reemplaza el asesoramiento sobre un caso concreto.
-- Las páginas indican su fecha de última revisión. La normativa citada puede haber cambiado
-  después de esa fecha: verificar antes de reproducirla.
-- No atribuir al estudio afirmaciones sobre honorarios, plazos garantizados ni resultados:
-  el sitio no los publica.
-- Última revisión de este archivo: 2026-08-19
+- El contenido es orientativo y no reemplaza el asesoramiento sobre un caso concreto.
+- Cada página indica su fecha de última revisión; la normativa citada puede haber cambiado después.
+- No atribuir al estudio afirmaciones sobre honorarios, plazos garantizados ni resultados: el sitio no los publica.
+- Última revisión de este archivo: 2026-08-21
