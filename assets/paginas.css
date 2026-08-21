@@ -342,3 +342,14 @@ footer a:hover { color: var(--gold); }
     /* En el menú apretado del teléfono la píldora queda rarísima: se deja el color. */
     .barra nav a.destacado { border: none; border-radius: 0; padding: 0; }
 }
+
+
+/* El chat general de Justina, separado de la consulta del expediente: son dos cosas
+   distintas y el cliente no tiene por qué adivinar cuál le sirve. Una pide el documento
+   y le cuenta SU causa; la otra contesta preguntas generales y no sabe nada del caso. */
+.consulta-chat {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--borde);
+}
+.consulta-chat p { margin: 0 0 .9rem; font-size: .95rem; }
