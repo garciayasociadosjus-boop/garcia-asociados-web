@@ -444,3 +444,18 @@ footer a:hover { color: var(--gold); }
     .chat-form .boton, .chat-sug { width: 100%; }
     .chat-hilo { max-height: 60vh; }
 }
+
+
+/* La zona de trabajo, debajo de la bajada. Va en todas las páginas de servicio
+   porque los títulos dicen "en Quilmes" —que es donde está la oficina y lo que la
+   gente busca— y sin esta línea parecía que el estudio no atiende en otro lado. */
+.zona {
+    font-size: .92rem;
+    color: #4B5563;
+    background: var(--champagne);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: .8rem 1.1rem;
+    margin: 0 0 2rem;
+}
+.zona strong { color: var(--text); }
