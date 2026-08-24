@@ -101,6 +101,8 @@ input.falta{border-color:var(--err);background:#fdf6f4}
   border-radius:9px;padding:12px;cursor:pointer;font-size:.9rem}
 .opcion input{width:18px;height:18px;accent-color:var(--gold)}
 .opcion.sel{border-color:var(--gold);background:#fffdf8}
+    /* La pregunta obligatoria, sin contestar. */
+    .bloque.falta{border-color:#d94f4f;box-shadow:0 0 0 3px rgba(217,79,79,.12)}
 
 .fotos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px}
 .fotos.una{grid-template-columns:1fr}
@@ -302,7 +304,7 @@ const MATERIAS = [
   { id:'violencia',   nom:'Violencia familiar',         otraParte:'Datos del denunciado',
     bloques:['violencia','hijos'] },
   { id:'cese',        nom:'Cese de cuota alimentaria',  otraParte:'Datos de la otra parte',
-    bloques:['expediente','hijos'] },
+    bloques:['hijos'] },
   { id:'siniestro',   nom:'Siniestro automotor',        otraParte:'',
     bloques:['siniestro'], sinDemandado:true },
   { id:'otros',       nom:'Otros',                      otraParte:'Datos de la otra parte',
@@ -365,6 +367,20 @@ const domicilio = (pre, conEntreCalles) =>
   dosCampos(campo(pre + '_localidad', 'Localidad'), campo(pre + '_partido', 'Partido')) +
   campo(pre + '_provincia', 'Provincia', { val: 'Buenos Aires' });
 
+// Los datos del expediente sólo aparecen si dijo que sí. Preguntarle el número de
+// una causa a alguien que todavía no tiene ninguna es la clase de cosa que hace
+// abandonar un formulario a la mitad.
+function verExpediente() {
+  const sel = document.querySelector('input[name=tieneExpediente]:checked');
+  const caja = document.getElementById('datosExpediente');
+  if (caja) caja.style.display = (sel && sel.value === 'si') ? 'block' : 'none';
+  document.querySelectorAll('#bloqueExpediente .opcion').forEach(o => {
+    o.classList.toggle('sel', !!o.querySelector('input:checked'));
+  });
+  const bl = document.getElementById('bloqueExpediente');
+  if (bl && sel) bl.classList.remove('falta');
+}
+
 // ── Armado del paso 2 ─────────────────────────────────────────────────────────
 function armarPaso2() {
   document.getElementById('tituloMateria').textContent = materiaSel.nom;
@@ -380,6 +396,28 @@ function armarPaso2() {
       dosCampos(campo('c_tel', 'Teléfono', { tipo: 'tel' }), campo('c_mail', 'Mail', { tipo: 'email' })) +
       domicilio('c') +
     '</div></div>';
+
+  // ── ¿Ya hay expediente? ──
+  // Obligatoria en todas las materias menos siniestros. Cambia todo lo que sigue:
+  // no es lo mismo iniciar una causa que meterse en una que ya tramita, con plazos
+  // corriendo y actos ya cumplidos. Preguntarlo después, por teléfono, es tarde.
+  if (materiaSel.id !== 'siniestro') {
+    h += '<div class="bloque" id="bloqueExpediente"><h3>¿Ya tiene un expediente iniciado?</h3>' +
+      '<div class="nota">Es decir: ¿ya hay una causa en el juzgado por este tema, iniciada por usted o por la otra parte?</div>' +
+      '<div class="opciones">' +
+        '<label class="opcion"><input type="radio" name="tieneExpediente" value="si" onchange="verExpediente()"> Sí, ya hay una causa iniciada</label>' +
+        '<label class="opcion"><input type="radio" name="tieneExpediente" value="no" onchange="verExpediente()"> No, todavía no hay nada</label>' +
+        '<label class="opcion"><input type="radio" name="tieneExpediente" value="nose" onchange="verExpediente()"> No estoy seguro</label>' +
+      '</div>' +
+      '<div id="datosExpediente" style="display:none;margin-top:14px">' +
+        '<div class="nota">Si tiene el expediente a mano, estos datos aceleran mucho el trámite. Si no los tiene, complete lo que sepa.</div>' +
+        '<div class="campos">' +
+          campo('x_expediente', 'Número de expediente') +
+          campo('x_juzgado', 'Juzgado donde tramita', { ph: 'Ej: Juzgado de Familia N° 3 de Quilmes' }) +
+          campo('x_caratula', 'Carátula', { ph: 'Ej: PEREZ c/ GOMEZ s/ ALIMENTOS' }) +
+        '</div>' +
+      '</div></div>';
+  }
 
   // ── Otra parte ──
   if (materiaSel.otraParte) {
@@ -721,21 +759,41 @@ function revisar() {
   // Lo minimo para poder llamarlo. Frenarlo por un dato que no tiene a mano solo
   // logra que abandone el formulario a la mitad.
   const faltan = [];
+  let faltaExpediente = false;
   [['c_nombre', 'su nombre'], ['c_dni', 'su DNI'], ['c_tel', 'un teléfono']].forEach(([id, txt]) => {
     const el = document.getElementById(id);
     if (!val(id)) { faltan.push(txt); if (el) el.classList.add('falta'); }
     else if (el) el.classList.remove('falta');
   });
+  // Si ya hay expediente o no es lo único que se exige además de los datos de
+  // contacto: sin eso el estudio no sabe si está abriendo una causa o entrando a
+  // una que ya corre, con plazos andando.
+  if (materiaSel.id !== 'siniestro' &&
+      !document.querySelector('input[name=tieneExpediente]:checked')) {
+    faltaExpediente = true;
+    const bl = document.getElementById('bloqueExpediente');
+    if (bl) bl.classList.add('falta');
+  }
+
   // Para siniestros el mail no es opcional: por ahi va la carta de patrocinio.
   if (materiaSel.id === 'siniestro' && !val('c_mail')) {
     faltan.push('su mail');
     const el = document.getElementById('c_mail'); if (el) el.classList.add('falta');
   }
   const err = document.getElementById('errorPaso2');
-  if (faltan.length) {
-    err.textContent = 'Nos falta ' + faltan.join(', ') + ' para poder contactarlo.';
+  if (faltan.length || faltaExpediente) {
+    // Dos avisos distintos, porque son dos cosas distintas: los datos de contacto
+    // son para poder llamarlo; lo del expediente es para saber qué caso es.
+    const partes = [];
+    if (faltan.length) partes.push('Nos falta ' + faltan.join(', ') + ' para poder contactarlo.');
+    if (faltaExpediente) partes.push((faltan.length ? 'Y necesitamos' : 'Necesitamos')
+                                     + ' saber si ya hay un expediente iniciado.');
+    err.textContent = partes.join(' ');
     err.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Al bloque que falta, no al principio: si lo mando arriba, no ve cuál era.
+    const bl = faltaExpediente && !faltan.length ? document.getElementById('bloqueExpediente') : null;
+    if (bl) bl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
     return;
   }
   err.style.display = 'none';
@@ -751,7 +809,10 @@ function armarResumen() {
   h += li('Domicilio', [val('c_calle'), val('c_numero'), val('c_localidad'), val('c_partido'), val('c_provincia')].filter(Boolean).join(', '));
   if (val('d_nombre')) h += '<div style="margin-top:9px;font-weight:600">' + materiaSel.otraParte + '</div>' + li('Nombre', val('d_nombre')) + li('DNI', val('d_dni'));
   if (val('e_nombre')) h += '<div style="margin-top:9px;font-weight:600">Empleador</div>' + li('Razón social', val('e_nombre'));
-  if (val('x_expediente') || val('x_juzgado')) h += '<div style="margin-top:9px;font-weight:600">Causa</div>' + li('Expediente', val('x_expediente')) + li('Juzgado', val('x_juzgado'));
+  const _exp = (document.querySelector('input[name=tieneExpediente]:checked') || {}).value;
+  if (_exp) h += '<div style="margin-top:9px;font-weight:600">Causa</div>' +
+    li('¿Expediente iniciado?', { si: 'Sí, ya hay una causa', no: 'No, todavía no', nose: 'No está seguro' }[_exp]);
+  if (val('x_expediente') || val('x_juzgado')) h += '' + li('Expediente', val('x_expediente')) + li('Juzgado', val('x_juzgado'));
   if (val('s_dominio')) h += '<div style="margin-top:9px;font-weight:600">Vehículo</div>' + li('Dominio', val('s_dominio')) + li('Marca', val('s_marca'));
   const hs = [];
   for (let i = 1; i <= nHijos; i++) {
@@ -810,7 +871,7 @@ async function enviar() {
         localidad: val('d_localidad'), partido: val('d_partido'), provincia: val('d_provincia') } },
     empleador: { nombre: val('e_nombre'), calle: val('e_calle'), numero: val('e_numero'),
       localidad: val('e_localidad'), partido: val('e_partido'), provincia: val('e_provincia') },
-    causa: { expediente: val('x_expediente'), juzgado: val('x_juzgado'), caratula: val('x_caratula') },
+    causa: { iniciado: (document.querySelector('input[name=tieneExpediente]:checked') || {}).value || '', expediente: val('x_expediente'), juzgado: val('x_juzgado'), caratula: val('x_caratula') },
     matrimonio: { fecha: val('m_fecha'), lugar: val('m_lugar'), registro: val('m_registro') },
     bienes: { hay: chk('tieneBienes'), detalle: val('b_detalle') },
     violencia: { dependencia: val('v_dependencia'), fecha: val('v_fecha'), causa: val('v_causa') },
