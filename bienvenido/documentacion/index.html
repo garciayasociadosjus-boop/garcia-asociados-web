@@ -742,55 +742,51 @@ function nombreDoc(id) {
 // cartel quieto cuarenta segundos, cree que se colgo y bloquea la pantalla, que es
 // justamente lo que rompe el envio.
 function enviarPaquete(datos, btn) {
-  return new Promise(function (resolve, reject) {
-    const x = new XMLHttpRequest();
-    x.open('POST', ENVIO_URL, true);
-    x.timeout = 180000;   // 3 minutos: varios megas de fotos por datos moviles tardan
-    // text/plain a proposito: evita el preflight, que es lo que Apps Script rechaza.
-    x.setRequestHeader('Content-Type', 'text/plain;charset=utf-8');
-    // Safari de iPhone no siempre informa el avance de la subida: a veces avisa una sola
-    // vez al final y a veces no avisa nada. Por eso el cartel NO puede depender de eso.
-    //
-    // Y el cartel quieto no era un problema estetico: el cliente del 27/08/2026 bloqueo la
-    // pantalla porque llevaba cuarenta segundos sin moverse y creyo que se habia colgado.
-    // Bloquear la pantalla es justo lo que suspende la conexion en iOS. El cartel quieto no
-    // era el sintoma, era parte de la causa.
-    //
-    // Corre un reloj propio cada segundo pase lo que pase. Si ademas el navegador informa
-    // el porcentaje, ese pisa al reloj porque dice mas.
-    let seg = 0, pct = -1, subido = false;
-    const reloj = setInterval(function () {
-      seg++;
-      if (!btn) return;
-      btn.textContent = pct >= 0 ? 'Enviando\u2026 ' + pct + '%'
-                                 : 'Enviando\u2026 (' + seg + ' s)';
-    }, 1000);
-    const parar = function () { clearInterval(reloj); };
+  // fetch y NO XMLHttpRequest con upload.onprogress. Escuchar la subida convierte el pedido
+  // en uno "no simple": el navegador manda antes un OPTIONS pidiendo permiso, Apps Script
+  // contesta 200 pero sin las cabeceras de permiso, y el envio ni sale. Probado en vivo el
+  // 27/08/2026: por mostrar el porcentaje se rompio el formulario entero.
+  //
+  // El cartel igual no puede quedar quieto -si la persona cree que se colgo, interrumpe-,
+  // asi que el reloj corre por su cuenta, sin depender de que el navegador informe nada.
+  let seg = 0;
+  const reloj = setInterval(function () {
+    seg++;
+    if (btn) btn.textContent = 'Enviando\u2026 (' + seg + ' s)';
+  }, 1000);
 
-    x.upload.onprogress = function (e) {
-      if (!e.lengthComputable) return;
-      pct = Math.round(e.loaded * 100 / e.total);
-      if (btn) btn.textContent = pct < 100 ? 'Enviando\u2026 ' + pct + '%'
-                                           : 'Guardando en el estudio\u2026';
-    };
-    x.upload.onload = function () {
-      // El cuerpo entero ya viajo: de aca en adelante el servidor LO TIENE, aunque la
-      // respuesta no vuelva. Lo que falle despues no es un envio perdido.
-      subido = true;
-      pct = 100;
+  // Tope de tiempo: sin esto el pedido puede quedar esperando para siempre.
+  const corte = ('AbortController' in window) ? new AbortController() : null;
+  const reloj2 = corte ? setTimeout(function () { corte.abort(); }, 180000) : null;
+
+  const limpiar = function () {
+    clearInterval(reloj);
+    if (reloj2) clearTimeout(reloj2);
+  };
+
+  // text/plain a proposito: evita el preflight, que es lo que Apps Script rechaza.
+  const opciones = {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(datos)
+  };
+  if (corte) opciones.signal = corte.signal;
+
+  return fetch(ENVIO_URL, opciones)
+    .then(function (r) {
+      limpiar();
       if (btn) btn.textContent = 'Guardando en el estudio\u2026';
-    };
-    x.onload = function () {
-      parar();
-      let res = null;
-      try { res = JSON.parse(x.responseText); } catch (e) { res = null; }
-      resolve(res);
-    };
-    // Si el cuerpo ya se subio, esto no es 'no se envio': es 'no pudimos confirmarlo'.
-    x.onerror = function () { parar(); reject(new Error(subido ? 'SIN_CONFIRMAR' : 'SIN_CONEXION')); };
-    x.ontimeout = function () { parar(); reject(new Error(subido ? 'SIN_CONFIRMAR' : 'TIMEOUT')); };
-    x.send(JSON.stringify(datos));
-  });
+      return r.json().catch(function () { return null; });
+    })
+    .catch(function (e) {
+      limpiar();
+      // Apps Script recibe y EJECUTA antes de contestar: cuando falla la respuesta, el
+      // envio ya pudo haber llegado. Es lo que le paso a un cliente el 27/08/2026, que vio
+      // "no pudimos enviar" con el mail ya en la casilla del estudio. Por eso el error se
+      // marca como "sin confirmar" y no como "no se envio": mandar de nuevo deja dos
+      // legajos del mismo cliente, con las mismas fotos de DNI, en el Drive del estudio.
+      throw new Error('SIN_CONFIRMAR');
+    });
 }
 
 function comprimir(dataURL) {
