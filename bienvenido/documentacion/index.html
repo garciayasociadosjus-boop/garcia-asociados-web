@@ -317,6 +317,8 @@ const MATERIAS = [
     bloques:['hijos'] },
   { id:'siniestro',   nom:'Siniestro automotor',        otraParte:'',
     bloques:['siniestro'], sinDemandado:true },
+  { id:'sucesion',    nom:'Sucesión',                   otraParte:'',
+    bloques:['sucesion'] },
   { id:'otros',       nom:'Otros',                      otraParte:'Datos de la otra parte',
     bloques:[] }
 ];
@@ -325,6 +327,7 @@ let materiaSel = null;
 const fotos = {};        // id -> dataURL  (documentos de a uno)
 const galerias = {};     // id -> [dataURL]  (varias fotos del mismo tipo)
 let nHijos = 0;
+let nHered = 0;
 
 // ── Paso 1 ────────────────────────────────────────────────────────────────────
 const contM = document.getElementById('materias');
@@ -536,6 +539,56 @@ function armarPaso2() {
       '<button class="btn linea" type="button" onclick="agregarHijo()">+ Agregar otro hijo/a</button></div>';
   }
 
+  // ── Sucesión ──
+  // El orden no es casual: primero el muerto, despues donde vivia, despues quienes
+  // heredan y al final que dejo. Es el orden en que se piensa una sucesion y el orden
+  // en que la persona tiene los papeles sobre la mesa.
+  if (B.includes('sucesion')) {
+    h += '<div class="bloque"><h3>El causante</h3>' +
+      '<div class="nota">El causante es la persona fallecida. La partida de defunción es el documento que abre el trámite; si todavía no la tiene, mande el resto igual y la vemos después.</div>' +
+      '<div class="fotos una">' + fotoDoc('partida_defuncion', 'Partida de defunción', 'tocar para la foto') + '</div>' +
+      '<div class="campos">' +
+        campo('su_nombre', 'Nombre y apellido del fallecido') +
+        dosCampos(campo('su_dni', 'DNI', { num: 1 }), campo('su_fallecimiento', 'Fecha de fallecimiento', { tipo: 'date' })) +
+        campo('su_estadoCivil', 'Estado civil al momento de fallecer', { ph: 'Casado, viudo, soltero, divorciado' }) +
+      '</div></div>';
+
+    // La sucesion tramita en el juzgado del ULTIMO domicilio del causante -no donde
+    // vive el heredero ni donde esta la propiedad-. Sin este dato no se sabe adonde
+    // se presenta, asi que va con su propio titulo y no escondido entre otros campos.
+    h += '<div class="bloque"><h3>Último domicilio del fallecido</h3>' +
+      '<div class="nota">Define en qué juzgado tramita la sucesión. Es donde vivía al momento de fallecer, aunque las propiedades estén en otro lado.</div>' +
+      '<div class="campos">' + domicilio('sd') + '</div></div>';
+
+    // Con testamento el juicio es otro: testamentaria y no ab intestato. Cambia el
+    // escrito de inicio completo, asi que conviene saberlo en la primera consulta.
+    h += '<div class="bloque"><h3>¿Dejó testamento?</h3>' +
+      '<label class="check" style="margin-bottom:12px"><input type="checkbox" id="hayTestamento" onchange="toggleBloque(\'testamentoDiv\',this.checked)">' +
+      '<span>Sí, dejó testamento</span></label>' +
+      '<div id="testamentoDiv" style="display:none">' +
+        galeria('testamento', 'Testamento', 'Si tiene una copia, saque foto de todas las hojas.') +
+      '</div></div>';
+
+    h += '<div class="bloque"><h3>Herederos</h3>' +
+      '<div class="nota">Cárguelos a todos, incluido usted. De cada uno el DNI y la partida que acredita el parentesco: de nacimiento para hijos, de matrimonio para el cónyuge. Si a alguna no la tiene, complete los datos y la pedimos nosotros.</div>' +
+      '<div id="herederos"></div>' +
+      '<button class="btn linea" type="button" onclick="agregarHeredero()">+ Agregar otro heredero/a</button></div>';
+
+    h += '<div class="bloque"><h3>Bienes que dejó</h3>' +
+      '<div class="nota">Inmuebles (casas, departamentos, terrenos) y bienes registrables (autos, motos, embarcaciones). Saque foto de cada título o escritura, y de todas las hojas si tiene varias.</div>' +
+      galeria('titulos', 'Títulos, escrituras y cédulas verdes') +
+      '<div class="campos">' +
+        campo('su_inmuebles', 'Inmuebles', { ph: 'Ej: casa en Quilmes, Mitre 250' }) +
+        campo('su_muebles', 'Automotores y otros registrables', { ph: 'Ej: Fiat Cronos 2019, dominio AB123CD' }) +
+        campo('su_otros', 'Cuentas, plazos fijos, acciones', { ph: 'Si sabe dónde y en qué banco' }) +
+      '</div></div>';
+
+    h += '<div class="bloque"><h3>Otros documentos <span class="opt">optativo</span></h3>' +
+      '<div class="nota">Todo lo que le parezca relevante: partida de matrimonio del fallecido, recibos de haberes o jubilación, resúmenes bancarios, boletos de compraventa, deudas, gastos del sepelio.</div>' +
+      galeria('otros_suc', 'Otros documentos') +
+      '</div>';
+  }
+
   // ── Siniestro automotor ──
   if (B.includes('siniestro')) {
     h += '<div class="bloque"><h3>Sus documentos</h3>' +
@@ -597,6 +650,7 @@ function armarPaso2() {
   // galerias declaradas en el html recien creado
   document.querySelectorAll('.galeria').forEach(g => pintarGaleria(g.id.replace('gal_', '')));
   if (B.includes('hijos') && nHijos === 0) agregarHijo();
+  if (B.includes('sucesion') && nHered === 0) agregarHeredero();
 }
 
 function toggleBloque(id, mostrar) {
@@ -707,6 +761,30 @@ function agregarHijo() {
     '</div>';
   document.getElementById('hijos').appendChild(d);
 }
+// Mismo mecanismo que los hijos, con campos propios: al heredero se le pregunta el
+// vinculo -hijo, conyuge, padre- porque cada parentesco se acredita con una partida
+// distinta, y sin saberlo no se sabe cual falta. Y el telefono de cada uno, porque en
+// una sucesion todos tienen que firmar y hay que poder ubicarlos.
+function agregarHeredero() {
+  const i = ++nHered;
+  const d = document.createElement('div');
+  d.className = 'hijo'; d.id = 'hered' + i;
+  d.innerHTML =
+    '<div class="cab"><b>Heredero/a ' + i + '</b>' +
+      (i > 1 ? '<button class="quitar" type="button" onclick="quitarHeredero(' + i + ')">quitar</button>' : '') + '</div>' +
+    parDni('hd' + i, 'DNI') +
+    '<div class="fotos una">' + fotoDoc('hd' + i + '_partida', 'Partida de nacimiento o matrimonio', 'si la tiene') + '</div>' +
+    '<div class="campos">' +
+      campo('hd' + i + '_nombre', 'Nombre completo') +
+      dosCampos(campo('hd' + i + '_dni', 'DNI', { num: 1 }), campo('hd' + i + '_fnac', 'Fecha de nacimiento', { tipo: 'date' })) +
+      campo('hd' + i + '_vinculo', 'Vínculo con el fallecido', { ph: 'Hijo/a, cónyuge, madre, padre, nieto/a' }) +
+      dosCampos(campo('hd' + i + '_tel', 'Teléfono', { tipo: 'tel' }), campo('hd' + i + '_mail', 'Mail', { tipo: 'email' })) +
+    '</div>';
+  document.getElementById('herederos').appendChild(d);
+}
+function quitarHeredero(i) {
+  const e = document.getElementById('hered' + i); if (e) e.remove();
+}
 function quitarHijo(i) {
   const e = document.getElementById('hijo' + i); if (e) e.remove();
 }
@@ -722,16 +800,20 @@ const NOMBRES_DOC = {
   f_tit_frente:'Titulo de propiedad - frente', f_tit_dorso:'Titulo de propiedad - dorso',
   f_partida_matrimonio:'Partida de matrimonio',
   f_partida_propia:'Partida de nacimiento del cliente',
-  f_denuncia:'Denuncia policial o fiscalia'
+  f_denuncia:'Denuncia policial o fiscalia',
+  f_partida_defuncion:'Partida de defuncion del causante'
 };
 const NOMBRES_GAL = {
   vehiculo:'Foto del vehiculo', presupuesto:'Presupuesto', lesiones:'Lesiones',
   pruebas:'Prueba', bienes:'Escritura o titulo',
   denuncia_adm:'Denuncia administrativa', cobertura:'Certificado de cobertura',
-  otros_sin:'Otro documento'
+  otros_sin:'Otro documento',
+  titulos:'Titulo o escritura', testamento:'Testamento', otros_suc:'Otro documento'
 };
 function nombreDoc(id) {
   if (NOMBRES_DOC[id]) return NOMBRES_DOC[id];
+  const hd = /^f_hd(\d+)_(frente|dorso|partida)$/.exec(id);
+  if (hd) return 'Heredero ' + hd[1] + ' - ' + (hd[2] === 'partida' ? 'partida' : 'DNI ' + hd[2]);
   const h = /^f_h(\d+)_(frente|dorso|partida)$/.exec(id);
   if (h) return 'Hijo ' + h[1] + ' - ' + (h[2] === 'partida' ? 'partida de nacimiento' : 'DNI ' + h[2]);
   return id.replace(/^f_/, '').replace(/_/g, ' ');
@@ -888,6 +970,18 @@ function armarResumen() {
     if (val('h' + i + '_nombre')) hs.push(val('h' + i + '_nombre') + (chk('h' + i + '_discapacidad') ? ' (con CUD)' : ''));
   }
   if (hs.length) h += '<div style="margin-top:9px;font-weight:600">Hijos</div><div>' + hs.join(' · ') + '</div>';
+  if (val('su_nombre')) h += '<div style="margin-top:9px;font-weight:600">Causante</div>' +
+    li('Nombre', val('su_nombre')) + li('DNI', val('su_dni')) +
+    li('Fallecimiento', val('su_fallecimiento')) +
+    li('Último domicilio', [val('sd_calle'), val('sd_numero'), val('sd_localidad'), val('sd_partido')].filter(Boolean).join(', ')) +
+    li('Testamento', chk('hayTestamento') ? 'Sí' : '');
+  const hers = [];
+  for (let i = 1; i <= nHered; i++) {
+    if (!document.getElementById('hered' + i)) continue;
+    if (val('hd' + i + '_nombre')) hers.push(val('hd' + i + '_nombre') +
+      (val('hd' + i + '_vinculo') ? ' (' + val('hd' + i + '_vinculo') + ')' : ''));
+  }
+  if (hers.length) h += '<div style="margin-top:9px;font-weight:600">Herederos</div><div>' + hers.join(' · ') + '</div>';
   // Se cuentan los PDF aparte: si el cliente adjunto la poliza, que la vea nombrada.
   const todas = Object.values(galerias).reduce((a, b) => a.concat(b), []);
   const nPdf = todas.filter(esPDF).length;
@@ -948,6 +1042,13 @@ async function enviar() {
     siniestro: { dominio: val('s_dominio'), marca: val('s_marca'), fecha: val('s_fecha'),
       lugar: val('s_lugar'), relato: val('s_relato'),
       hayLesiones: chk('hayLesiones'), lesiones: val('s_lesiones') },
+    sucesion: { causante: val('su_nombre'), dni: val('su_dni'),
+      fechaFallecimiento: val('su_fallecimiento'), estadoCivil: val('su_estadoCivil'),
+      hayTestamento: chk('hayTestamento'),
+      ultimoDomicilio: { calle: val('sd_calle'), numero: val('sd_numero'),
+        localidad: val('sd_localidad'), partido: val('sd_partido'), provincia: val('sd_provincia') },
+      inmuebles: val('su_inmuebles'), muebles: val('su_muebles'), otrosBienes: val('su_otros') },
+    herederos: [],
     hijos: [],
     archivos: []
   };
@@ -960,6 +1061,13 @@ async function enviar() {
       domicilio: { calle: val('h' + i + '_calle'), numero: val('h' + i + '_numero'),
         localidad: val('h' + i + '_localidad'), partido: val('h' + i + '_partido'),
         provincia: val('h' + i + '_provincia') } });
+  }
+
+  for (let i = 1; i <= nHered; i++) {
+    if (!document.getElementById('hered' + i)) continue;
+    datos.herederos.push({ nombre: val('hd' + i + '_nombre'), dni: val('hd' + i + '_dni'),
+      fechaNac: val('hd' + i + '_fnac'), vinculo: val('hd' + i + '_vinculo'),
+      telefono: val('hd' + i + '_tel'), mail: val('hd' + i + '_mail') });
   }
 
   const textoOrig = btn ? btn.textContent : '';
