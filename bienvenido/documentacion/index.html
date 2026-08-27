@@ -758,7 +758,7 @@ function enviarPaquete(datos, btn) {
     //
     // Corre un reloj propio cada segundo pase lo que pase. Si ademas el navegador informa
     // el porcentaje, ese pisa al reloj porque dice mas.
-    let seg = 0, pct = -1;
+    let seg = 0, pct = -1, subido = false;
     const reloj = setInterval(function () {
       seg++;
       if (!btn) return;
@@ -774,6 +774,9 @@ function enviarPaquete(datos, btn) {
                                            : 'Guardando en el estudio\u2026';
     };
     x.upload.onload = function () {
+      // El cuerpo entero ya viajo: de aca en adelante el servidor LO TIENE, aunque la
+      // respuesta no vuelva. Lo que falle despues no es un envio perdido.
+      subido = true;
       pct = 100;
       if (btn) btn.textContent = 'Guardando en el estudio\u2026';
     };
@@ -783,8 +786,9 @@ function enviarPaquete(datos, btn) {
       try { res = JSON.parse(x.responseText); } catch (e) { res = null; }
       resolve(res);
     };
-    x.onerror = function () { parar(); reject(new Error('SIN_CONEXION')); };
-    x.ontimeout = function () { parar(); reject(new Error('TIMEOUT')); };
+    // Si el cuerpo ya se subio, esto no es 'no se envio': es 'no pudimos confirmarlo'.
+    x.onerror = function () { parar(); reject(new Error(subido ? 'SIN_CONFIRMAR' : 'SIN_CONEXION')); };
+    x.ontimeout = function () { parar(); reject(new Error(subido ? 'SIN_CONFIRMAR' : 'TIMEOUT')); };
     x.send(JSON.stringify(datos));
   });
 }
@@ -1005,7 +1009,8 @@ async function enviar() {
     // ejecuta antes de contestar. Ofrecer "reintentar" ahi duplicaria la documentacion en
     // el Drive del estudio, con dos legajos del mismo cliente. Por eso se le pide
     // explicitamente que NO lo mande de nuevo.
-    if (String(err && err.message) === 'TIMEOUT') {
+    const m = String(err && err.message);
+    if (m === 'TIMEOUT' || m === 'SIN_CONFIRMAR') {
       if (confirm('La conexión tardó demasiado y no pudimos confirmar el envío.\n\n' +
                   'Es posible que la documentación ya haya llegado al estudio. ' +
                   'NO la envíes de nuevo.\n\n' +
