@@ -5,6 +5,16 @@
     <meta name="robots" content="noindex, nofollow">
     <!-- Herramienta para clientes: se llega por el enlace que manda el estudio,
          no por buscadores. -->
+    <!-- Que el navegador NO se quede con una copia vieja. GitHub Pages sirve el HTML con
+         cache y Safari lo respeta a rajatabla: el 27/08/2026 un cliente estuvo viendo una
+         version anterior del formulario durante horas, con el mensaje de error equivocado,
+         mientras la corregida ya estaba publicada. Este es un formulario que la persona abre
+         UNA vez, desde un enlace que le mandamos: no hay nada que ganar cacheandolo, y una
+         version vieja aca cuesta un cliente.
+    -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>García &amp; Asociados — Documentación</title>
 <meta name="description" content="Complete sus datos y adjunte la documentación para iniciar su consulta con el estudio.">
