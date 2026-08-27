@@ -731,6 +731,39 @@ function nombreDoc(id) {
 // fotos son 40 MB por una conexion de datos: se corta a la mitad y el cliente se queda
 // creyendo que mando todo. A 1600px de lado largo y calidad 0,82 se leen perfecto y
 // pesan unos 300 KB.
+// Apps Script contesta con un 302 a script.googleusercontent.com y el navegador tiene que
+// seguir ese salto para leer la respuesta. En Safari de iPhone eso se cuelga cuando la
+// subida tarda y el telefono se bloquea o cambia de app: el envio LLEGA -el mail sale- pero
+// la respuesta nunca vuelve y la pantalla queda en "Enviando..." para siempre. Le paso a un
+// cliente real el 27/08/2026.
+//
+// XMLHttpRequest y no fetch por dos motivos concretos: tiene tope de tiempo propio -fetch no
+// lo tiene- y avisa cuanto se subio. El porcentaje no es adorno: sin el, la persona mira un
+// cartel quieto cuarenta segundos, cree que se colgo y bloquea la pantalla, que es
+// justamente lo que rompe el envio.
+function enviarPaquete(datos, btn) {
+  return new Promise(function (resolve, reject) {
+    const x = new XMLHttpRequest();
+    x.open('POST', ENVIO_URL, true);
+    x.timeout = 180000;   // 3 minutos: varios megas de fotos por datos moviles tardan
+    // text/plain a proposito: evita el preflight, que es lo que Apps Script rechaza.
+    x.setRequestHeader('Content-Type', 'text/plain;charset=utf-8');
+    x.upload.onprogress = function (e) {
+      if (!btn || !e.lengthComputable) return;
+      const p = Math.round(e.loaded * 100 / e.total);
+      btn.textContent = p < 100 ? 'Enviando\u2026 ' + p + '%' : 'Guardando en el estudio\u2026';
+    };
+    x.onload = function () {
+      let res = null;
+      try { res = JSON.parse(x.responseText); } catch (e) { res = null; }
+      resolve(res);
+    };
+    x.onerror = function () { reject(new Error('SIN_CONEXION')); };
+    x.ontimeout = function () { reject(new Error('TIMEOUT')); };
+    x.send(JSON.stringify(datos));
+  });
+}
+
 function comprimir(dataURL) {
   return new Promise(function (resolve) {
     const img = new Image();
@@ -927,13 +960,7 @@ async function enviar() {
       alert('El formulario todavía no está conectado al Drive del estudio.\n\n' +
             'Falta pegar la URL del Apps Script en ENVIO_URL.');
     } else {
-      // text/plain a proposito: evita el preflight, que es lo que Apps Script rechaza.
-      const r = await fetch(ENVIO_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(datos)
-      });
-      const res = await r.json().catch(function () { return null; });
+      const res = await enviarPaquete(datos, btn);
       if (res && res.ok === false) throw new Error(res.error || 'el servidor rechazó el envío');
     }
 
@@ -948,6 +975,23 @@ async function enviar() {
   } catch (err) {
     // Nunca dejar al cliente sin salida: si el envio falla, que pueda escribir igual.
     console.error(err);
+
+    // Si se vencio el tiempo, el envio PUDO haber llegado igual: el servidor lo recibe y
+    // ejecuta antes de contestar. Ofrecer "reintentar" ahi duplicaria la documentacion en
+    // el Drive del estudio, con dos legajos del mismo cliente. Por eso se le pide
+    // explicitamente que NO lo mande de nuevo.
+    if (String(err && err.message) === 'TIMEOUT') {
+      if (confirm('La conexión tardó demasiado y no pudimos confirmar el envío.\n\n' +
+                  'Es posible que la documentación ya haya llegado al estudio. ' +
+                  'NO la envíes de nuevo.\n\n' +
+                  '¿Querés escribirnos por WhatsApp para que la verifiquemos?')) {
+        window.open('https://wa.me/5491168063444?text=' + encodeURIComponent(
+          'Hola, envié la documentación desde la web y no me confirmó si llegó. ' +
+          'Mi consulta es por ' + materiaSel.nom + '. ¿Pueden verificar antes de que la mande otra vez?'), '_blank');
+      }
+      return;
+    }
+
     if (confirm('No pudimos enviar la documentación. Puede ser la conexión.\n\n' +
                 '¿Querés escribirnos por WhatsApp para que te ayudemos?')) {
       window.open('https://wa.me/5491168063444?text=' + encodeURIComponent(
