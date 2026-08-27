@@ -748,18 +748,43 @@ function enviarPaquete(datos, btn) {
     x.timeout = 180000;   // 3 minutos: varios megas de fotos por datos moviles tardan
     // text/plain a proposito: evita el preflight, que es lo que Apps Script rechaza.
     x.setRequestHeader('Content-Type', 'text/plain;charset=utf-8');
+    // Safari de iPhone no siempre informa el avance de la subida: a veces avisa una sola
+    // vez al final y a veces no avisa nada. Por eso el cartel NO puede depender de eso.
+    //
+    // Y el cartel quieto no era un problema estetico: el cliente del 27/08/2026 bloqueo la
+    // pantalla porque llevaba cuarenta segundos sin moverse y creyo que se habia colgado.
+    // Bloquear la pantalla es justo lo que suspende la conexion en iOS. El cartel quieto no
+    // era el sintoma, era parte de la causa.
+    //
+    // Corre un reloj propio cada segundo pase lo que pase. Si ademas el navegador informa
+    // el porcentaje, ese pisa al reloj porque dice mas.
+    let seg = 0, pct = -1;
+    const reloj = setInterval(function () {
+      seg++;
+      if (!btn) return;
+      btn.textContent = pct >= 0 ? 'Enviando\u2026 ' + pct + '%'
+                                 : 'Enviando\u2026 (' + seg + ' s)';
+    }, 1000);
+    const parar = function () { clearInterval(reloj); };
+
     x.upload.onprogress = function (e) {
-      if (!btn || !e.lengthComputable) return;
-      const p = Math.round(e.loaded * 100 / e.total);
-      btn.textContent = p < 100 ? 'Enviando\u2026 ' + p + '%' : 'Guardando en el estudio\u2026';
+      if (!e.lengthComputable) return;
+      pct = Math.round(e.loaded * 100 / e.total);
+      if (btn) btn.textContent = pct < 100 ? 'Enviando\u2026 ' + pct + '%'
+                                           : 'Guardando en el estudio\u2026';
+    };
+    x.upload.onload = function () {
+      pct = 100;
+      if (btn) btn.textContent = 'Guardando en el estudio\u2026';
     };
     x.onload = function () {
+      parar();
       let res = null;
       try { res = JSON.parse(x.responseText); } catch (e) { res = null; }
       resolve(res);
     };
-    x.onerror = function () { reject(new Error('SIN_CONEXION')); };
-    x.ontimeout = function () { reject(new Error('TIMEOUT')); };
+    x.onerror = function () { parar(); reject(new Error('SIN_CONEXION')); };
+    x.ontimeout = function () { parar(); reject(new Error('TIMEOUT')); };
     x.send(JSON.stringify(datos));
   });
 }
