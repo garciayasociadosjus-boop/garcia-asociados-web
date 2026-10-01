@@ -870,6 +870,15 @@ function enviarPaquete(datos, btn) {
       if (btn) btn.textContent = 'Guardando en el estudio\u2026';
       return r.json().catch(function () { return null; });
     })
+    .then(function (j) {
+      // Solo vale como enviado si el servidor dijo ok:true con todas las letras. Cuando
+      // Google contesta con una pagina de error en vez del JSON, antes esto devolvia null
+      // y la pantalla mostraba "Recibimos su consulta" con su codigo, sin carpeta y sin
+      // mail: el cliente se quedaba tranquilo y el estudio no se enteraba nunca.
+      if (j && j.ok === true) return j;
+      if (j && j.ok === false) return j;   // rechazo explicito: lo informa quien llama
+      throw new Error('SIN_CONFIRMAR');
+    })
     .catch(function (e) {
       limpiar();
       // Apps Script recibe y EJECUTA antes de contestar: cuando falla la respuesta, el
