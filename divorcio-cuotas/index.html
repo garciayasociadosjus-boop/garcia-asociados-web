@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Herramienta para clientes: se llega por el enlace que manda el estudio,
+       no por buscadores. Los precios se cambian en PRECIO_CONTADO y PRECIO_12. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Divorcio en cuotas — García & Asociados</title>
+  <meta property="og:title" content="Divorcio en cuotas · García & Asociados">
+  <meta property="og:description" content="Elegí en cuántas cuotas querés pagar tu divorcio y mirá cuánto queda cada una.">
+  <meta property="og:image" content="https://garciayasociados.com.ar/og-image.png">
+  <meta property="og:url" content="https://garciayasociados.com.ar/divorcio-cuotas/">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --primary: #0A0E1A; --secondary: #151B2D;
+      --gold: #C9A84C; --gold-light: #E8C97A;
+      --text: #1F2937; --muted: #6B7280; --border: #E5E7EB;
+      --success: #16a34a; --wa: #25D366;
+    }
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background: linear-gradient(135deg, #F0F2F7 0%, #E5E7EB 100%);
+      min-height: 100vh; color: var(--text);
+      display: flex; flex-direction: column; align-items: center;
+      padding: 24px 16px 40px;
+    }
+    .card {
+      width: 100%; max-width: 420px; background: #fff; border-radius: 22px;
+      box-shadow: 0 12px 40px rgba(10,14,26,.15); overflow: hidden;
+    }
+    .top {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: #fff; padding: 22px 24px 20px; text-align: center;
+    }
+    .marca { font-family: 'Crimson Text', serif; font-size: 1.15rem; letter-spacing: .3px; }
+    .marca span { color: var(--gold); }
+    .top h1 { font-family: 'Crimson Text', serif; font-weight: 600; font-size: 1.9rem; margin-top: 6px; }
+    .top p { color: #9CA3AF; font-size: .92rem; margin-top: 2px; }
+
+    .cuerpo { padding: 24px; }
+    .pregunta { text-align: center; font-weight: 600; font-size: 1.02rem; }
+
+    .selector { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 14px 0 6px; }
+    .btn-mm {
+      width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--gold);
+      background: #fff; color: var(--primary); font-size: 1.7rem; line-height: 1;
+      cursor: pointer; font-family: inherit; transition: background .15s;
+    }
+    .btn-mm:active { background: #FBF5E6; }
+    .btn-mm:disabled { opacity: .3; cursor: default; }
+    .cant { text-align: center; min-width: 96px; }
+    .cant b { display: block; font-family: 'Crimson Text', serif; font-size: 3.2rem; line-height: 1; color: var(--primary); }
+    .cant small { color: var(--muted); font-size: .9rem; }
+
+    input[type=range] { width: 100%; accent-color: var(--gold); margin: 10px 0 2px; height: 28px; }
+    .marcas { display: flex; justify-content: space-between; color: var(--muted); font-size: .78rem; padding: 0 2px; }
+
+    .resultado {
+      margin-top: 20px; border-radius: 16px; background: #FBF5E6;
+      border: 1px solid #EEDDB0; padding: 18px; text-align: center;
+    }
+    .resultado .lbl { color: var(--muted); font-size: .88rem; }
+    .resultado .cuota { font-family: 'Crimson Text', serif; font-size: 2.6rem; font-weight: 700; color: var(--primary); line-height: 1.1; }
+    .resultado .total { margin-top: 6px; font-size: .98rem; }
+    .resultado .ahorro { margin-top: 8px; color: var(--success); font-weight: 600; font-size: .95rem; min-height: 1.2em; }
+
+    .wa {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      margin-top: 20px; width: 100%; padding: 15px; border-radius: 14px;
+      background: var(--wa); color: #fff; font-weight: 700; font-size: 1.05rem;
+      text-decoration: none;
+    }
+    .nota { margin-top: 14px; color: var(--muted); font-size: .8rem; text-align: center; line-height: 1.45; }
+    .pie { margin-top: 18px; color: var(--muted); font-size: .8rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="top">
+      <div class="marca">García <span>&amp;</span> Asociados</div>
+      <h1>Tu divorcio en cuotas</h1>
+      <p>Elegí cómo te queda más cómodo pagar</p>
+    </div>
+
+    <div class="cuerpo">
+      <div class="pregunta">¿En cuántas cuotas lo querés pagar?</div>
+
+      <div class="selector">
+        <button class="btn-mm" id="menos" aria-label="Una cuota menos">−</button>
+        <div class="cant"><b id="n">12</b><small id="nTxt">cuotas</small></div>
+        <button class="btn-mm" id="mas" aria-label="Una cuota más">+</button>
+      </div>
+
+      <input type="range" id="rango" min="1" max="12" step="1" value="12" aria-label="Cantidad de cuotas">
+      <div class="marcas"><span>1 pago</span><span>12 cuotas</span></div>
+
+      <div class="resultado">
+        <div class="lbl" id="cuotaLbl">Cada cuota</div>
+        <div class="cuota" id="cuota">$ 200.000</div>
+        <div class="total" id="total">Total: $ 2.400.000</div>
+        <div class="ahorro" id="ahorro"></div>
+      </div>
+
+      <a class="wa" id="wa" href="#" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
+        Lo quiero en <span id="waN">12 cuotas</span>
+      </a>
+
+      <div class="nota">Cuotas mensuales y consecutivas. Cuantas menos cuotas elijas, menos pagás en total: en un solo pago tenés un 10&nbsp;% de descuento.</div>
+    </div>
+  </div>
+  <div class="pie">Estudio Jurídico García &amp; Asociados · Quilmes · 11 6806-3444</div>
+
+  <script>
+    // Honorarios del divorcio. En 1 pago tiene un 10 % de descuento sobre el precio en
+    // 12 cuotas, y entre los dos extremos el total sube parejo con cada cuota que se agrega.
+    const PRECIO_12 = 2400000;
+    const PRECIO_CONTADO = 2160000;
+    const WHATSAPP = '5491168063444';
+
+    const $ = id => document.getElementById(id);
+    const pesos = v => '$ ' + Math.round(v).toLocaleString('es-AR');
+
+    function calcular(n) {
+      const total = PRECIO_CONTADO + (PRECIO_12 - PRECIO_CONTADO) * (n - 1) / 11;
+      // La cuota se redondea a la centena para arriba y el total sale de ahí, así el cliente
+      // ve una cuota prolija y el total coincide exactamente con lo que va a pagar.
+      const cuota = Math.ceil(total / n / 100) * 100;
+      return { cuota, total: cuota * n };
+    }
+
+    function mostrar(n) {
+      n = Math.max(1, Math.min(12, n));
+      const { cuota, total } = calcular(n);
+      $('n').textContent = n;
+      $('nTxt').textContent = n === 1 ? 'pago' : 'cuotas';
+      $('rango').value = n;
+      $('menos').disabled = n === 1;
+      $('mas').disabled = n === 12;
+      $('cuotaLbl').textContent = n === 1 ? 'Un solo pago de' : 'Cada cuota';
+      $('cuota').textContent = pesos(cuota);
+      $('total').textContent = n === 1 ? 'Con 10 % de descuento' : 'Total: ' + pesos(total);
+      const ahorro = PRECIO_12 - total;
+      $('ahorro').textContent = ahorro > 0 ? 'Ahorrás ' + pesos(ahorro) + ' frente a 12 cuotas' : '';
+      const forma = n === 1 ? 'un solo pago de ' + pesos(cuota) : n + ' cuotas de ' + pesos(cuota);
+      $('waN').textContent = n === 1 ? '1 pago' : n + ' cuotas';
+      $('wa').href = 'https://wa.me/' + WHATSAPP + '?text=' +
+        encodeURIComponent('Hola, quiero hacer el divorcio pagando en ' + forma + '.');
+    }
+
+    $('menos').onclick = () => mostrar(+$('rango').value - 1);
+    $('mas').onclick = () => mostrar(+$('rango').value + 1);
+    $('rango').oninput = e => mostrar(+e.target.value);
+    mostrar(12);
+  </script>
+</body>
+</html>
