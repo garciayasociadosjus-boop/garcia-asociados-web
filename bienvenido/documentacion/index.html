@@ -302,7 +302,7 @@ const MATERIAS = [
   { id:'divorcio',    nom:'Divorcio',                   otraParte:'Datos del cónyuge',
     bloques:['divorcio'] },
   { id:'alimentos',   nom:'Alimentos',                  otraParte:'Datos del demandado',
-    bloques:['empleador','hijos'] },
+    bloques:['empleador','hijos','relacion','situacion','gastos'] },
   { id:'comunicacion',nom:'Comunicación con los hijos', otraParte:'Datos de la otra parte',
     bloques:['hijos'] },
   { id:'cuidado',     nom:'Cuidado personal de hijos',  otraParte:'Datos de la otra parte',
@@ -528,7 +528,23 @@ function armarPaso2() {
   if (B.includes('empleador')) {
     h += '<div class="bloque"><h3>Dónde trabaja la otra parte</h3>' +
       '<div class="nota">Sirve para pedir la retención de la cuota. Si no lo sabe con exactitud, ponga lo que recuerde.</div>' +
-      '<div class="campos">' + campo('e_nombre', 'Nombre o razón social') + domicilio('e') + '</div></div>';
+      '<div class="campos">' + campo('e_nombre', 'Nombre o razón social') + domicilio('e') + '</div>';
+    if (materiaSel.id === 'alimentos') {
+      h += '<div class="nota" style="margin-top:14px">¿Cómo trabaja?</div>' +
+        radios('a_dem_modo', [['blanco', 'En blanco, con recibo de sueldo'], ['negro', 'En negro o por su cuenta'],
+                              ['no', 'No trabaja'], ['nose', 'No sé']]) +
+        '<div class="campos" style="margin-top:12px">' +
+          dosCampos(campo('a_dem_tarea', 'A qué se dedica', { ph: 'Ej: chofer, albañil, comerciante' }),
+                    campo('a_dem_ingreso', 'Cuánto gana por mes, aproximado', { num: 1, ph: '$' })) +
+          campo('a_dem_bienes', 'Bienes que tenga', { ph: 'Ej: auto, moto, casa, un comercio' }) +
+        '</div>' +
+        '<div class="nota" style="margin-top:14px">¿Aporta algo para los chicos?</div>' +
+        radios('a_dem_aporta', [['no', 'No aporta nada'], ['irregular', 'Aporta a veces o muy poco'], ['si', 'Aporta todos los meses']]) +
+        '<div class="campos" style="margin-top:12px">' +
+          campo('a_dem_aporte', 'Si aporta: cuánto y desde cuándo', { ph: 'Ej: $50.000 por mes desde marzo, pero no siempre' }) +
+        '</div>';
+    }
+    h += '</div>';
   }
 
   // ── Hijos ──
@@ -537,6 +553,58 @@ function armarPaso2() {
       '<div class="nota">DNI de cada uno y la partida de nacimiento. Si no tiene la partida, complete los datos y la pedimos nosotros.</div>' +
       '<div id="hijos"></div>' +
       '<button class="btn linea" type="button" onclick="agregarHijo()">+ Agregar otro hijo/a</button></div>';
+  }
+
+  // ── Alimentos: lo que sólo sabe la clienta ──
+  // Son los datos que el escrito de demanda necesita y que el estudio no tiene cómo
+  // saber: la historia de la pareja, de qué vive ella, qué hace él y cuánto cuestan
+  // los chicos. El porcentaje que se pide y el juzgado los decide el estudio, no acá.
+  if (B.includes('relacion')) {
+    h += '<div class="bloque"><h3>La relación con el otro progenitor</h3>' +
+      radios('a_rel_tipo', [['matrimonio', 'Estábamos casados'], ['convivencia', 'Convivíamos sin casarnos'],
+                            ['pareja', 'Éramos pareja pero no vivíamos juntos'], ['otra', 'Otra situación']]) +
+      '<div class="campos" style="margin-top:12px">' +
+        dosCampos(campo('a_rel_desde', 'Desde cuándo (año)', { ph: 'Ej: 2008' }),
+                  campo('a_rel_hasta', 'Cuándo se separaron', { ph: 'Ej: marzo de 2021' })) +
+        '<div><label>¿Cómo fue la separación?</label><textarea id="a_rel_como" placeholder="Contános brevemente qué pasó y quién se fue de la casa."></textarea></div>' +
+      '</div>' +
+      '<div class="nota" style="margin-top:14px">¿Hay algún acuerdo sobre la cuota?</div>' +
+      radios('a_rel_acuerdo', [['no', 'No hay ningún acuerdo'], ['palabra', 'Hay un acuerdo de palabra'],
+                               ['firmado', 'Hay un acuerdo firmado o del juzgado']]) +
+      '<div class="nota" style="margin-top:14px">¿Con quién viven los chicos?</div>' +
+      radios('a_cuidado', [['yo', 'Viven conmigo, los cuido yo'], ['compartido', 'Viven un tiempo en cada casa'],
+                           ['otro', 'Otra situación']]) +
+      '</div>';
+  }
+
+  if (B.includes('situacion')) {
+    h += '<div class="bloque"><h3>Su situación</h3>' +
+      '<div class="nota">Sirve para mostrarle al juez que sola no alcanza.</div>' +
+      radios('a_act_trabaja', [['blanco', 'Trabajo con recibo de sueldo'], ['negro', 'Trabajo en negro o por mi cuenta'],
+                               ['no', 'No trabajo']]) +
+      '<div class="campos" style="margin-top:12px">' +
+        dosCampos(campo('a_act_tarea', 'En qué trabaja'), campo('a_act_empleador', 'Empleador o lugar')) +
+        campo('a_act_ingreso', 'Cuánto gana por mes, aproximado', { num: 1, ph: '$' }) +
+      '</div>' +
+      '<div class="nota" style="margin-top:14px">¿Cobra AUH, asignaciones familiares o Tarjeta Alimentar?</div>' +
+      radios('a_auh', [['si', 'Sí'], ['no', 'No']]) +
+      '<div class="nota" style="margin-top:14px">¿Los chicos tienen obra social?</div>' +
+      radios('a_obra', [['dem', 'Sí, la del otro progenitor'], ['mia', 'Sí, la mía'], ['no', 'No tienen']]) +
+      '<div class="nota" style="margin-top:14px">La casa donde viven es</div>' +
+      radios('a_vivienda', [['propia', 'Propia'], ['alquila', 'Alquilada'], ['prestada', 'Prestada o vivimos con familiares']]) +
+      '<div class="nota" style="margin-top:14px">¿Su familia la ayuda con los gastos?</div>' +
+      radios('a_ayuda', [['si', 'Sí'], ['no', 'No']]) +
+      '</div>';
+  }
+
+  if (B.includes('gastos')) {
+    h += '<div class="bloque"><h3>Gastos de los chicos por mes</h3>' +
+      '<div class="nota">Lo que gasta en total por mes en los chicos. Si no sabe el número exacto, ponga uno aproximado: lo revisamos juntos.</div>' +
+      '<div class="campos">' +
+        GASTOS.map(function (g) { return campo('a_g_' + g[0], g[1], { num: 1, ph: g[2] ? '$  ' + g[2] : '$' }); }).join('') +
+        campo('a_g_otros', 'Otros gastos: qué y cuánto', { ph: 'Ej: celular $15.000' }) +
+        '<div><label>Lo que necesitan y hoy no pueden pagar</label><textarea id="a_nocub" placeholder="Ej: ortodoncia, anteojos, cuota del club. Con el precio si lo sabe."></textarea></div>' +
+      '</div></div>';
   }
 
   // ── Sucesión ──
@@ -758,6 +826,12 @@ function agregarHijo() {
       campo('h' + i + '_provincia', 'Provincia', { val: 'Buenos Aires' }) +
       '<label class="check"><input type="checkbox" id="h' + i + '_discapacidad">' +
       '<span>Tiene discapacidad acreditada (CUD)</span></label>' +
+      (materiaSel && materiaSel.id === 'alimentos'
+        ? dosCampos(campo('h' + i + '_escuela', 'Escuela y año que cursa', { ph: 'Ej: EP N° 12, 4° grado' }),
+                    campo('h' + i + '_gestion', 'La escuela es', { ph: 'Pública o privada' })) +
+          campo('h' + i + '_activ', 'Actividades fuera de la escuela', { ph: 'Ej: fútbol, inglés, danza' }) +
+          campo('h' + i + '_trat', 'Tratamientos médicos o terapias', { ph: 'Ej: psicóloga, ortodoncia, fonoaudióloga' })
+        : '') +
     '</div>';
   document.getElementById('hijos').appendChild(d);
 }
@@ -911,6 +985,35 @@ function comprimir(dataURL) {
 }
 
 // ── Revision ──────────────────────────────────────────────────────────────────
+// Los rubros son los mismos de la solapa Necesidades de la planilla jurídica, con el
+// mismo nombre: así el importe cae solo en su renglón al pasar la consulta a la ficha.
+const GASTOS = [
+  ['alimentacion', 'Alimentación', ''],
+  ['transporte',   'Transporte', ''],
+  ['vestimenta',   'Vestimenta', ''],
+  ['farmacia',     'Farmacia', ''],
+  ['servicios',    'Impuestos y servicios', 'luz, gas, agua, internet'],
+  ['higiene',      'Higiene personal', ''],
+  ['escolares',    'Gastos escolares', 'cuota, útiles, uniforme'],
+  ['salud',        'Salud', 'consultas, tratamientos'],
+  ['esparcimiento','Esparcimiento', '']
+];
+function radios(name, ops) {
+  return '<div class="opciones">' + ops.map(function (o) {
+    return '<label class="opcion"><input type="radio" name="' + name + '" value="' + o[0] +
+      '" onchange="marcarOpcion(this)"> ' + o[1] + '</label>';
+  }).join('') + '</div>';
+}
+function marcarOpcion(inp) {
+  inp.closest('.opciones').querySelectorAll('.opcion').forEach(function (o) {
+    o.classList.toggle('sel', !!o.querySelector('input:checked'));
+  });
+}
+// El texto que eligió, no el código: es lo que se lee en el archivo de datos.
+function radTxt(name) {
+  const r = document.querySelector('input[name="' + name + '"]:checked');
+  return r ? r.parentElement.textContent.trim() : '';
+}
 const val = id => (document.getElementById(id) || {}).value ? document.getElementById(id).value.trim() : '';
 const chk = id => !!(document.getElementById(id) || {}).checked;
 
@@ -1067,9 +1170,35 @@ async function enviar() {
       fechaNac: val('h' + i + '_fnac'), lugarNac: val('h' + i + '_lugar'),
       hospital: val('h' + i + '_hospital'), conviveCon: val('h' + i + '_convive'),
       discapacidad: chk('h' + i + '_discapacidad'),
+      extra: [['Escuela', val('h' + i + '_escuela')], ['Gestión', val('h' + i + '_gestion')],
+              ['Actividades', val('h' + i + '_activ')], ['Tratamientos', val('h' + i + '_trat')]]
+             .filter(function (x) { return x[1]; }),
       domicilio: { calle: val('h' + i + '_calle'), numero: val('h' + i + '_numero'),
         localidad: val('h' + i + '_localidad'), partido: val('h' + i + '_partido'),
         provincia: val('h' + i + '_provincia') } });
+  }
+
+  // Secciones genéricas: el Apps Script las escribe tal cual en el archivo de datos,
+  // así sumar una pregunta nueva no obliga a tocar el script. Los títulos y las
+  // etiquetas son los que lee la planilla jurídica: no cambiarlos sin cambiar allá.
+  datos.secciones = [];
+  if (materiaSel.id === 'alimentos') {
+    const sec = function (titulo, pares) {
+      const l = pares.filter(function (x) { return x[1]; });
+      if (l.length) datos.secciones.push({ titulo: titulo, lineas: l });
+    };
+    sec('RELACIÓN', [['Tipo', radTxt('a_rel_tipo')], ['Desde', val('a_rel_desde')], ['Hasta', val('a_rel_hasta')],
+                     ['Cómo fue la separación', val('a_rel_como')], ['Acuerdo previo', radTxt('a_rel_acuerdo')],
+                     ['Cuidado de los hijos', radTxt('a_cuidado')]]);
+    sec('SU SITUACIÓN', [['Trabajo', radTxt('a_act_trabaja')], ['Tarea', val('a_act_tarea')],
+                         ['Empleador', val('a_act_empleador')], ['Ingreso mensual', val('a_act_ingreso')],
+                         ['Asignaciones', radTxt('a_auh')], ['Obra social de los hijos', radTxt('a_obra')],
+                         ['Vivienda', radTxt('a_vivienda')], ['Ayuda familiar', radTxt('a_ayuda')]]);
+    sec('EL DEMANDADO', [['Cómo trabaja', radTxt('a_dem_modo')], ['Tarea', val('a_dem_tarea')],
+                         ['Ingreso mensual', val('a_dem_ingreso')], ['Bienes', val('a_dem_bienes')],
+                         ['Aporta', radTxt('a_dem_aporta')], ['Detalle del aporte', val('a_dem_aporte')]]);
+    sec('GASTOS MENSUALES', GASTOS.map(function (g) { return [g[1], val('a_g_' + g[0])]; })
+                              .concat([['Otros', val('a_g_otros')], ['No cubiertas', val('a_nocub')]]));
   }
 
   for (let i = 1; i <= nHered; i++) {
