@@ -429,7 +429,10 @@
             mostrar(salida, r.ok ? 'ok' : 'aviso', r.texto);
         })
         .catch(function () {
-            mostrar(salida, 'aviso', 'No pudimos consultar en este momento. Intente de nuevo en unos minutos, o escríbanos por WhatsApp.');
+            // El WhatsApp sale con el documento ya escrito: así la persona no tiene que explicar
+            // nada y el estudio le puede contestar igual, aunque el resumen automático no ande.
+            mostrar(salida, 'aviso', 'No pudimos armar el resumen en este momento. Escríbanos por WhatsApp con el botón de abajo: el mensaje ya lleva su documento y le contestamos nosotros.', true,
+                'https://wa.me/5491168063444?text=' + encodeURIComponent('Hola, quise consultar mi expediente en la web y no funcionó. Mi documento es ' + dni + '.'), 'Escribir por WhatsApp');
         })
         .then(function () {
             boton.disabled = false;
@@ -437,7 +440,7 @@
         });
     }
 
-    function mostrar(donde, tipo, texto, conAccion) {
+    function mostrar(donde, tipo, texto, conAccion, enlace, rotulo) {
         donde.className = 'consulta-salida visible ' + tipo;
         donde.textContent = '';
 
@@ -454,10 +457,10 @@
         pie.className = 'consulta-acciones';
         var wa = document.createElement('a');
         wa.className = 'boton';
-        wa.href = WA;
+        wa.href = enlace || WA;
         wa.target = '_blank';
         wa.rel = 'noopener';
-        wa.textContent = 'Tengo una duda sobre esto';
+        wa.textContent = rotulo || 'Tengo una duda sobre esto';
         pie.appendChild(wa);
         donde.appendChild(pie);
 
