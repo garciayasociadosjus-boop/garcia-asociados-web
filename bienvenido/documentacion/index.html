@@ -242,6 +242,7 @@ footer{text-align:center;color:var(--ink-40);font-size:.72rem;letter-spacing:.14
     <h2>Revise antes de enviar</h2>
     <p class="lead">Si algo está mal, puede volver y corregirlo.</p>
     <div class="bloque"><div id="resumen" style="font-size:.9rem;line-height:1.75"></div></div>
+    <div class="aviso" id="avisoFaltan" style="display:none;border-left-color:#c9762e;margin-bottom:14px"></div>
     <button class="btn oro" onclick="enviar()">Enviar al estudio</button>
     <button class="btn linea" onclick="irA(2)">Volver y corregir</button>
     <button class="btn tinta" onclick="abrirContacto()">Contáctenos</button>
@@ -1102,6 +1103,61 @@ function armarResumen() {
        nFotos + ' foto(s) adjunta(s)' +
        (nPdf ? ' · ' + nPdf + ' PDF' : '') + '</div>';
   document.getElementById('resumen').innerHTML = h;
+
+  // Lo que le falta se le avisa acá y no se le bloquea el envío: frenarlo por una
+  // partida que no tiene a mano solo logra que abandone. El estudio recibe la misma
+  // lista, más completa, en el mail del Apps Script (revisarConsulta).
+  const falta = documentosQueFaltan();
+  const av = document.getElementById('avisoFaltan');
+  if (falta.length) {
+    av.innerHTML = '<b>Antes de enviar: le faltó subir</b><ul style="margin:6px 0 6px 18px;padding:0">' +
+      falta.map(f => '<li>' + f + '</li>').join('') + '</ul>' +
+      'Si los tiene a mano, vuelva y agréguelos: nos ahorra semanas. Si no, puede enviar igual ' +
+      'y se los pedimos después.';
+    av.style.display = 'block';
+  } else {
+    av.style.display = 'none';
+  }
+}
+
+// Solo documentos y el domicilio de la otra parte: lo que más demora una demanda y
+// el cliente puede resolver en el momento. Los nombres de las fotos son los ids de
+// fotoDoc/parDni: si cambian allá, cambian acá.
+function documentosQueFaltan() {
+  const m = materiaSel.id, f = [];
+  const tiene = id => !!fotos[id];
+  if (!tiene('f_dni_frente') || !tiene('f_dni_dorso')) f.push('Su DNI (frente y dorso)');
+
+  const conHijos = ['alimentos', 'comunicacion', 'cuidado', 'filiacion', 'cese', 'violencia'].includes(m) ||
+                   (m === 'divorcio' && chk('tieneHijos'));
+  if (conHijos) {
+    for (let i = 1; i <= nHijos; i++) {
+      if (!document.getElementById('hijo' + i)) continue;
+      const quien = val('h' + i + '_nombre') ? val('h' + i + '_nombre').split(/\s+/)[0] : 'hijo/a ' + i;
+      if (!tiene('f_h' + i + '_partida')) f.push('Partida de nacimiento de ' + quien);
+      if (!tiene('f_h' + i + '_frente')) f.push('DNI de ' + quien);
+    }
+  }
+  if (m === 'divorcio' && !tiene('f_partida_matrimonio')) f.push('Acta de matrimonio');
+  if (m === 'nombre' && !tiene('f_partida_propia')) f.push('Su partida de nacimiento');
+  if (m === 'violencia' && !tiene('f_denuncia') && !val('v_causa')) f.push('La denuncia (foto o número)');
+  if (m === 'sucesion') {
+    if (!tiene('f_partida_defuncion')) f.push('Partida de defunción');
+    for (let i = 1; i <= nHered; i++) {
+      if (!document.getElementById('hered' + i)) continue;
+      const quien = val('hd' + i + '_nombre') ? val('hd' + i + '_nombre').split(/\s+/)[0] : 'heredero ' + i;
+      if (!tiene('f_hd' + i + '_partida')) f.push('Partida de ' + quien);
+    }
+  }
+  if (m === 'siniestro') {
+    if (!tiene('f_lic_frente') || !tiene('f_lic_dorso')) f.push('Licencia de conducir (frente y dorso)');
+    if (!tiene('f_ced_frente') || !tiene('f_ced_dorso')) f.push('Cédula del vehículo (frente y dorso)');
+    if ((galerias.vehiculo || []).length < 4) f.push('Al menos 4 fotos del vehículo');
+  }
+  if (materiaSel.otraParte && m !== 'otros' && (!val('d_calle') || !val('d_numero') || !val('d_localidad'))) {
+    f.push('Domicilio completo de la otra parte (calle, número y localidad): sin eso no se la puede notificar');
+  }
+  return f;
 }
 
 // ── Contacto y nueva consulta ─────────────────────────────────────────────────
