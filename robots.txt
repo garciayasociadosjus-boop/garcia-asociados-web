@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+# La firma de los mails del estudio: es sólo para el correo, no para buscadores.
+Disallow: /assets/firma-mail.jpg
 
 # Herramientas para clientes: no son contenido publico y no deben aparecer en
 # buscadores. No se bloquean con Disallow a proposito: si se bloqueara el rastreo,
